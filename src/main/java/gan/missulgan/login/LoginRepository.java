@@ -1,4 +1,4 @@
-package gan.missulgan.repository;
+package gan.missulgan.login;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
