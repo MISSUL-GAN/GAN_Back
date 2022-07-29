@@ -19,11 +19,11 @@ public class Scrap {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
-    private Long member_id;
+    private Member member;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "drawing_id")
-    private Long drawing_id;
+    private Drawing drawing;
 
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
