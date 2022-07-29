@@ -3,3 +3,16 @@ os: linux
 files:
   - source: /
     destination: /home/ubuntu/app/deploy
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 777
+
+hooks:
+  ApplicationStart:
+    - location: restart.sh
+      timeout: 60
+      runas: ubuntu
