@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +27,14 @@ public class LocalStoreStrategy implements FileStoreStrategy {
 		} catch (IOException e) {
 			throw new RuntimeException(e); // TODO: replace with pre-defined exception
 		}
+	}
+
+	@Override
+	public Resource load(String fileName) {
+		FileSystemResource resource = new FileSystemResource(getPathName(fileName));
+		if (!resource.exists())
+			throw new RuntimeException(); // TODO: replace with pre-defined exception
+		return resource;
 	}
 
 	private String getPathName(String fileName) {

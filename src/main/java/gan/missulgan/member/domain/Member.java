@@ -1,5 +1,7 @@
-package gan.missulgan;
+package gan.missulgan.member.domain;
 
+import gan.missulgan.DateTimeEntity;
+import gan.missulgan.Drawing;
 import lombok.Getter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;

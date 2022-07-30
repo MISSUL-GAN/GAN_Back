@@ -41,6 +41,7 @@ jobs:
         spring.datasource.password: ${{ secrets.DATASOURCE_PASSWORD }} 
         app.auth.accessTokenSecret: ${{ secrets.ACCESS_TOKEN_SECRET }} 
         app.auth.refreshTokenSecret: ${{ secrets.REFRESH_TOKEN_SECRET }}
+        app.localStorePath: ${{ secrets.LOCAL_STORE_PATH }}
         
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
