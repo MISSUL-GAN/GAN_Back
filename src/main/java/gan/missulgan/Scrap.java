@@ -11,7 +11,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @ToString
-public class Scrap {
+public class Scrap extends DateTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "like_id")
@@ -24,8 +24,5 @@ public class Scrap {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "drawing_id")
     private Drawing drawing;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
 
 }

@@ -12,7 +12,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @ToString
-public class Nft {
+public class Nft extends DateTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "nft_id")
@@ -23,9 +23,6 @@ public class Nft {
 
     @OneToOne(mappedBy = "nft", fetch = LAZY)
     private Drawing drawing;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
 
     //==Setter 대체==//
     public void changeDrawing(Drawing drawing) {
