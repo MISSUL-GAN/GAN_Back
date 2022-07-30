@@ -29,6 +29,10 @@ public class Drawing extends DateTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
+
     @OneToOne(fetch = LAZY) // cascade = ALL, orphanRemoval = true
     @JoinColumn(name = "nft_id")
     private Nft nft;
