@@ -9,4 +9,4 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   config:
-    import: application-datasource.yml, application-settings.yml
+    import: application-datasource.yml, application-settings.yml, application-oauth.yml
