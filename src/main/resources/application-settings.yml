@@ -1,2 +1,9 @@
 app:
   localStorePath: /home/ubuntu/app/image
+
+  auth:
+    accessTokenSecret: ${ACCESS_TOKEN_SECRET}
+    refreshTokenSecret: ${REFRESH_TOKEN_SECRET}
+    accessTokenExpiry: 86400000
+    refreshTokenExpiry: 604800000
+    refreshTokenNearExpiryCriterion: 259200000

@@ -4,9 +4,9 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   config:
-    import: application-datasource.yml, application-settings.yml
+    import: application-datasource.yml, application-settings.yml, application-oauth.yml

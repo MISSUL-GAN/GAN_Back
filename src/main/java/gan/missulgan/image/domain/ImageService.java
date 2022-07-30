@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import gan.missulgan.entity.Member;
+import gan.missulgan.Member;
 import gan.missulgan.image.domain.strategy.filename.FileNameStrategy;
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.image.dto.ImagesDTO;
