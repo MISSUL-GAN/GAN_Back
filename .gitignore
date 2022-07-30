@@ -45,3 +45,4 @@ out
 gen
 .gradle
 build
+application.properties

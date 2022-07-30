@@ -1,11 +1,10 @@
-package gan.missulgan.controller;
+package gan.missulgan.login;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
-import gan.missulgan.service.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
