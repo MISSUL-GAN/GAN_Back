@@ -1,17 +1,17 @@
 package gan.missulgan.image.domain;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
-import gan.missulgan.image.domain.strategy.filename.FileNameStrategy;
+import gan.missulgan.image.domain.strategy.name.FileNameStrategy;
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
-import gan.missulgan.image.dto.ImagesDTO;
-import gan.missulgan.image.dto.SavedImageDTO;
+import gan.missulgan.image.dto.ImageResponseDTO;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,19 +31,50 @@ public class ImageService {
 			.orElseThrow(NoSuchElementException::new); // TODO: replace with custom exception
 	}
 
-	public List<SavedImageDTO> save(List<MultipartFile> files) {
+	@Transactional
+	public ImageResponseDTO save(InputStream inputStream, String contentType) {
+		ImageType imageType = getImageType(contentType);
+		String name = fileNameStrategy.encodeName(inputStream);
 		Member member = getMember();
-		ImagesDTO imagesDTO = new ImagesDTO(files, fileNameStrategy);
-		imagesDTO.storeFilesWith(fileStoreStrategy);
-		List<Image> images = imagesDTO.toEntities(member.getId());
-		imageRepository.saveAll(images);
-
-		return images.stream()
-			.map(Image::toDTO)
-			.collect(Collectors.toList());
+		Image image = Image.builder()
+			.member(member)
+			.imageType(imageType)
+			.fileName(name)
+			.build();
+		saveImage(name, inputStream, image);
+		return ImageResponseDTO.from(image);
 	}
 
 	public Resource load(String fileName) {
-		return fileStoreStrategy.load(fileName);
+		try {
+			if (doesImageExist(fileName))
+				return fileStoreStrategy.load(fileName);
+			return null;
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage()); // TODO: 404로 대체
+		}
+	}
+
+	private boolean doesImageExist(String fileName) {
+		return imageRepository.findImageByFileName(fileName)
+			.isPresent();
+	}
+
+	private ImageType getImageType(String contentType) {
+		ImageType imageType = ImageType.of(contentType);
+		if (imageType != null)
+			return imageType;
+		throw new RuntimeException("NOT_A_IMAGE"); // TODO: 400으로 대체
+	}
+
+	private void saveImage(String name, InputStream inputStream, Image image) {
+		try {
+			Optional<Image> imageByFileName = imageRepository.findImageByFileName(name);
+			if (imageByFileName.isEmpty())
+				imageRepository.save(image);
+			fileStoreStrategy.store(inputStream, name);
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage()); // TODO: 500 대체
+		}
 	}
 }
