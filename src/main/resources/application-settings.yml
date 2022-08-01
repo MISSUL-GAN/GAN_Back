@@ -1,5 +1,5 @@
 app:
-  localStorePath: /home/ubuntu/app/image
+  localStorePath: ${LOCAL_STORE_PATH}
 
   auth:
     accessTokenSecret: ${ACCESS_TOKEN_SECRET}

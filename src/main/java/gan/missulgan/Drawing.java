@@ -1,12 +1,12 @@
 package gan.missulgan;
 
+import gan.missulgan.member.domain.Member;
 import lombok.Getter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
 
