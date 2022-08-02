@@ -57,8 +57,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	public Docket docket() {
 		return new Docket(DocumentationType.OAS_30)
 			.apiInfo(getApiInfo())
-			// .securityContexts(List.of(getSecurityContext()))
-			// .securitySchemes(List.of(getApiKey()))
+			.securityContexts(List.of(getSecurityContext()))
+			.securitySchemes(List.of(getApiKey()))
 			.select()
 			.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
 			.paths(PathSelectors.any())

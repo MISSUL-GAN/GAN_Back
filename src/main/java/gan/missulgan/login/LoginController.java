@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
-@Controller
 public class LoginController {
 
     LoginService loginService = new LoginService();

@@ -27,7 +27,7 @@ public class ImageService {
 
 	// TODO: find member by authentication first (나중에)
 	private Member getMember() {
-		return memberRepository.findById(0L) // TODO: 실제 사용자로 변경
+		return memberRepository.findById(1L) // TODO: 실제 사용자로 변경
 			.orElseThrow(NoSuchElementException::new); // TODO: replace with custom exception
 	}
 
