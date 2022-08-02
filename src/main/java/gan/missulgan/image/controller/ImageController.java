@@ -49,7 +49,7 @@ public class ImageController {
 	}
 
 	@ApiOperation(value = "이미지 보기", notes = "`fileName`으로 파일 조회")
-	@GetMapping(value = "{fileName}", produces = {IMAGE_JPEG_VALUE, IMAGE_GIF_VALUE, IMAGE_PNG_VALUE})
+	@GetMapping(value = "view/{fileName}", produces = {IMAGE_JPEG_VALUE, IMAGE_GIF_VALUE, IMAGE_PNG_VALUE})
 	public Resource load(@PathVariable String fileName) {
 		return imageService.load(fileName);
 	}
