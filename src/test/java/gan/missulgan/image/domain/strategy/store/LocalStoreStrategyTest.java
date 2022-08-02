@@ -18,11 +18,11 @@ class LocalStoreStrategyTest {
 	private static final String CURRENT_DIRECTORY = ".";
 
 	private final LocalStoreStrategy localStoreStrategy = new LocalStoreStrategy();
-
+	private File testFile;
 	@BeforeEach
 	void setUp() {
 		ReflectionTestUtils.setField(localStoreStrategy, "storePath", ".");
-		File testFile = new File(CURRENT_DIRECTORY + File.separator + TEST_FILE_NAME);
+		testFile = new File(CURRENT_DIRECTORY + File.separator + TEST_FILE_NAME);
 		testFile.deleteOnExit();
 	}
 
@@ -31,11 +31,11 @@ class LocalStoreStrategyTest {
 	void storeAndLoad() {
 		// given
 		byte[] bufferExpected = {1, 1};
-		InputStream inputStream = new ByteArrayInputStream(bufferExpected);
 		// when, then
 		assertThatNoException().isThrownBy(() ->
-			localStoreStrategy.store(inputStream, TEST_FILE_NAME));
+			localStoreStrategy.store(bufferExpected, TEST_FILE_NAME));
 		assertThatNoException().isThrownBy(() ->
 			localStoreStrategy.load(TEST_FILE_NAME));
+		assertThat(testFile).hasSize(bufferExpected.length);
 	}
 }

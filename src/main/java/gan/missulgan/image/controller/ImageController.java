@@ -41,8 +41,9 @@ public class ImageController {
 	public ImageResponseDTO upload(@RequestPart("file") MultipartFile multipartFile) {
 		try {
 			InputStream inputStream = multipartFile.getInputStream();
+			byte[] bytes = inputStream.readAllBytes();
 			String contentType = multipartFile.getContentType();
-			return imageService.save(inputStream, contentType);
+			return imageService.save(bytes, contentType);
 		} catch (IOException e) {
 			throw new RuntimeException(e); // TODO: 400 -> 잘못된 파일
 		}
