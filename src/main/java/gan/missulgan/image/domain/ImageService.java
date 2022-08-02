@@ -32,16 +32,16 @@ public class ImageService {
 	}
 
 	@Transactional
-	public ImageResponseDTO save(InputStream inputStream, String contentType) {
+	public ImageResponseDTO save(byte[] bytes, String contentType) {
 		ImageType imageType = getImageType(contentType);
-		String name = fileNameStrategy.encodeName(inputStream);
+		String name = fileNameStrategy.encodeName(bytes);
 		Member member = getMember();
 		Image image = Image.builder()
 			.member(member)
 			.imageType(imageType)
 			.fileName(name)
 			.build();
-		saveImage(name, inputStream, image);
+		saveImage(name, bytes, image);
 		return ImageResponseDTO.from(image);
 	}
 
@@ -67,12 +67,12 @@ public class ImageService {
 		throw new RuntimeException("NOT_A_IMAGE"); // TODO: 400으로 대체
 	}
 
-	private void saveImage(String name, InputStream inputStream, Image image) {
+	private void saveImage(String name, byte [] bytes, Image image) {
 		try {
 			Optional<Image> imageByFileName = imageRepository.findImageByFileName(name);
 			if (imageByFileName.isEmpty())
 				imageRepository.save(image);
-			fileStoreStrategy.store(inputStream, name);
+			fileStoreStrategy.store(bytes, name);
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage()); // TODO: 500 대체
 		}

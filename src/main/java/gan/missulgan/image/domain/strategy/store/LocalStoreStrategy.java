@@ -19,11 +19,11 @@ public class LocalStoreStrategy implements FileStoreStrategy {
 	private String storePath;
 
 	@Override
-	public void store(InputStream inputStream, String fileName) throws IOException {
+	public void store(byte [] bytes, String fileName) throws IOException {
 		File newFile = new File(getPathName(fileName));
 		if (newFile.exists())
 			return;
-		writeToFile(inputStream, newFile);
+		writeToFile(bytes, newFile);
 	}
 
 	@Override
@@ -34,9 +34,9 @@ public class LocalStoreStrategy implements FileStoreStrategy {
 		return resource;
 	}
 
-	private void writeToFile(InputStream inputStream, File file) throws IOException {
+	private void writeToFile(byte [] bytes, File file) throws IOException {
 		try {
-			FileCopyUtils.copy(inputStream.readAllBytes(), file);
+			FileCopyUtils.copy(bytes, file);
 		} catch (IOException e) {
 			throw new IOException("FILE_WRITE_FAIL");
 		}

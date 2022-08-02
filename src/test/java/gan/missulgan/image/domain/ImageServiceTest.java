@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -63,7 +62,7 @@ class ImageServiceTest {
 	@DisplayName("저장/불러오기")
 	void saveAndLoad() {
 		// given, when
-		ImageResponseDTO saved = imageService.save(InputStream.nullInputStream(), PNG.getContentType());
+		ImageResponseDTO saved = imageService.save(EMPTY_BYTES, PNG.getContentType());
 		Resource load = imageService.load(saved.getFileName());
 		// then
 		assertThat(load).isNotNull();
