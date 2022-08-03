@@ -1,5 +1,6 @@
-package gan.missulgan.exception;
+package gan.missulgan.common.exception;
 
+import gan.missulgan.common.ExceptionEnum;
 import lombok.Getter;
 
 @Getter

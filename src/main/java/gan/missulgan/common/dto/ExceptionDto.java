@@ -1,4 +1,4 @@
-package gan.missulgan.exception.dto;
+package gan.missulgan.common.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -19,11 +19,3 @@ public class ExceptionDto {
         this.errorMessage = errorMessage;
     }
 }
-
-/**
- * 예시
- * {
- *   "errorCode": "S0001",
- *   "errorMessage": "권한이 없습니다."
- * }
- */

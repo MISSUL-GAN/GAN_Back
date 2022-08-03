@@ -1,7 +1,8 @@
 package gan.missulgan.config.handler;
 
-import gan.missulgan.exception.*;
-import gan.missulgan.exception.dto.ExceptionDto;
+import gan.missulgan.common.ExceptionEnum;
+import gan.missulgan.common.dto.ExceptionDto;
+import gan.missulgan.common.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
