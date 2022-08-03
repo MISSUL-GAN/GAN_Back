@@ -15,9 +15,10 @@ import springfox.documentation.builders.AuthorizationScopeBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.HttpAuthenticationScheme;
 import springfox.documentation.service.SecurityReference;
+import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -33,8 +34,6 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	private static final String API_DESCRIPTION = "Missulgan API Document";
 	private static final String API_VERSION = "Version 1";
 	private static final String SWAGGER_PATH = "/swagger-ui/index.html";
-	private static final String API_KEY_HEADER_NAME = "Authorization";
-	private static final String API_KEY_IN = "header";
 	private static final String API_KEY_NAME = "JWT AccessToken";
 	private static final String SCOPE_GLOBAL = "global";
 	private static final String SCOPE_GLOBAL_DESCRIPTION = "to access resources";
@@ -60,7 +59,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 			.apiInfo(getApiInfo())
 			.ignoredParameterTypes(AuthenticatedEmail.class)
 			.securityContexts(List.of(getSecurityContext()))
-			.securitySchemes(List.of(getApiKey()))
+			.securitySchemes(List.of(getScheme()))
 			.select()
 			.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
 			.paths(PathSelectors.any())
@@ -73,8 +72,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
 		registry.addRedirectViewController("/swagger-ui", SWAGGER_PATH);
 	}
 
-	private ApiKey getApiKey() {
-		return new ApiKey(API_KEY_HEADER_NAME, API_KEY_NAME, API_KEY_IN);
+	private SecurityScheme getScheme() {
+		return HttpAuthenticationScheme
+			.JWT_BEARER_BUILDER
+			.name(API_KEY_NAME)
+			.description("`eyJhbGciOiJIUzUxMiJ9.xxxxxxxxxxxx` 입력.  <br><br>(**`Bearer` 필요없음**)")
+			.build();
 	}
 
 	private SecurityContext getSecurityContext() {
@@ -84,7 +87,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	}
 
 	private List<SecurityReference> getSecurityReferences() {
-		return List.of(new SecurityReference(API_KEY_HEADER_NAME, getAuthorizationScopes()));
+		return List.of(new SecurityReference(API_KEY_NAME, getAuthorizationScopes()));
 	}
 
 	private AuthorizationScope[] getAuthorizationScopes() {
