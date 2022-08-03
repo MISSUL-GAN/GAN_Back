@@ -28,6 +28,7 @@ import gan.missulgan.member.domain.MemberRepository;
 class ImageServiceTest {
 
 	private static final String TEST_FILE_NAME = "testFileName";
+	private static final String TEST_EMAIL = "test@emai.il";
 	private static final byte[] EMPTY_BYTES = {};
 
 	@InjectMocks
@@ -43,7 +44,7 @@ class ImageServiceTest {
 
 	@BeforeEach
 	void setUp() throws IOException {
-		given(memberRepository.findById(anyLong()))
+		given(memberRepository.findByAccountEmail(anyString()))
 			.willReturn(Optional.of(new Member()));
 		given(imageRepository.findImageByFileName(any()))
 			.willReturn(Optional.of(new Image()));
@@ -62,7 +63,7 @@ class ImageServiceTest {
 	@DisplayName("저장/불러오기")
 	void saveAndLoad() {
 		// given, when
-		ImageResponseDTO saved = imageService.save(EMPTY_BYTES, PNG.getContentType());
+		ImageResponseDTO saved = imageService.save(TEST_EMAIL, EMPTY_BYTES, PNG.getContentType());
 		Resource load = imageService.load(saved.getFileName());
 		// then
 		assertThat(load).isNotNull();
