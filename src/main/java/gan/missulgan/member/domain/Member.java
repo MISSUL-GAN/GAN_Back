@@ -46,6 +46,7 @@ public class Member extends DateTimeEntity {
 	private String profileImage;
 
 	@NotNull
+	@Column(unique = true)
 	private String accountEmail;
 
 	@NotNull
