@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import gan.missulgan.auth.AuthenticatedEmail;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.AuthorizationScopeBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -57,6 +58,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	public Docket docket() {
 		return new Docket(DocumentationType.OAS_30)
 			.apiInfo(getApiInfo())
+			.ignoredParameterTypes(AuthenticatedEmail.class)
 			.securityContexts(List.of(getSecurityContext()))
 			.securitySchemes(List.of(getApiKey()))
 			.select()
