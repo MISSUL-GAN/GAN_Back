@@ -19,10 +19,10 @@ public class Drawing extends DateTimeEntity {
     @Column(name = "drawing_id")
     private Long id;
 
-    @NotNull @Length(max = 16)
+    @NotNull @Length(max = 40)
     private String title;
 
-    @NotNull @Length(max = 100)
+    @NotNull @Length(max = 400)
     private String description;
 
     @ManyToOne(fetch = LAZY)
