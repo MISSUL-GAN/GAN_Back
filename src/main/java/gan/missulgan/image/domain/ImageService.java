@@ -26,16 +26,16 @@ public class ImageService {
 	private final FileStoreStrategy fileStoreStrategy;
 
 	// TODO: find member by authentication first (나중에)
-	private Member getMember() {
-		return memberRepository.findById(1L) // TODO: 실제 사용자로 변경
+	private Member getMember(String email) {
+		return memberRepository.findByAccountEmail(email) // TODO: 실제 사용자로 변경
 			.orElseThrow(NoSuchElementException::new); // TODO: replace with custom exception
 	}
 
 	@Transactional
-	public ImageResponseDTO save(byte[] bytes, String contentType) {
+	public ImageResponseDTO save(String email, byte[] bytes, String contentType) {
 		ImageType imageType = getImageType(contentType);
 		String name = fileNameStrategy.encodeName(bytes);
-		Member member = getMember();
+		Member member = getMember(email);
 		Image image = Image.builder()
 			.member(member)
 			.imageType(imageType)

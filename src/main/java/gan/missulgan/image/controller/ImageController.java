@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import gan.missulgan.auth.AuthenticatedEmail;
 import gan.missulgan.image.domain.ImageService;
 import gan.missulgan.image.dto.ImageResponseDTO;
 import io.swagger.annotations.ApiOperation;
@@ -30,20 +31,21 @@ public class ImageController {
 
 	@ApiOperation(value = "다중 이미지 업로드", notes = "다중 이미지 업로드. 반환된 `fileName`으로 다시 파일을 조회할 수 있음")
 	@PostMapping(path = "uploads", consumes = MULTIPART_FORM_DATA_VALUE)
-	public List<ImageResponseDTO> upload(@RequestPart("files") List<MultipartFile> files) {
+	public List<ImageResponseDTO> upload(@AuthenticatedEmail String email,
+		@RequestPart("files") List<MultipartFile> files) {
 		return files.stream()
-			.map(this::upload)
+			.map(file -> upload(email, file))
 			.collect(Collectors.toList());
 	}
 
 	@ApiOperation(value = "이미지 업로드", notes = "이미지 업로드. 반환된 `fileName`으로 다시 파일을 조회할 수 있음")
 	@PostMapping(path = "upload", consumes = MULTIPART_FORM_DATA_VALUE)
-	public ImageResponseDTO upload(@RequestPart("file") MultipartFile multipartFile) {
+	public ImageResponseDTO upload(@AuthenticatedEmail String email, @RequestPart("file") MultipartFile multipartFile) {
 		try {
 			InputStream inputStream = multipartFile.getInputStream();
 			byte[] bytes = inputStream.readAllBytes();
 			String contentType = multipartFile.getContentType();
-			return imageService.save(bytes, contentType);
+			return imageService.save(email, bytes, contentType);
 		} catch (IOException e) {
 			throw new RuntimeException(e); // TODO: 400 -> 잘못된 파일
 		}
