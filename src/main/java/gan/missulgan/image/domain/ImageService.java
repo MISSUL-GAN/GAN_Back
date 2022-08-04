@@ -1,7 +1,6 @@
 package gan.missulgan.image.domain;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -13,7 +12,7 @@ import gan.missulgan.image.domain.strategy.name.FileNameStrategy;
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.image.dto.ImageResponseDTO;
 import gan.missulgan.member.domain.Member;
-import gan.missulgan.member.domain.MemberRepository;
+import gan.missulgan.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
