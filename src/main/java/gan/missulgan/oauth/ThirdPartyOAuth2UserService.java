@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import gan.missulgan.auth.dto.JwtUserDetails;
 import gan.missulgan.member.domain.Member;
-import gan.missulgan.member.domain.MemberRepository;
+import gan.missulgan.member.repository.MemberRepository;
 import gan.missulgan.oauth.dto.MemberInfoDTO;
 import gan.missulgan.oauth.dto.OAuth2UserAttribute;
 import gan.missulgan.oauth.dto.OAuth2UserAttributeFactory;
