@@ -20,7 +20,7 @@ public enum ExceptionEnum {
     NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "---", "~~~"),
     UNAUTHORIZED_EXCEPTION(HttpStatus.UNAUTHORIZED, "---", "~~~"),
 
-    NO_SUCH_USER(HttpStatus.BAD_REQUEST, "---", "해당 사용자가 존재하지 않습니다.");
+    NO_SUCH_MEMBER(HttpStatus.BAD_REQUEST, "---", "해당 사용자가 존재하지 않습니다.");
 
     private final HttpStatus status;
     private final String code;

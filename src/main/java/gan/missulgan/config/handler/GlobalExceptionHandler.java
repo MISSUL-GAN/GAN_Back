@@ -120,9 +120,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionDto> exceptionHandler(HttpServletRequest request, final MemberNotFoundException e) {
         e.printStackTrace();
         return ResponseEntity
-                .status(ExceptionEnum.NO_SUCH_USER.getStatus())
+                .status(ExceptionEnum.NO_SUCH_MEMBER.getStatus())
                 .body(ExceptionDto.builder()
-                        .errorCode(ExceptionEnum.NO_SUCH_USER.getCode())
+                        .errorCode(ExceptionEnum.NO_SUCH_MEMBER.getCode())
                         .errorMessage(e.getMessage())
                         .build());
     }
