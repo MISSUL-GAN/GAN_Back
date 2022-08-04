@@ -3,6 +3,7 @@ package gan.missulgan.config.handler;
 import gan.missulgan.common.ExceptionEnum;
 import gan.missulgan.common.dto.ExceptionDto;
 import gan.missulgan.common.exception.*;
+import gan.missulgan.member.exception.MemberNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -111,6 +112,17 @@ public class GlobalExceptionHandler {
                 .status(ExceptionEnum.UNAUTHORIZED_EXCEPTION.getStatus())
                 .body(ExceptionDto.builder()
                         .errorCode(ExceptionEnum.UNAUTHORIZED_EXCEPTION.getCode())
+                        .errorMessage(e.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(MemberNotFoundException.class)
+    public ResponseEntity<ExceptionDto> exceptionHandler(HttpServletRequest request, final MemberNotFoundException e) {
+        e.printStackTrace();
+        return ResponseEntity
+                .status(ExceptionEnum.NO_SUCH_USER.getStatus())
+                .body(ExceptionDto.builder()
+                        .errorCode(ExceptionEnum.NO_SUCH_USER.getCode())
                         .errorMessage(e.getMessage())
                         .build());
     }

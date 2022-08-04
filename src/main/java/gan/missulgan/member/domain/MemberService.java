@@ -1,5 +1,7 @@
 package gan.missulgan.member.domain;
 
+import gan.missulgan.common.ExceptionEnum;
+import gan.missulgan.member.exception.MemberNotFoundException;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,6 @@ public class MemberService {
 	public String findRole(String email) {
 		return memberRepository.findByAccountEmail(email)
 			.map(Member::getAccountEmail)
-			.orElseThrow(() -> new RuntimeException("NO_SUCH_USER")); // TODO: replace with 400
+			.orElseThrow(() -> new MemberNotFoundException(ExceptionEnum.NO_SUCH_USER));
 	}
 }
