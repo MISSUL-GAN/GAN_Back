@@ -2,6 +2,7 @@ package gan.missulgan.member.service;
 
 import gan.missulgan.common.ExceptionEnum;
 import gan.missulgan.member.domain.Member;
+import gan.missulgan.member.dto.UserNicknameDTO.UserNicknameRequest;
 import gan.missulgan.member.repository.MemberRepository;
 import gan.missulgan.member.exception.MemberNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,6 @@ import gan.missulgan.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,13 +32,11 @@ public class MemberService {
 	}
 
 	@Transactional
-	public void saveUserNickname(String email, String nickname) {
-		Optional<Member> member = memberRepository.findByAccountEmail(email);
-		if (member.isPresent()) {
-
-		}
+	public String saveUserNickname(UserNicknameRequest userNicknameDTO) {
+		Member member = memberRepository.findByAccountEmail(userNicknameDTO.getAccountEmail())
+				.orElseThrow(() -> new MemberNotFoundException(ExceptionEnum.NO_SUCH_MEMBER));
+		member.setUserNickname(userNicknameDTO.getUserNickname());
+		return member.getUserNickname();
 	}
-
-
 
 }
