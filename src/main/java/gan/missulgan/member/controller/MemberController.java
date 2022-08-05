@@ -1,7 +1,6 @@
 package gan.missulgan.member.controller;
 
-import gan.missulgan.member.dto.UserNicknameDTO.UserNicknameRequest;
-import gan.missulgan.member.dto.UserNicknameDTO.UserNicknameResponse;
+import gan.missulgan.member.dto.UserNicknameDTO;
 import gan.missulgan.member.service.MemberService;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +25,14 @@ public class MemberController {
 
 	@GetMapping("nickname")
 	@ApiOperation(value = "별명 변경 전 카카오톡 이름 보여주기")
-	public UserNicknameResponse getUserNickname(@AuthenticatedEmail String email) {
-		return new UserNicknameResponse(memberService.findMember(email).getUserNickname());
+	public UserNicknameDTO getUserNickname(@AuthenticatedEmail String email) {
+		return new UserNicknameDTO(memberService.findMember(email).getUserNickname());
 	}
 
 	@PutMapping("nickname")
 	@ApiOperation(value = "별명 변경하기")
-	public UserNicknameResponse putUserNickname(@RequestBody UserNicknameRequest userNicknameRequest) {
-		return new UserNicknameResponse(memberService.saveUserNickname(userNicknameRequest));
+	public UserNicknameDTO putUserNickname(@AuthenticatedEmail String email, @RequestBody UserNicknameDTO userNicknameDTO) {
+		return new UserNicknameDTO(memberService.saveUserNickname(email, userNicknameDTO.getUserNickname()));
 	}
 
 }

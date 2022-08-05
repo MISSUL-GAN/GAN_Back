@@ -2,7 +2,6 @@ package gan.missulgan.member.service;
 
 import gan.missulgan.common.ExceptionEnum;
 import gan.missulgan.member.domain.Member;
-import gan.missulgan.member.dto.UserNicknameDTO.UserNicknameRequest;
 import gan.missulgan.member.repository.MemberRepository;
 import gan.missulgan.member.exception.MemberNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,6 +9,8 @@ import org.springframework.stereotype.Service;
 import gan.missulgan.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -22,21 +23,26 @@ public class MemberService {
 	public String findRole(String email) {
 		return memberRepository.findByAccountEmail(email)
 			.map(Member::getAccountEmail)
-			.orElseThrow(() -> new MemberNotFoundException(ExceptionEnum.NO_SUCH_MEMBER));
+			.orElseThrow(NoSuchElementException::new);
 	}
 
 	public MemberDTO findMember(String email) {
 		return memberRepository.findByAccountEmail(email)
 			.map(MemberDTO::from)
-			.orElseThrow(() -> new MemberNotFoundException(ExceptionEnum.NO_SUCH_MEMBER));
+			.orElseThrow(NoSuchElementException::new);
+	}
+
+	private Member getMember(String email) {
+		return memberRepository.findByAccountEmail(email)
+			.orElseThrow(NoSuchElementException::new); // TODO: replace with custom exception
 	}
 
 	@Transactional
-	public String saveUserNickname(UserNicknameRequest userNicknameDTO) {
-		Member member = memberRepository.findByAccountEmail(userNicknameDTO.getAccountEmail())
-				.orElseThrow(() -> new MemberNotFoundException(ExceptionEnum.NO_SUCH_MEMBER));
-		member.setUserNickname(userNicknameDTO.getUserNickname());
-		return member.getUserNickname();
+	public String saveUserNickname(String email, String userNickname) {
+		return getMember(email).setUserNickname(userNickname).getUserNickname();
 	}
 
 }
+
+
+

@@ -72,7 +72,8 @@ public class Member extends DateTimeEntity {
 		return this;
 	}
 
-	public void setUserNickname(String nickname) {
+	public Member setUserNickname(String nickname) {
 		this.userNickname = nickname;
+		return this;
 	}
 }
