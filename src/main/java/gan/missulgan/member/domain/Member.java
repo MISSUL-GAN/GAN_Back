@@ -58,7 +58,7 @@ public class Member extends DateTimeEntity {
 
 	@Builder
 	public Member(Role role, String provider, String profileNickname, String profileImage, String accountEmail,
-		String userNickname) {
+				  String userNickname) {
 		this.role = role;
 		this.provider = provider;
 		this.profileNickname = profileNickname;
@@ -69,6 +69,11 @@ public class Member extends DateTimeEntity {
 
 	public Member updateProfileImage(String profileImage) {
 		this.profileImage = profileImage;
+		return this;
+	}
+
+	public Member setUserNickname(String nickname) {
+		this.userNickname = nickname;
 		return this;
 	}
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import gan.missulgan.auth.dto.JwtUserDetails;
 import gan.missulgan.auth.dto.TokenResponseDto;
 import gan.missulgan.auth.key.JwtKey;
-import gan.missulgan.member.domain.MemberService;
+import gan.missulgan.member.service.MemberService;
 import gan.missulgan.oauth.dto.MemberInfoDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

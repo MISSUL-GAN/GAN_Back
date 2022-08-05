@@ -21,7 +21,7 @@ import gan.missulgan.image.domain.strategy.name.FileNameStrategy;
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.image.dto.ImageResponseDTO;
 import gan.missulgan.member.domain.Member;
-import gan.missulgan.member.domain.MemberRepository;
+import gan.missulgan.member.repository.MemberRepository;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("이미지 서비스 테스트")
