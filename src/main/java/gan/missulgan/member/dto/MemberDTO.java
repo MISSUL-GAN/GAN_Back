@@ -12,6 +12,7 @@ import lombok.Getter;
 @Builder(access = PRIVATE)
 public class MemberDTO {
 
+	private final Long id;
 	private final String profileNickname;
 	private final String userNickname;
 	private final String profileImage;
@@ -19,6 +20,7 @@ public class MemberDTO {
 
 	public static MemberDTO from(Member member) {
 		return MemberDTO.builder()
+			.id(member.getId())
 			.userNickname(member.getUserNickname())
 			.profileNickname(member.getProfileNickname())
 			.accountEmail(member.getAccountEmail())

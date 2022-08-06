@@ -1,9 +1,13 @@
-package gan.missulgan;
+package gan.missulgan.tag.domain;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 
@@ -17,4 +21,7 @@ public class Tag {
 	private Long id;
 
 	private String name;
+
+	@OneToMany(mappedBy = "tag")
+	private Set<DrawingTag> drawingTags = new HashSet<>();
 }

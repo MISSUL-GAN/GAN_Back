@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import gan.missulgan.DateTimeEntity;
-import gan.missulgan.Drawing;
+import gan.missulgan.drawing.domain.Drawing;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
