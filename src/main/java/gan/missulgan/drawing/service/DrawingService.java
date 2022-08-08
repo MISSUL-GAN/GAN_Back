@@ -34,7 +34,7 @@ public class DrawingService {
 
 	@Transactional
 	public List<DrawingResponseDTO> getDrawingsByTags(Set<Tag> tags, Pageable pageable) {
-		return drawingTagRepository.findAllByTagsAnd(tags, pageable)
+		return drawingTagRepository.findAllByOrTags(tags, pageable)
 			.stream()
 			.map(DrawingResponseDTO::from)
 			.collect(Collectors.toList());

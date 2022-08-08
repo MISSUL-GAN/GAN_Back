@@ -22,8 +22,8 @@ public interface DrawingTagRepository extends JpaRepository<DrawingTag, Long> {
 		+ "(select dt.drawing "
 		+ "from DrawingTag dt "
 		+ "where d.drawing = dt.drawing and dt.tag not in :tags)")
-	List<Drawing> findAllByTagsAnd(@Param("tags") Set<Tag> tags, Pageable pageable);
+	List<Drawing> findAllByAndTags(@Param("tags") Set<Tag> tags, Pageable pageable);
 
 	@Query("select distinct d.drawing from DrawingTag d where d.tag in :tags")
-	List<Drawing> findAllByTagsOr(@Param("tags") Set<Tag> tags, Pageable pageable);
+	List<Drawing> findAllByOrTags(@Param("tags") Set<Tag> tags, Pageable pageable);
 }
