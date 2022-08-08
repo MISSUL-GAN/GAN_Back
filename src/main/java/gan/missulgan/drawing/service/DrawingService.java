@@ -8,8 +8,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import gan.missulgan.common.ExceptionEnum;
+import gan.missulgan.common.exception.ForbiddenException;
+import gan.missulgan.drawing.domain.Drawing;
+import gan.missulgan.drawing.dto.DrawingAddRequestDTO;
 import gan.missulgan.drawing.dto.DrawingResponseDTO;
-import gan.missulgan.tag.domain.DrawingTag;
+import gan.missulgan.drawing.exception.BadDrawingException;
+import gan.missulgan.drawing.repository.DrawingRepository;
+import gan.missulgan.member.domain.Member;
+import gan.missulgan.tag.domain.Tag;
 import gan.missulgan.tag.repository.DrawingTagRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -17,13 +24,57 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DrawingService {
 
-	final DrawingTagRepository drawingTagRepository;
+	private final DrawingTagRepository drawingTagRepository;
+	private final DrawingRepository drawingRepository;
+
+	public Drawing getDrawingById(Long drawingId) {
+		return drawingRepository.findById(drawingId)
+			.orElseThrow(BadDrawingException::new);
+	}
 
 	@Transactional
-	public List<DrawingResponseDTO> getDrawingsByTags(Set<Long> tagIds, Pageable pageable) {
-		return drawingTagRepository.findAllById(tagIds, pageable)
+	public List<DrawingResponseDTO> getDrawingsByTags(Set<Tag> tags, Pageable pageable) {
+		return drawingTagRepository.findAllByTagsAnd(tags, pageable)
 			.stream()
 			.map(DrawingResponseDTO::from)
 			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public DrawingResponseDTO addDrawing(Member member, Set<Tag> tags, DrawingAddRequestDTO requestDTO) {
+		Drawing drawing = Drawing.builder()
+			.title(requestDTO.getTitle())
+			.description(requestDTO.getDescription())
+			.fileName(requestDTO.getFileName())
+			.member(member)
+			.build();
+		drawing.setTags(tags);
+		Drawing saved = drawingRepository.save(drawing);
+		return DrawingResponseDTO.from(saved);
+	}
+
+	@Transactional
+	public List<DrawingResponseDTO> getDrawings(Member member, Pageable pageable) {
+		List<Drawing> drawings = drawingRepository.findAllByMember(member, pageable);
+		return drawings.stream()
+			.map(DrawingResponseDTO::from)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public List<DrawingResponseDTO> getRandomDrawings(Integer size) {
+		List<Drawing> drawings = drawingRepository.findAllByRandom(size);
+		return drawings.stream()
+			.map(DrawingResponseDTO::from)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public void removeDrawing(Member member, Long drawingId) {
+		Drawing drawing = getDrawingById(drawingId);
+		Member drawingOwner = drawing.getMember();
+		if (!drawingOwner.equals(member))
+			throw new ForbiddenException(ExceptionEnum.FORBIDDEN_EXCEPTION);
+		drawingRepository.delete(drawing);
 	}
 }

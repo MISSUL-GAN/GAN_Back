@@ -46,6 +46,8 @@ public class SecurityConfig {
 			.antMatchers("/auth/renew").permitAll()
 			.antMatchers("/image/view/**").permitAll()
 			.mvcMatchers(HttpMethod.GET, "/tag/all").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/drawing/{memberId}", "/drawing/random").permitAll()
+			.mvcMatchers(HttpMethod.POST, "/drawing/tags").permitAll()
 			.anyRequest().authenticated()
 			.and()
 

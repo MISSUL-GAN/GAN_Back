@@ -1,17 +1,14 @@
 package gan.missulgan.member.service;
 
-import gan.missulgan.common.ExceptionEnum;
-import gan.missulgan.member.domain.Member;
-import gan.missulgan.member.repository.MemberRepository;
-import gan.missulgan.member.exception.MemberNotFoundException;
-import org.springframework.stereotype.Service;
-
-import gan.missulgan.member.dto.MemberDTO;
-import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.NoSuchElementException;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import gan.missulgan.member.domain.Member;
+import gan.missulgan.member.dto.MemberDTO;
+import gan.missulgan.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -32,8 +29,13 @@ public class MemberService {
 			.orElseThrow(NoSuchElementException::new);
 	}
 
-	private Member getMember(String email) {
+	public Member getMember(String email) {
 		return memberRepository.findByAccountEmail(email)
+			.orElseThrow(NoSuchElementException::new); // TODO: replace with custom exception
+	}
+
+	public Member getMember(Long id) {
+		return memberRepository.findById(id)
 			.orElseThrow(NoSuchElementException::new); // TODO: replace with custom exception
 	}
 

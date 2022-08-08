@@ -7,5 +7,4 @@ import gan.missulgan.tag.domain.Tag;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
-
 }

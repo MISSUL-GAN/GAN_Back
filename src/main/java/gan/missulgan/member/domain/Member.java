@@ -2,6 +2,7 @@ package gan.missulgan.member.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Length;
 
 import gan.missulgan.DateTimeEntity;
@@ -75,5 +77,22 @@ public class Member extends DateTimeEntity {
 	public Member setUserNickname(String nickname) {
 		this.userNickname = nickname;
 		return this;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		Member member = (Member)o;
+
+		return id.equals(member.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id.hashCode();
 	}
 }
