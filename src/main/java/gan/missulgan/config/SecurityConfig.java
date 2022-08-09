@@ -9,13 +9,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import gan.missulgan.auth.JwtAuthenticationEntryPoint;
-import gan.missulgan.auth.JwtAuthenticationFilter;
-import gan.missulgan.auth.JwtService;
-import gan.missulgan.oauth.CookieOAuth2AuthorizationRequestRepository;
-import gan.missulgan.oauth.OAuth2FailureHandler;
-import gan.missulgan.oauth.OAuth2SuccessHandler;
-import gan.missulgan.oauth.ThirdPartyOAuth2UserService;
+import gan.missulgan.security.auth.JwtAuthenticationEntryPoint;
+import gan.missulgan.security.auth.JwtAuthenticationFilter;
+import gan.missulgan.security.auth.JwtService;
+import gan.missulgan.security.oauth.CookieOAuth2AuthorizationRequestRepository;
+import gan.missulgan.security.oauth.OAuth2FailureHandler;
+import gan.missulgan.security.oauth.OAuth2SuccessHandler;
+import gan.missulgan.security.oauth.ThirdPartyOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

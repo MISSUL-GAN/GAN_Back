@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import gan.missulgan.auth.AuthenticatedEmail;
-import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.drawing.dto.DrawingAddRequestDTO;
 import gan.missulgan.drawing.dto.DrawingResponseDTO;
 import gan.missulgan.drawing.dto.TagDrawingSearchRequestDTO;
 import gan.missulgan.drawing.service.DrawingService;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
+import gan.missulgan.security.auth.AuthDTO;
+import gan.missulgan.security.auth.dto.AuthMemberDTO;
 import gan.missulgan.tag.domain.Tag;
 import gan.missulgan.tag.service.TagService;
 import io.swagger.annotations.ApiOperation;
@@ -41,8 +41,7 @@ public class DrawingController {
 	@PostMapping("tags")
 	@ApiOperation(value = "태그로 그림 가져오기", notes = "태그로 그림을 검색함. `tagId`를 입력해야하며,  **페이징** 가능, `AccessToken` 불필요")
 	public List<DrawingResponseDTO> getDrawingsByTags(
-		@Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO,
-		@PageableDefault Pageable pageable) {
+		@Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
 		Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
 		Set<Tag> tags = tagService.getTagsByIds(tagIds);
 		return drawingService.getDrawingsByTags(tags, pageable);
@@ -64,16 +63,16 @@ public class DrawingController {
 
 	@GetMapping("")
 	@ApiOperation(value = "현재 멤버의 그림 가져오기", notes = "현재 멤버의 그림 가져옴")
-	public List<DrawingResponseDTO> getDrawings(@AuthenticatedEmail String email, @PageableDefault Pageable pageable) {
-		Member member = memberService.getMember(email);
+	public List<DrawingResponseDTO> getDrawings(@AuthDTO AuthMemberDTO memberDTO, @PageableDefault Pageable pageable) {
+		Member member = memberService.getMember(memberDTO.getId());
 		return drawingService.getDrawings(member, pageable);
 	}
 
 	@PostMapping("")
 	@ApiOperation(value = "그림 추가", notes = "그림 추가. 태그 필요하며, `fileName`을 넣어야함")
-	public DrawingResponseDTO addDrawing(@AuthenticatedEmail String email,
+	public DrawingResponseDTO addDrawing(@AuthDTO AuthMemberDTO memberDTO,
 		@Valid @RequestBody DrawingAddRequestDTO requestDTO) {
-		Member member = memberService.getMember(email);
+		Member member = memberService.getMember(memberDTO.getId());
 		Set<Long> tagIds = requestDTO.getTagIds();
 		Set<Tag> tags = tagService.getTagsByIds(tagIds);
 		return drawingService.addDrawing(member, tags, requestDTO);
@@ -81,10 +80,8 @@ public class DrawingController {
 
 	@DeleteMapping("{drawingId}")
 	@ApiOperation(value = "그림 삭제", notes = "그림 삭제. 그림 업로더만 삭제 가능")
-	public void removeDrawing(@AuthenticatedEmail String email,
-		@PathVariable Long drawingId) {
-		Member member = memberService.getMember(email);
-		// Drawing drawing = drawingService.getDrawingById(drawingId);
+	public void removeDrawing(@AuthDTO AuthMemberDTO memberDTO, @PathVariable Long drawingId) {
+		Member member = memberService.getMember(memberDTO.getId());
 		drawingService.removeDrawing(member, drawingId);
 	}
 }
