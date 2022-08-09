@@ -1,4 +1,4 @@
-package gan.missulgan.oauth;
+package gan.missulgan.security.oauth;
 
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -8,12 +8,12 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import gan.missulgan.auth.dto.JwtUserDetails;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.repository.MemberRepository;
-import gan.missulgan.oauth.dto.MemberInfoDTO;
-import gan.missulgan.oauth.dto.OAuth2UserAttribute;
-import gan.missulgan.oauth.dto.OAuth2UserAttributeFactory;
+import gan.missulgan.security.auth.dto.OAuthUserImpl;
+import gan.missulgan.security.oauth.dto.OAuth2UserAttribute;
+import gan.missulgan.security.oauth.dto.OAuth2UserAttributeFactory;
+import gan.missulgan.security.oauth.dto.SavedMemberDTO;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -27,22 +27,24 @@ public class ThirdPartyOAuth2UserService implements OAuth2UserService<OAuth2User
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService = new DefaultOAuth2UserService();
 		OAuth2User oAuth2User = oAuth2UserService.loadUser(userRequest);
-		return handleRequest(oAuth2User, userRequest);
-	}
 
-	private OAuth2User handleRequest(final OAuth2User oAuth2User, final OAuth2UserRequest userRequest) {
-		final String registrationId = userRequest.getClientRegistration().getRegistrationId();
+		String registrationId = userRequest.getClientRegistration().getRegistrationId();
 		OAuth2UserAttribute attributes = OAuth2UserAttributeFactory.of(registrationId, oAuth2User.getAttributes());
-		MemberInfoDTO memberInfoDTO = save(attributes);
-		return new JwtUserDetails(memberInfoDTO, attributes.getAttributes());
+		SavedMemberDTO savedMemberDTO = save(attributes);
+		return new OAuthUserImpl(savedMemberDTO, attributes.getAttributes());
 	}
 
-	private MemberInfoDTO save(OAuth2UserAttribute userAttribute) {
+	private SavedMemberDTO save(OAuth2UserAttribute userAttribute) {
 		String email = userAttribute.getEmail();
 		String profileImage = userAttribute.getProfileImage();
-		Member member = memberRepository.findByAccountEmail(email)
-			.map(entity -> entity.updateProfileImage(profileImage))
-			.orElseGet(() -> memberRepository.save(userAttribute.toEntity()));
-		return MemberInfoDTO.from(member);
+		return memberRepository.findByAccountEmail(email)
+			.map(entity -> {
+				Member updatedMember = entity.updateProfileImage(profileImage);
+				return SavedMemberDTO.from(updatedMember);
+			})
+			.orElseGet(() -> {
+				Member savedMember = memberRepository.save(userAttribute.toEntity());
+				return SavedMemberDTO.from(savedMember, true);
+			});
 	}
 }

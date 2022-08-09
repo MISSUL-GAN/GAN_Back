@@ -1,4 +1,4 @@
-package gan.missulgan.auth;
+package gan.missulgan.security.auth;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : email")
+@Deprecated
 public @interface AuthenticatedEmail {
 
 }

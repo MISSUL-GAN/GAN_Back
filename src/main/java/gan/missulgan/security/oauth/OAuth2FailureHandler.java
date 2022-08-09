@@ -1,4 +1,4 @@
-package gan.missulgan.oauth;
+package gan.missulgan.security.oauth;
 
 import java.io.IOException;
 import java.util.Arrays;

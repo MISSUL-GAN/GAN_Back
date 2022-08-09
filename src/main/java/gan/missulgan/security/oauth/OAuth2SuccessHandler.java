@@ -1,6 +1,7 @@
-package gan.missulgan.oauth;
+package gan.missulgan.security.oauth;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -16,8 +17,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import gan.missulgan.auth.JwtService;
-import gan.missulgan.auth.dto.JwtUserDetails;
+import gan.missulgan.security.auth.JwtService;
+import gan.missulgan.security.auth.dto.OAuthUserImpl;
+import gan.missulgan.security.oauth.dto.SavedMemberDTO;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -41,9 +43,10 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 	}
 
 	private String getTargetUrl(HttpServletRequest request, Authentication authentication) {
-		JwtUserDetails userDetails = (JwtUserDetails)authentication.getPrincipal();
-		String accessToken = jwtService.generateAccessToken(userDetails);
-		String refreshToken = jwtService.generateRefreshToken(userDetails);
+		OAuthUserImpl oAuthUser = (OAuthUserImpl)authentication.getPrincipal();
+		SavedMemberDTO savedMemberDTO = oAuthUser.getSavedMemberDTO();
+		String accessToken = jwtService.generateAccessToken(savedMemberDTO);
+		String refreshToken = jwtService.generateRefreshToken(savedMemberDTO);
 
 		Optional<String> redirectUriOptional = requestRepository.getRedirectUriFromCookies(request)
 			.map(Cookie::getValue);
@@ -51,6 +54,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 		return UriComponentsBuilder.fromUriString(targetUrl)
 			.queryParam("accessToken", accessToken)
 			.queryParam("refreshToken", refreshToken)
+			.queryParam("firstTime", savedMemberDTO.getIsFirstTime())
+			.queryParam("profileNickname", savedMemberDTO.getProfileNickname())
+			.encode(StandardCharsets.UTF_8)
 			.build()
 			.toUriString();
 	}

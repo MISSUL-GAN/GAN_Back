@@ -1,4 +1,4 @@
-package gan.missulgan.oauth.dto;
+package gan.missulgan.security.oauth.dto;
 
 import java.util.Map;
 
@@ -44,6 +44,6 @@ public class KakaoOAuth2UserAttribute extends OAuth2UserAttribute {
 
 	@Override
 	public String getProfileImage() {
-		return profile.get("thumbnail_image_url").toString();
+		return profile.get("profile_image_url").toString();
 	}
 }

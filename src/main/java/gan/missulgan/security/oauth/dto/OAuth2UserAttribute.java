@@ -1,4 +1,4 @@
-package gan.missulgan.oauth.dto;
+package gan.missulgan.security.oauth.dto;
 
 import java.util.HashMap;
 import java.util.Map;

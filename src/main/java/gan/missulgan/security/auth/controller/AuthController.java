@@ -1,12 +1,12 @@
-package gan.missulgan.auth.controller;
+package gan.missulgan.security.auth.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import gan.missulgan.auth.JwtService;
-import gan.missulgan.auth.dto.TokenResponseDto;
+import gan.missulgan.security.auth.JwtService;
+import gan.missulgan.security.auth.dto.TokenResponseDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package gan.missulgan.oauth.util;
+package gan.missulgan.security.oauth.util;
 
 import java.util.Arrays;
 import java.util.Base64;

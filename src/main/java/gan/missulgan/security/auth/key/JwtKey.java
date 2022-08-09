@@ -1,4 +1,4 @@
-package gan.missulgan.auth.key;
+package gan.missulgan.security.auth.key;
 
 import io.jsonwebtoken.Claims;
 

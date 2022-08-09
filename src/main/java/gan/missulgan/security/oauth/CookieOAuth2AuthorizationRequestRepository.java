@@ -1,4 +1,4 @@
-package gan.missulgan.oauth;
+package gan.missulgan.security.oauth;
 
 import java.util.Optional;
 
@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.client.web.AuthorizationRequestReposi
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.stereotype.Component;
 
-import gan.missulgan.oauth.util.CookieUtils;
+import gan.missulgan.security.oauth.util.CookieUtils;
 import lombok.RequiredArgsConstructor;
 
 @Component

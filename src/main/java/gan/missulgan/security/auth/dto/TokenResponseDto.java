@@ -1,4 +1,4 @@
-package gan.missulgan.auth.dto;
+package gan.missulgan.security.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

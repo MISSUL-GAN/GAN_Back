@@ -1,4 +1,4 @@
-package gan.missulgan.auth;
+package gan.missulgan.security.auth;
 
 import java.io.IOException;
 
