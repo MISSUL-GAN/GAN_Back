@@ -29,6 +29,8 @@ jobs:
         env:
           spring.security.oauth2.client.registration.kakao.client-id: ${{ secrets.CLIENT_ID }}
           spring.security.oauth2.client.registration.kakao.client-secret: ${{ secrets.CLIENT_SECRET }}
+          spring.security.oauth2.client.registration.google.clientId: ${{ secrets.GOOGLE_CLIENT_ID }}
+          spring.security.oauth2.client.registration.google.clientSecret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           spring.datasource.url: ${{ secrets.DATASOURCE_URL }}
           spring.datasource.username: ${{ secrets.DATASOURCE_USERNAME }}
           spring.datasource.password: ${{ secrets.DATASOURCE_PASSWORD }}
