@@ -13,6 +13,12 @@ spring:
             - profile_nickname
             - profile_image
           client-name: Kakao
+        google:
+          clientId: ${GOOGLE_CLIENT_ID}
+          clientSecret: ${GOOGLE_CLIENT_SECRET}
+          scope:
+            - email
+            - profile
       provider:
         kakao:
           authorization-uri: https://kauth.kakao.com/oauth/authorize
