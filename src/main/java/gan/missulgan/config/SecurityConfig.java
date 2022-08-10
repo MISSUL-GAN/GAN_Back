@@ -1,6 +1,7 @@
 package gan.missulgan.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -8,13 +9,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import gan.missulgan.auth.JwtAuthenticationEntryPoint;
-import gan.missulgan.auth.JwtAuthenticationFilter;
-import gan.missulgan.auth.JwtService;
-import gan.missulgan.oauth.CookieOAuth2AuthorizationRequestRepository;
-import gan.missulgan.oauth.OAuth2FailureHandler;
-import gan.missulgan.oauth.OAuth2SuccessHandler;
-import gan.missulgan.oauth.ThirdPartyOAuth2UserService;
+import gan.missulgan.security.auth.JwtAuthenticationEntryPoint;
+import gan.missulgan.security.auth.JwtAuthenticationFilter;
+import gan.missulgan.security.auth.JwtService;
+import gan.missulgan.security.oauth.CookieOAuth2AuthorizationRequestRepository;
+import gan.missulgan.security.oauth.OAuth2FailureHandler;
+import gan.missulgan.security.oauth.OAuth2SuccessHandler;
+import gan.missulgan.security.oauth.ThirdPartyOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -44,6 +45,9 @@ public class SecurityConfig {
 			.antMatchers("/docs", "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
 			.antMatchers("/auth/renew").permitAll()
 			.antMatchers("/image/view/**").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/tag/all").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/drawing/{memberId}", "/drawing/random").permitAll()
+			.mvcMatchers(HttpMethod.POST, "/drawing/tags").permitAll()
 			.anyRequest().authenticated()
 			.and()
 

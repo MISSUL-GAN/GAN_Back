@@ -1,5 +1,6 @@
 package gan.missulgan;
 
+import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.member.domain.Member;
 import lombok.Getter;
 import lombok.ToString;

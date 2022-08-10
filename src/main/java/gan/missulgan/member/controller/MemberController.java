@@ -4,7 +4,7 @@ import gan.missulgan.member.dto.UserNicknameDTO;
 import gan.missulgan.member.service.MemberService;
 import org.springframework.web.bind.annotation.*;
 
-import gan.missulgan.auth.AuthenticatedEmail;
+import gan.missulgan.security.auth.AuthenticatedEmail;
 import gan.missulgan.member.dto.MemberDTO;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

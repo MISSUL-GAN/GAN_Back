@@ -1,11 +1,10 @@
 package gan.missulgan;
 
+import gan.missulgan.drawing.domain.Drawing;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
 
