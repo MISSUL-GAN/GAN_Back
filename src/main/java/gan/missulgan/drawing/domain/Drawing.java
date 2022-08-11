@@ -2,7 +2,9 @@ package gan.missulgan.drawing.domain;
 
 import static javax.persistence.FetchType.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import gan.missulgan.Scrap;
+import gan.missulgan.heart.domain.Heart;
 import org.hibernate.validator.constraints.Length;
 
 import gan.missulgan.DateTimeEntity;
@@ -63,6 +67,14 @@ public class Drawing extends DateTimeEntity {
 	@JoinColumn(name = "nft_id")
 	private Nft nft;
 
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Heart> hearts = new ArrayList<>();
+	private Long heartCounting = 0L;
+
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Scrap> scraps = new ArrayList<>();
+	private Long scrapCounting = 0L;
+
 	@Builder
 	public Drawing(String title, String description, String fileName, Member member, Set<DrawingTag> tags) {
 		this.title = title;
@@ -93,5 +105,13 @@ public class Drawing extends DateTimeEntity {
 		return tags.stream()
 			.map(DrawingTag::getTag)
 			.collect(Collectors.toSet());
+	}
+
+	public void updateHeartCounting(Long count) {
+		this.heartCounting += count;
+	}
+
+	public void updateScrapCounting(Long count) {
+		this.scrapCounting += count;
 	}
 }

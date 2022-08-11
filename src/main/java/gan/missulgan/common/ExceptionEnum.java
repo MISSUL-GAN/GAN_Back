@@ -20,7 +20,11 @@ public enum ExceptionEnum {
     NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "---", "~~~"),
     UNAUTHORIZED_EXCEPTION(HttpStatus.UNAUTHORIZED, "---", "~~~"),
 
-    NO_SUCH_MEMBER(HttpStatus.BAD_REQUEST, "---", "해당 사용자가 존재하지 않습니다.");
+    NO_SUCH_MEMBER(HttpStatus.BAD_REQUEST, "---", "해당 사용자가 존재하지 않습니다."),
+    HEART_OWNER(HttpStatus.FORBIDDEN, "---", "본인 그림의 좋아요는 누를 수 없습니다."),
+    HEART_DONE(HttpStatus.FORBIDDEN, "---", "좋아요를 이미 눌렀습니다."),
+    NO_SUCH_HEART(HttpStatus.BAD_REQUEST, "---", "해당 좋아요가 존재하지 않습니다.");
+
 
     private final HttpStatus status;
     private final String code;

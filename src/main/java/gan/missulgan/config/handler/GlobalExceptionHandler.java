@@ -3,6 +3,7 @@ package gan.missulgan.config.handler;
 import gan.missulgan.common.ExceptionEnum;
 import gan.missulgan.common.dto.ExceptionDto;
 import gan.missulgan.common.exception.*;
+import gan.missulgan.heart.exception.HeartNotFoundException;
 import gan.missulgan.member.exception.MemberNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -126,4 +127,16 @@ public class GlobalExceptionHandler {
                         .errorMessage(e.getMessage())
                         .build());
     }
+
+    @ExceptionHandler(HeartNotFoundException.class)
+    public ResponseEntity<ExceptionDto> exceptionHandler(HttpServletRequest request, final HeartNotFoundException e) {
+        e.printStackTrace();
+        return ResponseEntity
+                .status(ExceptionEnum.NO_SUCH_HEART.getStatus())
+                .body(ExceptionDto.builder()
+                        .errorCode(ExceptionEnum.NO_SUCH_HEART.getCode())
+                        .errorMessage(e.getMessage())
+                        .build());
+    }
+
 }

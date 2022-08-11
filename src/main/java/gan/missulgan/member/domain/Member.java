@@ -1,19 +1,12 @@
 package gan.missulgan.member.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.Hibernate;
+import gan.missulgan.Scrap;
+import gan.missulgan.heart.domain.Heart;
 import org.hibernate.validator.constraints.Length;
 
 import gan.missulgan.DateTimeEntity;
@@ -55,8 +48,14 @@ public class Member extends DateTimeEntity {
 	@Length(max = 24)
 	private String userNickname;
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Drawing> drawings = new ArrayList();
+
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Heart> hearts = new ArrayList<>();
+
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Scrap> scraps = new ArrayList<>();
 
 	@Builder
 	public Member(Role role, String provider, String profileNickname, String profileImage, String accountEmail,
