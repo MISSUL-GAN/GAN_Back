@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,4 +27,7 @@ public interface DrawingTagRepository extends JpaRepository<DrawingTag, Long> {
 
 	@Query("select distinct d.drawing from DrawingTag d where d.tag in :tags")
 	List<Drawing> findAllByOrTags(@Param("tags") Set<Tag> tags, Pageable pageable);
+
+	@Query(value = "select distinct d.drawing from DrawingTag d where d.tag in :tags order by rand()", nativeQuery = true)
+	List<Drawing> findAllByOrTagsRandom(@Param("tags") Set<Tag> tags, Pageable pageable);
 }

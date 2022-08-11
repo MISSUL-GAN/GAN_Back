@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,15 @@ public class DrawingService {
 	}
 
 	@Transactional
-	public List<DrawingResponseDTO> getDrawingsByTags(Set<Tag> tags, Pageable pageable) {
+	public List<DrawingResponseDTO> getDrawingsByRandomOrder(Set<Tag> tags, Pageable pageable) {
+		return drawingTagRepository.findAllByOrTagsRandom(tags, pageable)
+			.stream()
+			.map(DrawingResponseDTO::from)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public List<DrawingResponseDTO> getDrawingsByHeartOrder(Set<Tag> tags, Pageable pageable) {
 		return drawingTagRepository.findAllByOrTags(tags, pageable)
 			.stream()
 			.map(DrawingResponseDTO::from)
