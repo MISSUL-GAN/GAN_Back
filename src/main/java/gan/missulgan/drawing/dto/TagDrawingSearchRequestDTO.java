@@ -15,6 +15,5 @@ import lombok.NoArgsConstructor;
 public class TagDrawingSearchRequestDTO {
 
 	@NotNull
-	@Size(min = 1, max = 3)
 	private Set<Long> tagIds;
 }
