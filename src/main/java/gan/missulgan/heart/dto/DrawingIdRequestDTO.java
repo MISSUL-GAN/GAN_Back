@@ -1,10 +1,15 @@
 package gan.missulgan.heart.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class DrawingIdRequestDTO {
-    private final Long drawingId;
+
+    @NotNull
+    private Long drawingId;
+
 }

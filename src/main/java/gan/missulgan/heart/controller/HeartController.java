@@ -16,6 +16,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,17 +29,17 @@ public class HeartController {
     private final DrawingService drawingService;
 
 
-    @GetMapping("")
+    @GetMapping("{drawingID}")
     @ApiOperation(value = "좋아요 수 가져오기", notes = "특정 그림의 좋아요 수 정보 가져옴")
-    public HeartCountingResponseDTO getHeartCounting(@RequestBody DrawingIdRequestDTO drawingIdRequestDTO) {
-        Drawing drawing = drawingService.getDrawingById(drawingIdRequestDTO.getDrawingId());
+    public HeartCountingResponseDTO getHeartCounting(@PathVariable("drawingID") Long drawingID) {
+        Drawing drawing = drawingService.getDrawingById(drawingID);
         return new HeartCountingResponseDTO(heartService.getHeartCounting(drawing));
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "좋아요 누르기", notes = "사용자가 그림의 좋아요를 누름")
-    public void heart(@AuthDTO AuthMemberDTO memberDTO, @RequestBody DrawingIdRequestDTO drawingIdRequestDTO) {
+    public void heart(@AuthDTO AuthMemberDTO memberDTO, @Valid @RequestBody DrawingIdRequestDTO drawingIdRequestDTO) {
         Member member = memberService.getMember(memberDTO.getId());
         Drawing drawing = drawingService.getDrawingById(drawingIdRequestDTO.getDrawingId());
         heartService.heart(member, drawing);
@@ -46,13 +48,13 @@ public class HeartController {
     @DeleteMapping("")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "좋아요 취소하기", notes = "사용자가 그림의 좋아요를 취소함")
-    public void unHeart(@AuthDTO AuthMemberDTO memberDTO, @RequestBody DrawingIdRequestDTO drawingIdRequestDTO) {
+    public void unHeart(@AuthDTO AuthMemberDTO memberDTO, @Valid @RequestBody DrawingIdRequestDTO drawingIdRequestDTO) {
         Member member = memberService.getMember(memberDTO.getId());
         Drawing drawing = drawingService.getDrawingById(drawingIdRequestDTO.getDrawingId());
         heartService.unHeart(member, drawing);
     }
 
-    @GetMapping("members")
+    @PostMapping("members")
     @ApiOperation(value = "좋아요 누른 사용자 정보 가져오기", notes = "특정 그림의 좋아요를 누른 사용자의 정보를 가져옴")
     public List<MemberDTO> getHeartMembers(@RequestBody DrawingIdRequestDTO drawingIdRequestDTO, @PageableDefault Pageable pageable) {
         Drawing drawing = drawingService.getDrawingById(drawingIdRequestDTO.getDrawingId());
