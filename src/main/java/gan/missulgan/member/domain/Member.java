@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import gan.missulgan.Scrap;
-import gan.missulgan.heart.domain.Heart;
 import org.hibernate.validator.constraints.Length;
 
 import gan.missulgan.DateTimeEntity;
@@ -50,9 +49,6 @@ public class Member extends DateTimeEntity {
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Drawing> drawings = new ArrayList();
-
-	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private List<Heart> hearts = new ArrayList<>();
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Scrap> scraps = new ArrayList<>();

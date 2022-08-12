@@ -3,32 +3,26 @@ import gan.missulgan.heart.domain.Heart;
 import gan.missulgan.common.ExceptionEnum;
 import gan.missulgan.common.exception.ForbiddenException;
 import gan.missulgan.drawing.domain.Drawing;
-import gan.missulgan.drawing.repository.DrawingRepository;
-import gan.missulgan.heart.dto.HeartCountingResponseDTO;
 import gan.missulgan.heart.exception.HeartNotFoundException;
 import gan.missulgan.heart.repository.HeartRepository;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.dto.MemberDTO;
-import gan.missulgan.member.repository.MemberRepository;
-import gan.missulgan.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class HeartService {
-    private final MemberService memberService;
-    private final MemberRepository memberRepository;
-    private final DrawingRepository drawingRepository;
     private final HeartRepository heartRepository;
 
     @Transactional(readOnly = true)
-    public HeartCountingResponseDTO getHeartCounting(Drawing drawing) {
-        return HeartCountingResponseDTO.from(drawing);
+    public Long getHeartCounting(Drawing drawing) {
+        return heartRepository.countByDrawing(drawing);
     }
 
     @Transactional
@@ -37,22 +31,18 @@ public class HeartService {
         checkDuplicate(member, drawing);
 
         Heart heart = new Heart(member, drawing);
-        drawing.updateHeartCounting(1L);
-        drawingRepository.save(drawing);
         heartRepository.save(heart);
     }
 
     @Transactional
     public void unHeart(Member member, Drawing drawing) {
         Heart heart = getHeart(member, drawing);
-        drawing.updateHeartCounting(-1L);
-        drawingRepository.save(drawing);
         heartRepository.delete(heart);
     }
 
     @Transactional
-    public List<MemberDTO> getHearts(Drawing drawing) {
-        return  heartRepository.findHeartMembers(drawing).stream()
+    public List<MemberDTO> getHearts(Drawing drawing, Pageable pageable) {
+        return  heartRepository.findHeartMembers(drawing, pageable).stream()
                 .map(MemberDTO::from)
                 .collect(Collectors.toList());
     }
