@@ -11,13 +11,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import gan.missulgan.image.domain.ImageType;
+import gan.missulgan.image.domain.strategy.name.MD5Strategy;
+
 @DisplayName("로컬 저장소 전략 테스트")
 class LocalStoreStrategyTest {
 
 	private static final String TEST_FILE_NAME = "testFilename";
 	private static final String CURRENT_DIRECTORY = ".";
 
-	private final LocalStoreStrategy localStoreStrategy = new LocalStoreStrategy();
+	private final LocalStoreStrategy localStoreStrategy = new LocalStoreStrategy(new MD5Strategy());
 	private File testFile;
 	@BeforeEach
 	void setUp() {
@@ -33,7 +36,7 @@ class LocalStoreStrategyTest {
 		byte[] bufferExpected = {1, 1};
 		// when, then
 		assertThatNoException().isThrownBy(() ->
-			localStoreStrategy.store(bufferExpected, TEST_FILE_NAME));
+			localStoreStrategy.store(bufferExpected, ImageType.PNG));
 		assertThatNoException().isThrownBy(() ->
 			localStoreStrategy.load(TEST_FILE_NAME));
 		assertThat(testFile).hasSize(bufferExpected.length);
