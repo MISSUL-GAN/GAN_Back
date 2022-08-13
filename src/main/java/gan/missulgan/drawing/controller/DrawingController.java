@@ -38,13 +38,22 @@ public class DrawingController {
 	private final TagService tagService;
 	private final MemberService memberService;
 
-	@PostMapping("tags")
-	@ApiOperation(value = "태그로 그림 가져오기", notes = "태그로 그림을 검색함. `tagId`를 입력해야하며,  **페이징** 가능, `AccessToken` 불필요")
-	public List<DrawingResponseDTO> getDrawingsByTags(
+	@PostMapping("tags/random")
+	@ApiOperation(value = "태그 필터링 + 랜덤 순", notes = "태그로 그림 필터링. `tagId` 필요, 랜덤 순으로 나옴.  **페이징** 가능, `AccessToken` 불필요")
+	public List<DrawingResponseDTO> getDrawingsByRandomOrder(
 		@Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
 		Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
 		Set<Tag> tags = tagService.getTagsByIds(tagIds);
-		return drawingService.getDrawingsByTags(tags, pageable);
+		return drawingService.getDrawingsByRandomOrder(tags, pageable);
+	}
+
+	@PostMapping("tags/heart")
+	@ApiOperation(value = "태그 필터링 + 좋아요 순", notes = "태그로 그림 필터링. `tagId` 필요, 좋아요 순으로 나옴.  **페이징** 가능, `AccessToken` 불필요")
+	public List<DrawingResponseDTO> getDrawingsByHeartOrder(
+		@Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
+		Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
+		Set<Tag> tags = tagService.getTagsByIds(tagIds);
+		return drawingService.getDrawingsByHeartOrder(tags, pageable);
 	}
 
 	@GetMapping("{memberId}")
