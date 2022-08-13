@@ -1,6 +1,7 @@
 package gan.missulgan.security.auth;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,8 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import gan.missulgan.member.domain.Member;
-import gan.missulgan.member.service.MemberService;
+import gan.missulgan.member.repository.MemberRepository;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
 import gan.missulgan.security.auth.dto.TokenResponseDto;
 import gan.missulgan.security.auth.key.JwtKey;
@@ -26,7 +26,7 @@ public class JwtService {
 	private static final String ROLE_KEY = "role";
 	private static final String ID_KEY = "id";
 
-	private final MemberService memberService;
+	private final MemberRepository memberRepository;
 	private final JwtKey accessKey;
 	private final JwtKey refreshKey;
 
@@ -60,7 +60,7 @@ public class JwtService {
 	private Long getIdLong(String email, String id) {
 		Long idLong;
 		if (id == null) {
-			idLong = memberService.getMember(email).getId();
+			idLong = getMember(email).getId();
 		} else {
 			idLong = Long.parseLong(id);
 		}
@@ -70,15 +70,19 @@ public class JwtService {
 	public TokenResponseDto renew(String refreshToken) {
 		Claims claims = refreshKey.parse(refreshToken);
 		String email = claims.getSubject();
-		Member member = memberService.getMember(email);
-
-		SavedMemberDTO savedMemberDTO = SavedMemberDTO.from(member);
+		SavedMemberDTO savedMemberDTO = getMember(email);
 		String accessToken = generateAccessToken(savedMemberDTO);
 		return new TokenResponseDto(accessToken);
 	}
 
 	public boolean validate(String accessToken) {
 		return accessKey.validate(accessToken);
+	}
+
+	private SavedMemberDTO getMember(String email) {
+		return memberRepository.findByAccountEmail(email)
+			.map(SavedMemberDTO::from)
+			.orElseThrow(NoSuchElementException::new);
 	}
 
 	private Claims buildClaims(SavedMemberDTO savedMemberDTO) {

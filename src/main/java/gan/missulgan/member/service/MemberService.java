@@ -15,11 +15,6 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 
-	public Member getMember(String email) {
-		return memberRepository.findByAccountEmail(email)
-			.orElseThrow(BadMemberException::new);
-	}
-
 	public Member getMember(Long id) {
 		return memberRepository.findById(id)
 			.orElseThrow(BadMemberException::new);
