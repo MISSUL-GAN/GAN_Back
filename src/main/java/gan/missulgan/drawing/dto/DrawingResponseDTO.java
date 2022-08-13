@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import gan.missulgan.drawing.domain.Drawing;
-import gan.missulgan.member.dto.MemberDTO;
+import gan.missulgan.member.dto.MemberResponseDTO;
 import gan.missulgan.tag.dto.TagResponseDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ public class DrawingResponseDTO {
 		locale = "Asia/Seoul"
 	)
 	private final LocalDateTime createdAt;
-	private final MemberDTO member;
+	private final MemberResponseDTO member;
 	private final Set<TagResponseDTO> tags;
 
 	public static DrawingResponseDTO from(Drawing drawing) {
@@ -43,7 +43,7 @@ public class DrawingResponseDTO {
 			.description(drawing.getDescription())
 			.fileName(drawing.getFileName())
 			.createdAt(drawing.getCreatedAt())
-			.member(MemberDTO.from(drawing.getMember()))
+			.member(MemberResponseDTO.from(drawing.getMember()))
 			.tags(tags)
 			.build();
 	}

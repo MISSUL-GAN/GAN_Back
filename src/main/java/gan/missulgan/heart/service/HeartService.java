@@ -5,7 +5,7 @@ import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.heart.exception.BadHeartException;
 import gan.missulgan.heart.repository.HeartRepository;
 import gan.missulgan.member.domain.Member;
-import gan.missulgan.member.dto.MemberDTO;
+import gan.missulgan.member.dto.MemberResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,9 +40,9 @@ public class HeartService {
     }
 
     @Transactional
-    public List<MemberDTO> findHearts(Drawing drawing, Pageable pageable) {
+    public List<MemberResponseDTO> findHearts(Drawing drawing, Pageable pageable) {
         return  heartRepository.findHeartMembers(drawing, pageable).stream()
-                .map(MemberDTO::from)
+                .map(MemberResponseDTO::from)
                 .collect(Collectors.toList());
     }
 
