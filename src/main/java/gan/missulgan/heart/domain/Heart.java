@@ -1,17 +1,22 @@
-package gan.missulgan;
+package gan.missulgan.heart.domain;
 
+import gan.missulgan.DateTimeEntity;
 import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.member.domain.Member;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+
 
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
 @ToString
+@NoArgsConstructor
 public class Heart extends DateTimeEntity {
 
     @Id @GeneratedValue
@@ -26,4 +31,9 @@ public class Heart extends DateTimeEntity {
     @JoinColumn(name = "drawing_id")
     private Drawing drawing;
 
+    @Builder
+    public Heart(Member member, Drawing drawing) {
+        this.member = member;
+        this.drawing = drawing;
+    }
 }
