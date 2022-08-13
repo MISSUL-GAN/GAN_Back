@@ -1,12 +1,10 @@
 package gan.missulgan.common.exception;
 
-import gan.missulgan.common.ExceptionEnum;
-import lombok.Getter;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-@Getter
 public class BadRequestException extends ApiException  {
-    public BadRequestException(ExceptionEnum e) {
-        super(e);
+    public BadRequestException(String message) {
+        super(BAD_REQUEST, message);
     }
 }
 

@@ -1,11 +1,9 @@
 package gan.missulgan.common.exception;
 
-import gan.missulgan.common.ExceptionEnum;
-import lombok.Getter;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
-@Getter
 public class ForbiddenException extends ApiException  {
-    public ForbiddenException(ExceptionEnum e) {
-        super(e);
+    public ForbiddenException(String message) {
+        super(FORBIDDEN, message);
     }
 }

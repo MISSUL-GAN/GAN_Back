@@ -1,9 +1,8 @@
 package gan.missulgan.heart.service;
 import gan.missulgan.heart.domain.Heart;
-import gan.missulgan.common.ExceptionEnum;
 import gan.missulgan.common.exception.ForbiddenException;
 import gan.missulgan.drawing.domain.Drawing;
-import gan.missulgan.heart.exception.HeartNotFoundException;
+import gan.missulgan.heart.exception.BadHeartException;
 import gan.missulgan.heart.repository.HeartRepository;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.dto.MemberDTO;
@@ -41,7 +40,7 @@ public class HeartService {
     }
 
     @Transactional
-    public List<MemberDTO> getHearts(Drawing drawing, Pageable pageable) {
+    public List<MemberDTO> findHearts(Drawing drawing, Pageable pageable) {
         return  heartRepository.findHeartMembers(drawing, pageable).stream()
                 .map(MemberDTO::from)
                 .collect(Collectors.toList());
@@ -49,18 +48,18 @@ public class HeartService {
 
     private static void checkIsOwner(Member member, Drawing drawing) {
         if (member.equals(drawing.getMember())) {
-            throw new ForbiddenException(ExceptionEnum.HEART_OWNER);
+            throw new ForbiddenException("본인 작품에는 좋아요를 누를 수 없습니다.");
         }
     }
 
     private void checkDuplicate(Member member, Drawing drawing) {
         if (heartRepository.findByMemberAndDrawing(member, drawing).isPresent()) {
-            throw new ForbiddenException(ExceptionEnum.HEART_DONE);
+            throw new ForbiddenException("좋아요는 한 번만 누를 수 있습니다.");
         }
     }
 
     private Heart getHeart(Member member, Drawing drawing) {
         return heartRepository.findByMemberAndDrawing(member, drawing)
-                .orElseThrow(HeartNotFoundException::new);
+                .orElseThrow(BadHeartException::new);
     }
 }
