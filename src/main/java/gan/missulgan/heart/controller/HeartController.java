@@ -52,7 +52,7 @@ public class HeartController {
         heartService.unHeart(member, drawing);
     }
 
-    @GetMapping("members/{drawingID}")
+    @GetMapping("{drawingID}/members")
     @ApiOperation(value = "좋아요 누른 사용자 정보 가져오기", notes = "특정 그림의 좋아요를 누른 사용자의 정보를 가져옴")
     public List<MemberDTO> getHeartMembers(@PathVariable("drawingID") Long drawingID, @PageableDefault Pageable pageable) {
         Drawing drawing = drawingService.getDrawingById(drawingID);

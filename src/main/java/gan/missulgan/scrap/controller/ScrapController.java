@@ -27,13 +27,6 @@ public class ScrapController {
     private final MemberService memberService;
     private final DrawingService drawingService;
 
-    @GetMapping("")
-    @ApiOperation(value = "스크랩 수 가져오기", notes = "해당 사용자의 스크랩 갯수 정보 가져옴")
-    public ScrapCountingResponseDTO getHeartCounting(@AuthDTO AuthMemberDTO memberDTO) {
-        Member member = memberService.getMember(memberDTO.getId());
-        return new ScrapCountingResponseDTO(scrapService.getScrapCounting(member));
-    }
-
     @PostMapping("{drawingId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "스크랩 누르기", notes = "사용자가 그림의 스크랩을 누름")
@@ -52,7 +45,7 @@ public class ScrapController {
         scrapService.unScrap(member, drawing);
     }
 
-    @GetMapping("drawings")
+    @GetMapping("")
     @ApiOperation(value = "스크랩한 그림 모두 가져오기", notes = "해당 사용자가 누른 스크랩한 그림 정보를 가져옴")
     public List<DrawingResponseDTO> getScraps(@AuthDTO AuthMemberDTO memberDTO, @PageableDefault Pageable pageable) {
         Member member = memberService.getMember(memberDTO.getId());
