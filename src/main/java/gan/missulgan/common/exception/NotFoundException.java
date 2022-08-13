@@ -1,11 +1,9 @@
 package gan.missulgan.common.exception;
 
-import gan.missulgan.common.ExceptionEnum;
-import lombok.Getter;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-@Getter
 public class NotFoundException extends ApiException  {
-    public NotFoundException(ExceptionEnum e) {
-        super(e);
+    public NotFoundException(String message) {
+        super(NOT_FOUND, message);
     }
 }

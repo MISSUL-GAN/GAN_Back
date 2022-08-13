@@ -1,15 +1,19 @@
 package gan.missulgan.common.exception;
 
-import gan.missulgan.common.ExceptionEnum;
-import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@Getter
-public class ApiException extends RuntimeException {
+public abstract class ApiException extends ResponseStatusException {
 
-    private ExceptionEnum error;
+    private String message;
 
-    public ApiException(ExceptionEnum e) {
-        super(e.getMessage());
-        this.error = e;
+    public ApiException(final HttpStatus status, final String message) {
+        super(status, message);
+        this.message = message;
+    }
+
+    @Override
+    public String getMessage() {
+        return this.message;
     }
 }

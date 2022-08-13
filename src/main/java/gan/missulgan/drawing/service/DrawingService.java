@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import gan.missulgan.common.ExceptionEnum;
 import gan.missulgan.common.exception.ForbiddenException;
 import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.drawing.dto.DrawingAddRequestDTO;
@@ -82,7 +81,7 @@ public class DrawingService {
 		Drawing drawing = getDrawingById(drawingId);
 		Member drawingOwner = drawing.getMember();
 		if (!drawingOwner.equals(member))
-			throw new ForbiddenException(ExceptionEnum.FORBIDDEN_EXCEPTION);
+			throw new ForbiddenException("본인 작품만 삭제 가능합니다.");
 		drawingRepository.delete(drawing);
 	}
 }

@@ -1,9 +1,8 @@
 package gan.missulgan.member;
 
-import gan.missulgan.common.ExceptionEnum;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.domain.Role;
-import gan.missulgan.member.exception.MemberNotFoundException;
+import gan.missulgan.member.exception.BadMemberException;
 import gan.missulgan.member.repository.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +35,7 @@ public class MemberRepositoryTest {
             assertThat(findMember.get().getId()).isEqualTo(member.getId());
         }
         else {
-            throw new MemberNotFoundException(ExceptionEnum.NO_SUCH_MEMBER);
+            throw new BadMemberException();
         }
     }
 

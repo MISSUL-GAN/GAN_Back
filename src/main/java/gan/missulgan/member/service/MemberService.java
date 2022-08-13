@@ -1,7 +1,6 @@
 package gan.missulgan.member.service;
 
-import java.util.NoSuchElementException;
-
+import gan.missulgan.member.exception.BadMemberException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,23 +19,23 @@ public class MemberService {
 	public String findRole(String email) {
 		return memberRepository.findByAccountEmail(email)
 			.map(Member::getAccountEmail)
-			.orElseThrow(NoSuchElementException::new);
+			.orElseThrow(BadMemberException::new);
 	}
 
 	public MemberDTO findMember(String email) {
 		return memberRepository.findByAccountEmail(email)
 			.map(MemberDTO::from)
-			.orElseThrow(NoSuchElementException::new);
+			.orElseThrow(BadMemberException::new);
 	}
 
 	public Member getMember(String email) {
 		return memberRepository.findByAccountEmail(email)
-			.orElseThrow(NoSuchElementException::new); // TODO: replace with custom exception
+			.orElseThrow(BadMemberException::new);
 	}
 
 	public Member getMember(Long id) {
 		return memberRepository.findById(id)
-			.orElseThrow(NoSuchElementException::new); // TODO: replace with custom exception
+			.orElseThrow(BadMemberException::new);
 	}
 
 	@Transactional

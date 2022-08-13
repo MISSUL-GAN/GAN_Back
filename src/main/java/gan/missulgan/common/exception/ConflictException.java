@@ -1,11 +1,9 @@
 package gan.missulgan.common.exception;
 
-import gan.missulgan.common.ExceptionEnum;
-import lombok.Getter;
+import static org.springframework.http.HttpStatus.CONFLICT;
 
-@Getter
 public class ConflictException extends ApiException  {
-    public ConflictException(ExceptionEnum e) {
-        super(e);
+    public ConflictException(String message) {
+        super(CONFLICT, message);
     }
 }
