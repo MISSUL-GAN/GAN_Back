@@ -5,7 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import gan.missulgan.Scrap;
+import gan.missulgan.scrap.domain.Scrap;
 import org.hibernate.validator.constraints.Length;
 
 import gan.missulgan.DateTimeEntity;
