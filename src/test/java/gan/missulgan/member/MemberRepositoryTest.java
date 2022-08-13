@@ -23,8 +23,8 @@ public class MemberRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        member = new Member(Role.USER, "kakao", "손시연",
-                "image", "siyeon44@hanmail.net", "시연");
+        member = new Member(Role.USER, "kakao", "image", "siyeon44@hanmail.net",
+            "시연");
     }
 
     @Test
