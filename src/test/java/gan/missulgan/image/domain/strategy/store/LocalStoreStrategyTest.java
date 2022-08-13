@@ -2,9 +2,7 @@ package gan.missulgan.image.domain.strategy.store;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import gan.missulgan.image.domain.ImageType;
-import gan.missulgan.image.domain.strategy.name.MD5Strategy;
 
 @DisplayName("로컬 저장소 전략 테스트")
 class LocalStoreStrategyTest {
@@ -20,8 +17,9 @@ class LocalStoreStrategyTest {
 	private static final String TEST_FILE_NAME = "testFilename";
 	private static final String CURRENT_DIRECTORY = ".";
 
-	private final LocalStoreStrategy localStoreStrategy = new LocalStoreStrategy(new MD5Strategy());
+	private final LocalStoreStrategy localStoreStrategy = new LocalStoreStrategy(bytes -> TEST_FILE_NAME);
 	private File testFile;
+
 	@BeforeEach
 	void setUp() {
 		ReflectionTestUtils.setField(localStoreStrategy, "storePath", ".");

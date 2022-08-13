@@ -7,7 +7,6 @@ import static org.mockito.BDDMockito.*;
 import java.io.IOException;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,11 +16,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
 
-import gan.missulgan.image.domain.strategy.name.FileNameStrategy;
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.image.dto.ImageResponseDTO;
 import gan.missulgan.member.domain.Member;
-import gan.missulgan.member.repository.MemberRepository;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("이미지 서비스 테스트")
