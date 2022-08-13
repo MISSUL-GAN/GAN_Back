@@ -35,7 +35,6 @@ public class initDB {
         public void setup() {
 
             Member member1 = Member.builder()
-                    .profileNickname("사용자1")
                     .profileImage("사용자1_프로필")
                     .userNickname("사1")
                     .accountEmail("member1@com")
@@ -44,7 +43,6 @@ public class initDB {
                     .build();
 
             Member member2 = Member.builder()
-                    .profileNickname("사용자2")
                     .profileImage("사용자2_프로필")
                     .userNickname("사2")
                     .accountEmail("member2@com")

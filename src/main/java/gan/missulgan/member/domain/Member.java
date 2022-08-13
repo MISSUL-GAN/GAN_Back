@@ -34,9 +34,6 @@ public class Member extends DateTimeEntity {
 	private String provider;
 
 	@NotNull
-	private String profileNickname;
-
-	@NotNull
 	private String profileImage;
 
 	@NotNull
@@ -54,11 +51,10 @@ public class Member extends DateTimeEntity {
 	private List<Scrap> scraps = new ArrayList<>();
 
 	@Builder
-	public Member(Role role, String provider, String profileNickname, String profileImage, String accountEmail,
+	public Member(Role role, String provider, String profileImage, String accountEmail,
 				  String userNickname) {
 		this.role = role;
 		this.provider = provider;
-		this.profileNickname = profileNickname;
 		this.profileImage = profileImage;
 		this.accountEmail = accountEmail;
 		this.userNickname = userNickname;

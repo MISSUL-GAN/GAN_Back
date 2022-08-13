@@ -26,7 +26,6 @@ public class KakaoOAuth2UserAttribute extends OAuth2UserAttribute {
 			.role(Role.USER)
 			.provider(KAKAO_PROVIDER_ID)
 			.profileImage(getProfileImage())
-			.profileNickname(getNickname())
 			.userNickname(getNickname())
 			.accountEmail(getEmail())
 			.build();
