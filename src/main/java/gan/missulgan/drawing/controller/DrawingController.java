@@ -51,7 +51,7 @@ public class DrawingController {
 
 	@PostMapping("random/tags")
 	@ApiOperation(value = "랜덤으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 랜덤 순으로 나옴. **페이징** 가능")
-	public List<DrawingResponseDTO> getDrawingsByRandomOrder(
+	public List<DrawingResponseDTO> getDrawingsByRandom(
 		@Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
 		Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
 		Set<Tag> tags = tagService.getTagsByIds(tagIds);
@@ -60,7 +60,7 @@ public class DrawingController {
 
 	@GetMapping("random")
 	@ApiOperation(value = "랜덤으로 그림 가져오기 🔒❌", notes = "랜덤으로 그림 가져옴, **페이징 가능**")
-	public List<DrawingResponseDTO> getDrawings(@PageableDefault Pageable pageable) {
+	public List<DrawingResponseDTO> getDrawingsByRandom(@PageableDefault Pageable pageable) {
 		return drawingService.getDrawingsByRandom(pageable);
 	}
 
@@ -95,6 +95,7 @@ public class DrawingController {
 	}
 
 	@PostMapping("")
+	@ResponseStatus(CREATED)
 	@ApiOperation(value = "그림 추가", notes = "그림 추가. 태그 필요하며, `fileName`을 넣어야 함<br>**NFT 정보는 선택사항!**<br><h2>`fileName`은 이미지 서버가 줌!</h2>")
 	public DrawingResponseDTO addDrawing(@AuthDTO AuthMemberDTO memberDTO,
 		@Valid @RequestBody DrawingAddRequestDTO requestDTO) {
