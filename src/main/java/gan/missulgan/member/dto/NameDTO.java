@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NameDTO {
 
-	private String name;
+    private String name;
 
 }

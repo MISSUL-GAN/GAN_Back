@@ -5,10 +5,10 @@ import gan.missulgan.drawing.dto.DrawingResponseDTO;
 import gan.missulgan.drawing.service.DrawingService;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
-import gan.missulgan.scrap.dto.ScrapCountingResponseDTO;
 import gan.missulgan.scrap.service.ScrapService;
 import gan.missulgan.security.auth.AuthDTO;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("scrap")
+@Api(tags = "\uD83D\uDCF0 스크랩 API")
 public class ScrapController {
 
     private final ScrapService scrapService;
@@ -28,7 +29,7 @@ public class ScrapController {
     private final DrawingService drawingService;
 
     @PostMapping("{drawingId}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "스크랩 누르기", notes = "사용자가 그림의 스크랩을 누름")
     public void scrap(@AuthDTO AuthMemberDTO memberDTO, @PathVariable("drawingId") Long drawingID) {
         Member member = memberService.getMember(memberDTO.getId());

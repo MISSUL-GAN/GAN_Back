@@ -1,11 +1,12 @@
 package gan.missulgan.scrap.service;
 
-import gan.missulgan.common.exception.ForbiddenException;
 import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.drawing.dto.DrawingResponseDTO;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.scrap.domain.Scrap;
 import gan.missulgan.scrap.exception.BadScrapException;
+import gan.missulgan.scrap.exception.ScrapDuplicateException;
+import gan.missulgan.scrap.exception.ScrapOwnerException;
 import gan.missulgan.scrap.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -19,11 +20,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ScrapService {
     private final ScrapRepository scrapRepository;
-
-    @Transactional(readOnly = true)
-    public Long getScrapCounting(Member member) {
-        return scrapRepository.countByMember(member);
-    }
 
     @Transactional
     public void scrap(Member member, Drawing drawing) {
@@ -48,14 +44,15 @@ public class ScrapService {
     }
 
     private static void checkIsOwner(Member member, Drawing drawing) {
-        if (member.equals(drawing.getMember())) {
-            throw new ForbiddenException("본인 작품에는 스크랩을 누를 수 없습니다.");
+        Member drawingOwner = drawing.getMember();
+        if (drawingOwner.equals(member)) {
+            throw new ScrapOwnerException();
         }
     }
 
     private void checkDuplicate(Member member, Drawing drawing) {
         if (scrapRepository.findByMemberAndDrawing(member, drawing).isPresent()) {
-            throw new ForbiddenException("스크랩은 한 번만 누를 수 있습니다.");
+            throw new ScrapDuplicateException();
         }
     }
 
