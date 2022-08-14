@@ -13,14 +13,14 @@ import lombok.Getter;
 public class MemberResponseDTO {
 
 	private final Long id;
-	private final String userNickname;
+	private final String name;
 	private final String profileImage;
 	private final String accountEmail;
 
 	public static MemberResponseDTO from(Member member) {
 		return MemberResponseDTO.builder()
 			.id(member.getId())
-			.userNickname(member.getUserNickname())
+			.name(member.getName())
 			.accountEmail(member.getAccountEmail())
 			.profileImage(member.getProfileImage())
 			.build();

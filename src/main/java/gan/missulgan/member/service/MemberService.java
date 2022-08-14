@@ -20,15 +20,15 @@ public class MemberService {
 			.orElseThrow(BadMemberException::new);
 	}
 
-	public String getUserNickname(Long id) {
-		return getMember(id).getUserNickname();
+	public String getName(Long id) {
+		return getMember(id).getName();
 	}
 
 	@Transactional
-	public String saveUserNickname(Long id, String userNickname) {
+	public String saveName(Long id, String name) {
 		return getMember(id)
-			.setUserNickname(userNickname)
-			.getUserNickname();
+			.updateName(name)
+			.getName();
 	}
 }
 

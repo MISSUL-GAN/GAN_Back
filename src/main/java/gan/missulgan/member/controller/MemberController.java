@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.dto.MemberResponseDTO;
-import gan.missulgan.member.dto.UserNicknameDTO;
+import gan.missulgan.member.dto.NameDTO;
 import gan.missulgan.member.service.MemberService;
 import gan.missulgan.security.auth.AuthDTO;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
@@ -31,16 +31,16 @@ public class MemberController {
 
 	@GetMapping("nickname")
 	@ApiOperation(value = "별명 변경 전 카카오톡 이름 보여주기")
-	public UserNicknameDTO getUserNickname(@AuthDTO AuthMemberDTO memberDTO) {
-		String nickname = memberService.getUserNickname(memberDTO.getId());
-		return new UserNicknameDTO(nickname);
+	public NameDTO getUserNickname(@AuthDTO AuthMemberDTO memberDTO) {
+		String nickname = memberService.getName(memberDTO.getId());
+		return new NameDTO(nickname);
 	}
 
 	@PutMapping("nickname")
 	@ApiOperation(value = "별명 변경하기")
-	public UserNicknameDTO putUserNickname(@AuthDTO AuthMemberDTO memberDTO,
-		@RequestBody UserNicknameDTO userNicknameDTO) {
-		String userNickname = memberService.saveUserNickname(memberDTO.getId(), userNicknameDTO.getUserNickname());
-		return new UserNicknameDTO(userNickname);
+	public NameDTO putUserNickname(@AuthDTO AuthMemberDTO memberDTO,
+		@RequestBody NameDTO nameDTO) {
+		String userNickname = memberService.saveName(memberDTO.getId(), nameDTO.getName());
+		return new NameDTO(userNickname);
 	}
 }

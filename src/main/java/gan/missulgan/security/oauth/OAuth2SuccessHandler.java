@@ -55,7 +55,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 			.queryParam("accessToken", accessToken)
 			.queryParam("refreshToken", refreshToken)
 			.queryParam("firstTime", savedMemberDTO.getIsFirstTime())
-			.queryParam("nickname", savedMemberDTO.getNickname())
+			.queryParam("name", savedMemberDTO.getName())
 			.encode(StandardCharsets.UTF_8)
 			.build()
 			.toUriString();

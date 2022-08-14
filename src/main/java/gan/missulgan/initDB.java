@@ -36,7 +36,7 @@ public class initDB {
 
             Member member1 = Member.builder()
                     .profileImage("사용자1_프로필")
-                    .userNickname("사1")
+                    .name("사1")
                     .accountEmail("member1@com")
                     .role(Role.USER)
                     .provider("kakao")
@@ -44,7 +44,7 @@ public class initDB {
 
             Member member2 = Member.builder()
                     .profileImage("사용자2_프로필")
-                    .userNickname("사2")
+                    .name("사2")
                     .accountEmail("member2@com")
                     .role(Role.USER)
                     .provider("kakao")
