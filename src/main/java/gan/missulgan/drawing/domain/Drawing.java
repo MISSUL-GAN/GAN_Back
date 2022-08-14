@@ -1,5 +1,7 @@
 package gan.missulgan.drawing.domain;
 
+import static javax.persistence.FetchType.*;
+
 import gan.missulgan.common.DateTimeEntity;
 import gan.missulgan.heart.domain.Heart;
 import gan.missulgan.image.domain.Image;
@@ -22,8 +24,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -49,7 +49,7 @@ public class Drawing extends DateTimeEntity {
     private Image image;
 
     @NotNull
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -100,5 +100,9 @@ public class Drawing extends DateTimeEntity {
 
     public int getScrapCount() {
         return scraps.size();
+    }
+
+    public boolean ownerEquals(Member member) {
+        return this.member.equals(member);
     }
 }

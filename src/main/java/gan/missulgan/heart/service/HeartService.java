@@ -44,8 +44,7 @@ public class HeartService {
     }
 
     private void checkIsOwner(Member member, Drawing drawing) {
-        Member drawingOwner = drawing.getMember();
-        if (drawingOwner.equals(member)) {
+        if (drawing.ownerEquals(member)) {
             throw new HeartOwnerException();
         }
     }
