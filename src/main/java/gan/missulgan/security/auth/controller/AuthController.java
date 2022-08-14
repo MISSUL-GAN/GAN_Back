@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gan.missulgan.security.auth.JwtService;
 import gan.missulgan.security.auth.dto.TokenResponseDto;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("auth")
+@Api(tags = "🔑 보안 API")
 public class AuthController {
 
 	private final JwtService jwtService;

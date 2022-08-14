@@ -16,19 +16,20 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import gan.missulgan.image.domain.ImageService;
+import gan.missulgan.image.dto.ImageResponseDTO;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
 import gan.missulgan.security.auth.AuthDTO;
-import gan.missulgan.security.auth.AuthenticatedEmail;
-import gan.missulgan.image.domain.ImageService;
-import gan.missulgan.image.dto.ImageResponseDTO;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("image")
 @RequiredArgsConstructor
+@Api(tags = "🏞 이미지 API")
 public class ImageController {
 
 	private final MemberService memberService;
@@ -57,8 +58,8 @@ public class ImageController {
 		}
 	}
 
-	@ApiOperation(value = "이미지 보기", notes = "`fileName`으로 파일 조회")
-	@GetMapping(value = "view/{fileName}", produces = {IMAGE_JPEG_VALUE, IMAGE_GIF_VALUE, IMAGE_PNG_VALUE})
+	@ApiOperation(value = "이미지 보기 \uD83D\uDD12❌", notes = "`fileName`으로 파일 조회")
+	@GetMapping(value = "{fileName}", produces = {IMAGE_JPEG_VALUE, IMAGE_GIF_VALUE, IMAGE_PNG_VALUE})
 	public Resource load(@PathVariable String fileName) {
 		return imageService.load(fileName);
 	}

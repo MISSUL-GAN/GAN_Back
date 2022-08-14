@@ -1,5 +1,7 @@
 package gan.missulgan.config;
 
+import static org.springframework.http.HttpMethod.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -44,9 +46,9 @@ public class SecurityConfig {
 			.authorizeRequests()
 			.antMatchers("/docs", "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
 			.antMatchers("/auth/renew").permitAll()
-			.antMatchers("/image/view/**").permitAll()
-			.mvcMatchers(HttpMethod.GET, "/tag/all").permitAll()
-			.mvcMatchers(HttpMethod.GET, "/drawing/{memberId}").permitAll()
+			.mvcMatchers(GET,"/image/{fileName}").permitAll()
+			.mvcMatchers(GET, "/tag/all").permitAll()
+			.mvcMatchers(GET, "/drawing/{memberId}").permitAll()
 			.mvcMatchers( "/drawing/heart/**").permitAll()
 			.mvcMatchers( "/drawing/random/**").permitAll()
 			.anyRequest().authenticated()

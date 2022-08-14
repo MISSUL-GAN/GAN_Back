@@ -12,12 +12,14 @@ import gan.missulgan.member.dto.NameDTO;
 import gan.missulgan.member.service.MemberService;
 import gan.missulgan.security.auth.AuthDTO;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("member")
+@Api(tags = "\uD83D\uDC27 사용자 정보 API")
 public class MemberController {
 
 	private final MemberService memberService;
@@ -29,14 +31,14 @@ public class MemberController {
 		return MemberResponseDTO.from(member);
 	}
 
-	@GetMapping("nickname")
-	@ApiOperation(value = "별명 변경 전 카카오톡 이름 보여주기")
+	@GetMapping("name")
+	@ApiOperation(value = "별명 가져오기")
 	public NameDTO getName(@AuthDTO AuthMemberDTO memberDTO) {
 		String nickname = memberService.getName(memberDTO.getId());
 		return new NameDTO(nickname);
 	}
 
-	@PutMapping("nickname")
+	@PutMapping("name")
 	@ApiOperation(value = "별명 변경하기")
 	public NameDTO putName(@AuthDTO AuthMemberDTO memberDTO,
 		@RequestBody NameDTO nameDTO) {
