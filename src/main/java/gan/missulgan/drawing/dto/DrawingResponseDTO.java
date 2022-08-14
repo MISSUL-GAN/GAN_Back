@@ -31,6 +31,8 @@ public class DrawingResponseDTO {
 	private final LocalDateTime createdAt;
 	private final MemberResponseDTO member;
 	private final Set<TagResponseDTO> tags;
+	private final Integer heartCount;
+	private final Integer scrapCount;
 
 	public static DrawingResponseDTO from(Drawing drawing) {
 		Set<TagResponseDTO> tags = drawing.getTags()
@@ -41,10 +43,12 @@ public class DrawingResponseDTO {
 			.id(drawing.getId())
 			.title(drawing.getTitle())
 			.description(drawing.getDescription())
-			.fileName(drawing.getFileName())
+			.fileName(drawing.getImage().getFileName())
 			.createdAt(drawing.getCreatedAt())
 			.member(MemberResponseDTO.from(drawing.getMember()))
 			.tags(tags)
+			.heartCount(drawing.getHeartCount())
+			.scrapCount(drawing.getScrapCount())
 			.build();
 	}
 }

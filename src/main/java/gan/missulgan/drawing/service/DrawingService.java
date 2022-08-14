@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import gan.missulgan.common.exception.ForbiddenException;
 import gan.missulgan.drawing.domain.Drawing;
-import gan.missulgan.drawing.dto.DrawingAddRequestDTO;
 import gan.missulgan.drawing.dto.DrawingResponseDTO;
 import gan.missulgan.drawing.exception.BadDrawingException;
 import gan.missulgan.drawing.repository.DrawingRepository;
+import gan.missulgan.image.domain.Image;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.tag.domain.Tag;
 import gan.missulgan.tag.repository.DrawingTagRepository;
@@ -48,11 +48,11 @@ public class DrawingService {
 	}
 
 	@Transactional
-	public DrawingResponseDTO addDrawing(Member member, Set<Tag> tags, DrawingAddRequestDTO requestDTO) {
+	public DrawingResponseDTO addDrawing(Member member, String title, String description, Image image, Set<Tag> tags) {
 		Drawing drawing = Drawing.builder()
-			.title(requestDTO.getTitle())
-			.description(requestDTO.getDescription())
-			.fileName(requestDTO.getFileName())
+			.title(title)
+			.description(description)
+			.image(image)
 			.member(member)
 			.build();
 		drawing.setTags(tags);

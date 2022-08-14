@@ -20,11 +20,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import gan.missulgan.heart.domain.Heart;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 
 import gan.missulgan.DateTimeEntity;
 import gan.missulgan.Nft;
+import gan.missulgan.Scrap;
+import gan.missulgan.heart.domain.Heart;
+import gan.missulgan.image.domain.Image;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.tag.domain.DrawingTag;
 import gan.missulgan.tag.domain.Tag;
@@ -53,8 +57,11 @@ public class Drawing extends DateTimeEntity {
 	private String description;
 
 	@NotNull
-	private String fileName;
+	@ManyToOne(fetch = LAZY)
+	@JoinColumn(name = "image_id")
+	private Image image;
 
+	@NotNull
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
@@ -62,18 +69,23 @@ public class Drawing extends DateTimeEntity {
 	@OneToMany(mappedBy = "drawing", fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<DrawingTag> tags = new HashSet<>();
 
+	@LazyCollection(LazyCollectionOption.EXTRA)
+	@OneToMany(mappedBy = "drawing", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = LAZY)
+	private List<Heart> hearts = new ArrayList<>();
+
+	@LazyCollection(LazyCollectionOption.EXTRA)
+	@OneToMany(mappedBy = "drawing", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = LAZY)
+	private List<Scrap> scraps = new ArrayList<>();
+
 	@OneToOne(fetch = LAZY) // cascade = ALL, orphanRemoval = true
 	@JoinColumn(name = "nft_id")
 	private Nft nft;
 
-	@OneToMany(mappedBy = "drawing", cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private List<Heart> hearts = new ArrayList<>();
-
 	@Builder
-	public Drawing(String title, String description, String fileName, Member member, Set<DrawingTag> tags) {
+	public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags) {
 		this.title = title;
 		this.description = description;
-		this.fileName = fileName;
+		this.image = image;
 		this.member = member;
 		this.tags = tags;
 	}
@@ -99,5 +111,13 @@ public class Drawing extends DateTimeEntity {
 		return tags.stream()
 			.map(DrawingTag::getTag)
 			.collect(Collectors.toSet());
+	}
+
+	public int getHeartCount() {
+		return hearts.size();
+	}
+
+	public int getScrapCount() {
+		return scraps.size();
 	}
 }

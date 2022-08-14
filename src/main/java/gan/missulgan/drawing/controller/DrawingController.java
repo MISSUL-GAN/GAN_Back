@@ -20,6 +20,8 @@ import gan.missulgan.drawing.dto.DrawingAddRequestDTO;
 import gan.missulgan.drawing.dto.DrawingResponseDTO;
 import gan.missulgan.drawing.dto.TagDrawingSearchRequestDTO;
 import gan.missulgan.drawing.service.DrawingService;
+import gan.missulgan.image.domain.Image;
+import gan.missulgan.image.domain.ImageService;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
 import gan.missulgan.security.auth.AuthDTO;
@@ -37,6 +39,7 @@ public class DrawingController {
 	private final DrawingService drawingService;
 	private final TagService tagService;
 	private final MemberService memberService;
+	private final ImageService imageService;
 
 	@PostMapping("tags/random")
 	@ApiOperation(value = "태그 필터링 + 랜덤 순", notes = "태그로 그림 필터링. `tagId` 필요, 랜덤 순으로 나옴.  **페이징** 가능, `AccessToken` 불필요")
@@ -84,7 +87,11 @@ public class DrawingController {
 		Member member = memberService.getMember(memberDTO.getId());
 		Set<Long> tagIds = requestDTO.getTagIds();
 		Set<Tag> tags = tagService.getTagsByIds(tagIds);
-		return drawingService.addDrawing(member, tags, requestDTO);
+		Image image = imageService.getImage(requestDTO.getFileName());
+
+		String title = requestDTO.getTitle();
+		String description = requestDTO.getDescription();
+		return drawingService.addDrawing(member, title, description, image, tags);
 	}
 
 	@DeleteMapping("{drawingId}")
