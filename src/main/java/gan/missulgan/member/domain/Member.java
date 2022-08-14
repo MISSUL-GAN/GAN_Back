@@ -34,9 +34,6 @@ public class Member extends DateTimeEntity {
 	private String provider;
 
 	@NotNull
-	private String profileNickname;
-
-	@NotNull
 	private String profileImage;
 
 	@NotNull
@@ -45,7 +42,7 @@ public class Member extends DateTimeEntity {
 
 	@NotNull
 	@Length(max = 24)
-	private String userNickname;
+	private String name;
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Drawing> drawings = new ArrayList();
@@ -54,14 +51,13 @@ public class Member extends DateTimeEntity {
 	private List<Scrap> scraps = new ArrayList<>();
 
 	@Builder
-	public Member(Role role, String provider, String profileNickname, String profileImage, String accountEmail,
-				  String userNickname) {
+	public Member(Role role, String provider, String profileImage, String accountEmail,
+				  String name) {
 		this.role = role;
 		this.provider = provider;
-		this.profileNickname = profileNickname;
 		this.profileImage = profileImage;
 		this.accountEmail = accountEmail;
-		this.userNickname = userNickname;
+		this.name = name;
 	}
 
 	public Member updateProfileImage(String profileImage) {
@@ -69,8 +65,8 @@ public class Member extends DateTimeEntity {
 		return this;
 	}
 
-	public Member setUserNickname(String nickname) {
-		this.userNickname = nickname;
+	public Member updateName(String name) {
+		this.name = name;
 		return this;
 	}
 

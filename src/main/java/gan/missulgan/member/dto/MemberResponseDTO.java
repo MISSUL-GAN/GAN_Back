@@ -10,19 +10,17 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @Builder(access = PRIVATE)
-public class MemberDTO {
+public class MemberResponseDTO {
 
 	private final Long id;
-	private final String profileNickname;
-	private final String userNickname;
+	private final String name;
 	private final String profileImage;
 	private final String accountEmail;
 
-	public static MemberDTO from(Member member) {
-		return MemberDTO.builder()
+	public static MemberResponseDTO from(Member member) {
+		return MemberResponseDTO.builder()
 			.id(member.getId())
-			.userNickname(member.getUserNickname())
-			.profileNickname(member.getProfileNickname())
+			.name(member.getName())
 			.accountEmail(member.getAccountEmail())
 			.profileImage(member.getProfileImage())
 			.build();

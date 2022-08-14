@@ -19,8 +19,7 @@ public class GoogleOAuth2UserAttribute extends OAuth2UserAttribute {
 			.role(Role.USER)
 			.provider(GOOGLE_PROVIDER_ID)
 			.profileImage(getProfileImage())
-			.profileNickname(getNickname())
-			.userNickname(getNickname())
+			.name(getNickname())
 			.accountEmail(getEmail())
 			.build();
 	}

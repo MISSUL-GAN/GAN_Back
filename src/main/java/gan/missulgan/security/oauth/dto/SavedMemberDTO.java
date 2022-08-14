@@ -15,7 +15,7 @@ public class SavedMemberDTO {
 	private final Long id;
 	private final String email;
 	private final String role;
-	private final String profileNickname;
+	private final String name;
 	private final Boolean isFirstTime;
 
 
@@ -24,7 +24,7 @@ public class SavedMemberDTO {
 			.id(member.getId())
 			.email(member.getAccountEmail())
 			.role(member.getRole().getValue())
-			.profileNickname(member.getProfileNickname())
+			.name(member.getName())
 			.isFirstTime(false)
 			.build();
 	}
@@ -34,7 +34,7 @@ public class SavedMemberDTO {
 			.id(member.getId())
 			.email(member.getAccountEmail())
 			.role(member.getRole().getValue())
-			.profileNickname(member.getProfileNickname())
+			.name(member.getName())
 			.isFirstTime(isFirstTime)
 			.build();
 	}

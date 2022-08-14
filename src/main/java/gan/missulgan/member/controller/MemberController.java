@@ -1,14 +1,19 @@
 package gan.missulgan.member.controller;
 
-import gan.missulgan.member.dto.UserNicknameDTO;
-import gan.missulgan.member.service.MemberService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import gan.missulgan.security.auth.AuthenticatedEmail;
-import gan.missulgan.member.dto.MemberDTO;
+import gan.missulgan.member.domain.Member;
+import gan.missulgan.member.dto.MemberResponseDTO;
+import gan.missulgan.member.dto.NameDTO;
+import gan.missulgan.member.service.MemberService;
+import gan.missulgan.security.auth.AuthDTO;
+import gan.missulgan.security.auth.dto.AuthMemberDTO;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -19,20 +24,23 @@ public class MemberController {
 
 	@GetMapping("me")
 	@ApiOperation(value = "유저 정보 가져오기", notes = "현재 인증된 유저 정보 가져옴")
-	public MemberDTO getMember(@AuthenticatedEmail String email) {
-		return memberService.findMember(email);
+	public MemberResponseDTO getMember(@AuthDTO AuthMemberDTO memberDTO) {
+		Member member = memberService.getMember(memberDTO.getId());
+		return MemberResponseDTO.from(member);
 	}
 
 	@GetMapping("nickname")
 	@ApiOperation(value = "별명 변경 전 카카오톡 이름 보여주기")
-	public UserNicknameDTO getUserNickname(@AuthenticatedEmail String email) {
-		return new UserNicknameDTO(memberService.findMember(email).getUserNickname());
+	public NameDTO getName(@AuthDTO AuthMemberDTO memberDTO) {
+		String nickname = memberService.getName(memberDTO.getId());
+		return new NameDTO(nickname);
 	}
 
 	@PutMapping("nickname")
 	@ApiOperation(value = "별명 변경하기")
-	public UserNicknameDTO putUserNickname(@AuthenticatedEmail String email, @RequestBody UserNicknameDTO userNicknameDTO) {
-		return new UserNicknameDTO(memberService.saveUserNickname(email, userNicknameDTO.getUserNickname()));
+	public NameDTO putName(@AuthDTO AuthMemberDTO memberDTO,
+		@RequestBody NameDTO nameDTO) {
+		String name = memberService.saveName(memberDTO.getId(), nameDTO.getName());
+		return new NameDTO(name);
 	}
-
 }

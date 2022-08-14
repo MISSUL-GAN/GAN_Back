@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.image.dto.ImageResponseDTO;
+import gan.missulgan.image.exception.ImageNotFoundException;
 import gan.missulgan.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 
@@ -33,15 +34,16 @@ public class ImageService {
 
 	public Resource load(String fileName) {
 		try {
-			Optional<Image> imageOptional = imageRepository.findImageByFileName(fileName);
-			if (imageOptional.isPresent()) {
-				Image image = imageOptional.get();
-				return image.load(fileStoreStrategy);
-			}
-			throw new RuntimeException("IMAGE_NOT_FOUND");
+			Image image = getImage(fileName);
+			return image.load(fileStoreStrategy);
 		} catch (IOException e) {
-			throw new RuntimeException(e.getMessage()); // TODO: 404로 대체
+			throw new ImageNotFoundException();
 		}
+	}
+
+	public Image getImage(String fileName) {
+		return imageRepository.findImageByFileName(fileName)
+			.orElseThrow(ImageNotFoundException::new);
 	}
 
 	private Image saveImage(Image imageToSave) {
