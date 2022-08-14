@@ -95,7 +95,7 @@ public class DrawingController {
 	}
 
 	@PostMapping("")
-	@ApiOperation(value = "그림 추가", notes = "그림 추가. 태그 필요하며, `fileName`을 넣어야함<br>**NFT는 선택사항!**")
+	@ApiOperation(value = "그림 추가", notes = "그림 추가. 태그 필요하며, `fileName`을 넣어야 함<br>**NFT 정보는 선택사항!**<br><h2>`fileName`은 이미지 서버가 줌!</h2>")
 	public DrawingResponseDTO addDrawing(@AuthDTO AuthMemberDTO memberDTO,
 		@Valid @RequestBody DrawingAddRequestDTO requestDTO) {
 		Member member = memberService.getMember(memberDTO.getId());
