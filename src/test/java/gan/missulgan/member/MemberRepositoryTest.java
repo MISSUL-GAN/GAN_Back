@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ public class MemberRepositoryTest {
     }
 
     @Test
+    @Transactional
     public void find_member_by_email() throws RuntimeException {
         memberRepository.save(member);
         Optional<Member> findMember = memberRepository.findByAccountEmail("siyeon44@hanmail.net");
@@ -38,10 +40,4 @@ public class MemberRepositoryTest {
             throw new BadMemberException();
         }
     }
-
-    @AfterEach
-    public void tearDown() {
-        memberRepository.deleteAll();
-    }
-
 }

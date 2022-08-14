@@ -30,7 +30,7 @@ public class Image {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false)
+	@Column(name = "image_id", nullable = false)
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -48,10 +48,11 @@ public class Image {
 	private byte[] bytes;
 
 	@Builder
-	public Image(Member member, ImageType imageType, byte[] bytes) {
+	public Image(Member member, ImageType imageType, byte[] bytes, String fileName) {
 		this.member = member;
 		this.imageType = imageType;
 		this.bytes = bytes;
+		this.fileName = fileName;
 	}
 
 	public void store(final FileStoreStrategy fileStoreStrategy) throws IOException {

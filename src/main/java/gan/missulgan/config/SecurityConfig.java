@@ -46,8 +46,9 @@ public class SecurityConfig {
 			.antMatchers("/auth/renew").permitAll()
 			.antMatchers("/image/view/**").permitAll()
 			.mvcMatchers(HttpMethod.GET, "/tag/all").permitAll()
-			.mvcMatchers(HttpMethod.GET, "/drawing/{memberId}", "/drawing/random").permitAll()
-			.mvcMatchers(HttpMethod.POST, "/drawing/tags").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/drawing/{memberId}").permitAll()
+			.mvcMatchers( "/drawing/heart/**").permitAll()
+			.mvcMatchers( "/drawing/random/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
 
