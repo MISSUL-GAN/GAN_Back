@@ -1,5 +1,8 @@
 package gan.missulgan.member.domain;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.GenerationType.*;
+
 import gan.missulgan.common.DateTimeEntity;
 import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.scrap.domain.Scrap;
@@ -21,7 +24,7 @@ import java.util.List;
 public class Member extends DateTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -43,10 +46,10 @@ public class Member extends DateTimeEntity {
     @Length(max = 24)
     private String name;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
     private List<Drawing> drawings = new ArrayList();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = REMOVE, orphanRemoval = true)
     private List<Scrap> scraps = new ArrayList<>();
 
     @Builder

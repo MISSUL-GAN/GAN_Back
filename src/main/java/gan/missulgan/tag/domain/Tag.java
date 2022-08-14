@@ -1,5 +1,8 @@
 package gan.missulgan.tag.domain;
 
+import static javax.persistence.FetchType.*;
+import static javax.persistence.GenerationType.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,13 +16,13 @@ import java.util.Set;
 public class Tag {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "tag_id")
     private Long id;
 
     private String name;
 
-    @OneToMany(mappedBy = "tag")
+    @OneToMany(mappedBy = "tag", fetch = LAZY)
     private Set<DrawingTag> drawingTags = new HashSet<>();
 
     public Tag(String name) {
