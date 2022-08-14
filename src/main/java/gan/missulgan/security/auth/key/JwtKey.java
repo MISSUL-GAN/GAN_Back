@@ -4,9 +4,9 @@ import io.jsonwebtoken.Claims;
 
 public interface JwtKey {
 
-	String getTokenWith(Claims claims);
+    String getTokenWith(Claims claims);
 
-	Claims parse(String token);
+    Claims parse(String token);
 
-	boolean validate(String token);
+    boolean validate(String token);
 }

@@ -4,7 +4,9 @@ import gan.missulgan.common.exception.BadRequestException;
 
 public class BadTagException extends BadRequestException {
 
-	public BadTagException() {
-		super("잘못된 태그입니다");
-	}
+    private static final String MESSAGE = "잘못된 태그입니다";
+
+    public BadTagException() {
+        super(MESSAGE);
+    }
 }
