@@ -65,8 +65,8 @@ public class Member extends DateTimeEntity {
 		return this;
 	}
 
-	public Member updateName(String nickname) {
-		this.name = nickname;
+	public Member updateName(String name) {
+		this.name = name;
 		return this;
 	}
 
