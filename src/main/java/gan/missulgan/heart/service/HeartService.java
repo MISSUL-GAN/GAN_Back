@@ -43,7 +43,7 @@ public class HeartService {
                 .collect(Collectors.toList());
     }
 
-    private static void checkIsOwner(Member member, Drawing drawing) {
+    private void checkIsOwner(Member member, Drawing drawing) {
         Member drawingOwner = drawing.getMember();
         if (drawingOwner.equals(member)) {
             throw new HeartOwnerException();
