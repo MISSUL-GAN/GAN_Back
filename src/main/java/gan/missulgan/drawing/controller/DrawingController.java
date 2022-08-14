@@ -10,7 +10,6 @@ import javax.validation.Valid;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,12 +34,14 @@ import gan.missulgan.security.auth.AuthDTO;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
 import gan.missulgan.tag.domain.Tag;
 import gan.missulgan.tag.service.TagService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("drawing")
+@Api(tags = "🖼 그림 API")
 public class DrawingController {
 
 	private final DrawingService drawingService;
@@ -49,36 +49,42 @@ public class DrawingController {
 	private final MemberService memberService;
 	private final ImageService imageService;
 
-	@PostMapping("tags/random")
-	@ApiOperation(value = "태그 필터링 + 랜덤 순", notes = "태그로 그림 필터링. `tagId` 필요, 랜덤 순으로 나옴.  **페이징** 가능, `AccessToken` 불필요")
+	@PostMapping("random/tags")
+	@ApiOperation(value = "랜덤으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 랜덤 순으로 나옴. **페이징** 가능")
 	public List<DrawingResponseDTO> getDrawingsByRandomOrder(
 		@Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
 		Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
 		Set<Tag> tags = tagService.getTagsByIds(tagIds);
-		return drawingService.getDrawingsByRandomOrder(tags, pageable);
+		return drawingService.getDrawingsByRandom(tags, pageable);
 	}
 
-	@PostMapping("tags/heart")
-	@ApiOperation(value = "태그 필터링 + 좋아요 순", notes = "태그로 그림 필터링. `tagId` 필요, 좋아요 순으로 나옴.  **페이징** 가능, `AccessToken` 불필요")
+	@GetMapping("random")
+	@ApiOperation(value = "랜덤으로 그림 가져오기 🔒❌", notes = "랜덤으로 그림 가져옴, **페이징 가능**")
+	public List<DrawingResponseDTO> getDrawings(@PageableDefault Pageable pageable) {
+		return drawingService.getDrawingsByRandom(pageable);
+	}
+
+	@PostMapping("heart/tags")
+	@ApiOperation(value = "좋아요 순으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 좋아요 순으로 나옴. **페이징** 가능")
 	public List<DrawingResponseDTO> getDrawingsByHeartOrder(
 		@Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
 		Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
 		Set<Tag> tags = tagService.getTagsByIds(tagIds);
-		return drawingService.getDrawingsByHeartOrder(tags, pageable);
+		return drawingService.getDrawingsByHeartCountOrder(tags, pageable);
+	}
+
+	@GetMapping("heart")
+	@ApiOperation(value = "좋아요 순으로 그림 가져오기 🔒❌", notes = "좋아요 순으로 가져오기. **페이징** 가능")
+	public List<DrawingResponseDTO> getDrawingsByHeartOrder(@PageableDefault Pageable pageable) {
+		return drawingService.getDrawingsByHeartCountOrder(pageable);
 	}
 
 	@GetMapping("{memberId}")
-	@ApiOperation(value = "특정 멤버의 그림 가져오기", notes = "특정 멤버의 그림 가져옴, **페이징** 가능, `AccessToken` 불필요")
+	@ApiOperation(value = "특정 멤버의 그림 가져오기 🔒❌", notes = "특정 멤버의 그림 가져오기, **페이징** 가능")
 	public List<DrawingResponseDTO> getDrawings(@PathVariable("memberId") Long memberId,
 		@PageableDefault Pageable pageable) {
 		Member member = memberService.getMember(memberId);
 		return drawingService.getDrawings(member, pageable);
-	}
-
-	@GetMapping("random")
-	@ApiOperation(value = "랜덤으로 그림 가져오기", notes = "랜덤으로 그림 가져옴, 기본값 20개, `AccessToken` 불필요")
-	public List<DrawingResponseDTO> getDrawings(@RequestParam(defaultValue = "20") Integer size) {
-		return drawingService.getRandomDrawings(size);
 	}
 
 	@GetMapping("")

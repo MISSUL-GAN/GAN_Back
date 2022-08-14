@@ -36,7 +36,7 @@ public class DrawingService {
 	}
 
 	@Transactional
-	public List<DrawingResponseDTO> getDrawingsByRandomOrder(Set<Tag> tags, Pageable pageable) {
+	public List<DrawingResponseDTO> getDrawingsByRandom(Set<Tag> tags, Pageable pageable) {
 		return drawingTagRepository.findAllByOrTagsRandom(tags, pageable)
 			.stream()
 			.map(DrawingResponseDTO::from)
@@ -44,9 +44,33 @@ public class DrawingService {
 	}
 
 	@Transactional
-	public List<DrawingResponseDTO> getDrawingsByHeartOrder(Set<Tag> tags, Pageable pageable) {
-		return drawingTagRepository.findAllByOrTags(tags, pageable)
+	public List<DrawingResponseDTO> getDrawingsByRandom(Pageable pageable) {
+		List<Drawing> drawings = drawingRepository.findAllByRandom(pageable);
+		return drawings.stream()
+			.map(DrawingResponseDTO::from)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public List<DrawingResponseDTO> getDrawingsByHeartCountOrder(Set<Tag> tags, Pageable pageable) {
+		return drawingTagRepository.findAllByOrTagsOrderByHeartCount(tags, pageable)
 			.stream()
+			.map(DrawingResponseDTO::from)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public List<DrawingResponseDTO> getDrawingsByHeartCountOrder(Pageable pageable) {
+		return drawingRepository.findAllOrderByHeartCount(pageable)
+			.stream()
+			.map(DrawingResponseDTO::from)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public List<DrawingResponseDTO> getDrawings(Member member, Pageable pageable) {
+		List<Drawing> drawings = drawingRepository.findAllByMember(member, pageable);
+		return drawings.stream()
 			.map(DrawingResponseDTO::from)
 			.collect(Collectors.toList());
 	}
@@ -74,22 +98,6 @@ public class DrawingService {
 		Nft savedNft = nftRepository.save(nft);
 		drawing.putNftInfo(savedNft);
 		return DrawingResponseDTO.from(drawing);
-	}
-
-	@Transactional
-	public List<DrawingResponseDTO> getDrawings(Member member, Pageable pageable) {
-		List<Drawing> drawings = drawingRepository.findAllByMember(member, pageable);
-		return drawings.stream()
-			.map(DrawingResponseDTO::from)
-			.collect(Collectors.toList());
-	}
-
-	@Transactional
-	public List<DrawingResponseDTO> getRandomDrawings(Integer size) {
-		List<Drawing> drawings = drawingRepository.findAllByRandom(size);
-		return drawings.stream()
-			.map(DrawingResponseDTO::from)
-			.collect(Collectors.toList());
 	}
 
 	@Transactional

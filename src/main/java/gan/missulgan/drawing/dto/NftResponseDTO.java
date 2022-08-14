@@ -12,6 +12,8 @@ public class NftResponseDTO {
 	private final String tokenId;
 
 	public static NftResponseDTO from(Nft nft) {
-		return new NftResponseDTO(nft.getAssetContractAddress(), nft.getTokenId());
+		if (nft != null)
+			return new NftResponseDTO(nft.getAssetContractAddress(), nft.getTokenId());
+		return null;
 	}
 }
