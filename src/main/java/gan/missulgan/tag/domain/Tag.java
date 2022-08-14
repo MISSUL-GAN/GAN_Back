@@ -30,9 +30,7 @@ public class Tag {
 	@OneToMany(mappedBy = "tag")
 	private Set<DrawingTag> drawingTags = new HashSet<>();
 
-	@Builder
-	public Tag(Long id, String name) {
-		this.id = id;
+	public Tag(String name) {
 		this.name = name;
 	}
 }
