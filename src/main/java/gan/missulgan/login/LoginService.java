@@ -30,7 +30,7 @@ public class LoginService {
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=946c8298cdea8c7926ac11bb62f66a85");  //수정
             sb.append("&redirect_uri=http://localhost:8080/login");  //수정
-            sb.append("&code="+code);
+            sb.append("&code=" + code);
 
             bw.write(sb.toString());
             bw.flush();
@@ -44,7 +44,7 @@ public class LoginService {
 
             String line = "";
             String result = "";
-            while((line = br.readLine())!=null) {
+            while ((line = br.readLine()) != null) {
                 result += line;
             }
             System.out.println("response body=" + result);
@@ -58,7 +58,7 @@ public class LoginService {
 
             br.close();
             bw.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return accessToken;
@@ -82,13 +82,13 @@ public class LoginService {
             String line = "";
             String result = "";
 
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 result += line;
             }
-            System.out.println("response body ="+result);
+            System.out.println("response body =" + result);
 
             JsonParser parser = new JsonParser();
-            JsonElement element =  parser.parse(result);
+            JsonElement element = parser.parse(result);
 
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
@@ -124,8 +124,8 @@ public class LoginService {
             String result = "";
             String line = "";
 
-            while((line = br.readLine()) != null) {
-                result+=line;
+            while ((line = br.readLine()) != null) {
+                result += line;
             }
             System.out.println(result);
         } catch (Exception e) {

@@ -1,6 +1,7 @@
 package gan.missulgan.common.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
