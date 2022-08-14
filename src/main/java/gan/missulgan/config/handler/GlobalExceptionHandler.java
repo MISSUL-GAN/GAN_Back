@@ -1,7 +1,7 @@
 package gan.missulgan.config.handler;
 
 import gan.missulgan.common.dto.ExceptionDTO;
-import gan.missulgan.common.exception.ApiException;
+import gan.missulgan.common.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    protected ResponseEntity<ExceptionDTO> handleException(final Exception e) {
+    protected ResponseEntity<ExceptionDTO> handleException (final Exception e) {
         e.printStackTrace();
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ApiException.class)
-    protected ResponseEntity<ExceptionDTO> handleApiException(final ApiException e) {
+    protected ResponseEntity<ExceptionDTO> handleApiException (final ApiException e) {
         e.printStackTrace();
         return ResponseEntity
                 .status(e.getStatus())

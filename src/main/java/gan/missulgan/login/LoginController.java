@@ -1,15 +1,17 @@
 package gan.missulgan.login;
 
+import java.io.IOException;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.HashMap;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 public class LoginController {
 
@@ -37,7 +39,7 @@ public class LoginController {
 
         System.out.println("login info : " + userInfo.toString());
 
-        if (userInfo.get("account_email") != null) {
+        if(userInfo.get("account_email") != null) {
             session.setAttribute("userId", userInfo.get("account_email"));
             session.setAttribute("accessToken", accessToken);
         }
@@ -45,7 +47,7 @@ public class LoginController {
         mav.setViewName("login");
         return mav;
     }
-
+    
 
     /**
      * 로그아웃
@@ -54,7 +56,7 @@ public class LoginController {
     public ModelAndView logout(HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
-        loginService.logout((String) session.getAttribute("accessToken"));
+        loginService.logout((String)session.getAttribute("accessToken"));
         session.removeAttribute("accessToken");
         session.removeAttribute("userId");
         mav.setViewName("login");

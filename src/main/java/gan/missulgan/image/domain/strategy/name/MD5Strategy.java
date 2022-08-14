@@ -8,8 +8,8 @@ import org.springframework.util.DigestUtils;
 @Primary
 public class MD5Strategy implements FileNameStrategy {
 
-    @Override
-    public String encodeName(byte[] bytes) {
-        return DigestUtils.md5DigestAsHex(bytes);
-    }
+	@Override
+	public String encodeName(byte[] bytes) {
+		return DigestUtils.md5DigestAsHex(bytes);
+	}
 }

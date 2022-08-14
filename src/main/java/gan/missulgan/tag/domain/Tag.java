@@ -1,31 +1,36 @@
 package gan.missulgan.tag.domain;
 
-import static javax.persistence.FetchType.*;
-import static javax.persistence.GenerationType.*;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
 public class Tag {
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "tag_id")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "tag_id")
+	private Long id;
 
-    private String name;
+	private String name;
 
-    @OneToMany(mappedBy = "tag", fetch = LAZY)
-    private Set<DrawingTag> drawingTags = new HashSet<>();
+	@OneToMany(mappedBy = "tag")
+	private Set<DrawingTag> drawingTags = new HashSet<>();
 
-    public Tag(String name) {
-        this.name = name;
-    }
+	public Tag(String name) {
+		this.name = name;
+	}
 }
