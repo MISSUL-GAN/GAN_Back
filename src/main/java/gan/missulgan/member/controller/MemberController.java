@@ -31,14 +31,14 @@ public class MemberController {
 
 	@GetMapping("nickname")
 	@ApiOperation(value = "별명 변경 전 카카오톡 이름 보여주기")
-	public NameDTO getUserNickname(@AuthDTO AuthMemberDTO memberDTO) {
+	public NameDTO getName(@AuthDTO AuthMemberDTO memberDTO) {
 		String nickname = memberService.getName(memberDTO.getId());
 		return new NameDTO(nickname);
 	}
 
 	@PutMapping("nickname")
 	@ApiOperation(value = "별명 변경하기")
-	public NameDTO putUserNickname(@AuthDTO AuthMemberDTO memberDTO,
+	public NameDTO putName(@AuthDTO AuthMemberDTO memberDTO,
 		@RequestBody NameDTO nameDTO) {
 		String name = memberService.saveName(memberDTO.getId(), nameDTO.getName());
 		return new NameDTO(name);
