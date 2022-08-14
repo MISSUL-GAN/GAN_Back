@@ -1,6 +1,8 @@
 package gan.missulgan.drawing.domain;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.*;
+import static javax.persistence.GenerationType.*;
 
 import gan.missulgan.common.DateTimeEntity;
 import gan.missulgan.heart.domain.Heart;
@@ -31,7 +33,7 @@ import java.util.stream.Collectors;
 public class Drawing extends DateTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "drawing_id")
     private Long id;
 
@@ -53,15 +55,15 @@ public class Drawing extends DateTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "drawing", fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "drawing", fetch = LAZY, cascade = ALL, orphanRemoval = true)
     private Set<DrawingTag> tags = new HashSet<>();
 
     @LazyCollection(LazyCollectionOption.EXTRA)
-    @OneToMany(mappedBy = "drawing", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = LAZY)
+    @OneToMany(mappedBy = "drawing", cascade = REMOVE, orphanRemoval = true, fetch = LAZY)
     private List<Heart> hearts = new ArrayList<>();
 
     @LazyCollection(LazyCollectionOption.EXTRA)
-    @OneToMany(mappedBy = "drawing", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = LAZY)
+    @OneToMany(mappedBy = "drawing", cascade = REMOVE, orphanRemoval = true, fetch = LAZY)
     private List<Scrap> scraps = new ArrayList<>();
 
     @OneToOne(fetch = LAZY) // cascade = ALL, orphanRemoval = true
