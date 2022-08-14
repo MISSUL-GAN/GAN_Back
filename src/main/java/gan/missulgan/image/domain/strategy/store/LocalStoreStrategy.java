@@ -11,19 +11,26 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
-@Component
-@Primary
+import gan.missulgan.image.domain.ImageType;
+import gan.missulgan.image.domain.strategy.name.FileNameStrategy;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class LocalStoreStrategy implements FileStoreStrategy {
 
 	@Value("${app.localStorePath}")
 	private String storePath;
 
+	private final FileNameStrategy fileNameStrategy;
+
 	@Override
-	public void store(byte [] bytes, String fileName) throws IOException {
+	public String store(byte [] bytes, ImageType imageType) throws IOException {
+		String fileName = fileNameStrategy.encodeName(bytes);
 		File newFile = new File(getPathName(fileName));
 		if (newFile.exists())
-			return;
+			return fileName;
 		writeToFile(bytes, newFile);
+		return fileName;
 	}
 
 	@Override
