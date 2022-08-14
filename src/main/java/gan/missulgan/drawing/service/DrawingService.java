@@ -107,8 +107,7 @@ public class DrawingService {
     }
 
     private void validateDrawingOwner(Member member, Drawing drawing) {
-        Member drawingOwner = drawing.getMember();
-        if (!drawingOwner.equals(member))
+        if (!drawing.ownerEquals(member))
             throw new DrawingOwnerException();
     }
 }
