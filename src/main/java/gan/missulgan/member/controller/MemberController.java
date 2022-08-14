@@ -40,7 +40,7 @@ public class MemberController {
 	@ApiOperation(value = "별명 변경하기")
 	public NameDTO putUserNickname(@AuthDTO AuthMemberDTO memberDTO,
 		@RequestBody NameDTO nameDTO) {
-		String userNickname = memberService.saveName(memberDTO.getId(), nameDTO.getName());
-		return new NameDTO(userNickname);
+		String name = memberService.saveName(memberDTO.getId(), nameDTO.getName());
+		return new NameDTO(name);
 	}
 }
