@@ -1,11 +1,13 @@
 package gan.missulgan.drawing.dto;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import gan.missulgan.nft.domain.Nft;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,4 +28,11 @@ public class DrawingAddRequestDTO {
 	@NotNull
 	@Size(min = 1, max = 3)
 	private Set<Long> tagIds;
+	private NftAddRequestDTO nft;
+
+	public Optional<Nft> getNft() {
+		if(nft != null)
+			return Optional.of(nft.toEntity());
+		return Optional.empty();
+	}
 }

@@ -25,7 +25,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 
 import gan.missulgan.DateTimeEntity;
-import gan.missulgan.Nft;
+import gan.missulgan.nft.domain.Nft;
 import gan.missulgan.Scrap;
 import gan.missulgan.heart.domain.Heart;
 import gan.missulgan.image.domain.Image;
@@ -39,7 +39,6 @@ import lombok.ToString;
 
 @Entity
 @Getter
-@ToString
 @NoArgsConstructor
 public class Drawing extends DateTimeEntity {
 
@@ -82,23 +81,17 @@ public class Drawing extends DateTimeEntity {
 	private Nft nft;
 
 	@Builder
-	public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags) {
+	public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags, Nft nft) {
 		this.title = title;
 		this.description = description;
 		this.image = image;
 		this.member = member;
 		this.tags = tags;
-	}
-
-	//==연관관계 메서드==//
-	public void setMember(Member member) {
-		this.member = member;
-		member.getDrawings().add(this);
-	}
-
-	public void setNft(Nft nft) {
 		this.nft = nft;
-		nft.changeDrawing(this);
+	}
+
+	public void putNftInfo(Nft nft) {
+		this.nft = nft;
 	}
 
 	public void setTags(Set<Tag> tags) {

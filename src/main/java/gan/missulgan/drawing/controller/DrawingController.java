@@ -1,29 +1,37 @@
 package gan.missulgan.drawing.controller;
 
+import static org.springframework.http.HttpStatus.*;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import gan.missulgan.drawing.dto.DrawingAddRequestDTO;
 import gan.missulgan.drawing.dto.DrawingResponseDTO;
+import gan.missulgan.drawing.dto.NftAddRequestDTO;
 import gan.missulgan.drawing.dto.TagDrawingSearchRequestDTO;
 import gan.missulgan.drawing.service.DrawingService;
 import gan.missulgan.image.domain.Image;
 import gan.missulgan.image.domain.ImageService;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
+import gan.missulgan.nft.domain.Nft;
 import gan.missulgan.security.auth.AuthDTO;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
 import gan.missulgan.tag.domain.Tag;
@@ -81,21 +89,33 @@ public class DrawingController {
 	}
 
 	@PostMapping("")
-	@ApiOperation(value = "그림 추가", notes = "그림 추가. 태그 필요하며, `fileName`을 넣어야함")
+	@ApiOperation(value = "그림 추가", notes = "그림 추가. 태그 필요하며, `fileName`을 넣어야함<br>**NFT는 선택사항!**")
 	public DrawingResponseDTO addDrawing(@AuthDTO AuthMemberDTO memberDTO,
 		@Valid @RequestBody DrawingAddRequestDTO requestDTO) {
 		Member member = memberService.getMember(memberDTO.getId());
 		Set<Long> tagIds = requestDTO.getTagIds();
 		Set<Tag> tags = tagService.getTagsByIds(tagIds);
 		Image image = imageService.getImage(requestDTO.getFileName());
+		Optional<Nft> nftOptional = requestDTO.getNft();
 
 		String title = requestDTO.getTitle();
 		String description = requestDTO.getDescription();
-		return drawingService.addDrawing(member, title, description, image, tags);
+		return drawingService.addDrawing(member, title, description, image, tags, nftOptional);
+	}
+
+	@PutMapping("{drawingId}/nft")
+	@ApiOperation(value = "NFT 정보 넣기", notes = "본인 그림에만 가능")
+	@ResponseStatus(NO_CONTENT)
+	public DrawingResponseDTO addNft(@AuthDTO AuthMemberDTO memberDTO, @PathVariable Long drawingId,
+		@Valid @RequestBody NftAddRequestDTO requestDTO) {
+		Member member = memberService.getMember(memberDTO.getId());
+		Nft nft = requestDTO.toEntity();
+		return drawingService.putNft(member, drawingId, nft);
 	}
 
 	@DeleteMapping("{drawingId}")
 	@ApiOperation(value = "그림 삭제", notes = "그림 삭제. 그림 업로더만 삭제 가능")
+	@ResponseStatus(NO_CONTENT)
 	public void removeDrawing(@AuthDTO AuthMemberDTO memberDTO, @PathVariable Long drawingId) {
 		Member member = memberService.getMember(memberDTO.getId());
 		drawingService.removeDrawing(member, drawingId);
