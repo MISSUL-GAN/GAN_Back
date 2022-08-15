@@ -66,7 +66,7 @@ public class Drawing extends DateTimeEntity {
     @OneToMany(mappedBy = "drawing", cascade = REMOVE, orphanRemoval = true, fetch = LAZY)
     private List<Scrap> scraps = new ArrayList<>();
 
-    @OneToOne(fetch = LAZY) // cascade = ALL, orphanRemoval = true
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "nft_id")
     private Nft nft;
 

@@ -38,7 +38,7 @@ public class ScrapService {
 
     @Transactional
     public List<DrawingResponseDTO> findScraps(Member member, Pageable pageable) {
-        return scrapRepository.findScrapDrawing(member, pageable).stream()
+        return scrapRepository.findScrapedDrawing(member, pageable).stream()
                 .map(DrawingResponseDTO::from)
                 .collect(Collectors.toList());
     }

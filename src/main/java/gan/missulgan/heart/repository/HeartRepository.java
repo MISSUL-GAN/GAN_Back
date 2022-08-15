@@ -20,6 +20,6 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
     Long countByDrawing(Drawing drawing);
 
     @Query(value = "select h.member from Heart h where h.drawing = :drawing")
-    List<Member> findHeartMembers(@Param("drawing") Drawing drawing, Pageable pageable);
+    List<Member> findHeartedMembers(@Param("drawing") Drawing drawing, Pageable pageable);
 
 }
