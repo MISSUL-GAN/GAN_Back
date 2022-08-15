@@ -3,7 +3,7 @@ package gan.missulgan;
 import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.drawing.repository.DrawingRepository;
 import gan.missulgan.image.domain.Image;
-import gan.missulgan.image.domain.ImageRepository;
+import gan.missulgan.image.repository.ImageRepository;
 import gan.missulgan.image.domain.ImageType;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.domain.Role;

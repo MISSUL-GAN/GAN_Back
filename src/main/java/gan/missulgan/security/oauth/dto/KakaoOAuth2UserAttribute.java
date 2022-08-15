@@ -17,7 +17,7 @@ public class KakaoOAuth2UserAttribute extends OAuth2UserAttribute {
     public KakaoOAuth2UserAttribute(Map<String, Object> attributes) {
         super(attributes);
         this.kakaoAccount = (Map<String, Object>) attributes.get(KAKAO_ACCOUNT_KEY);
-        this.profile = (Map<String, Object>) kakaoAccount.get(KAKAO_PROFILE_KEY); // TODO: null 처리
+        this.profile = (Map<String, Object>) kakaoAccount.get(KAKAO_PROFILE_KEY);
     }
 
     @Override
