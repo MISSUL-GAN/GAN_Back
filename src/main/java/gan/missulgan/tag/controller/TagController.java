@@ -2,6 +2,7 @@ package gan.missulgan.tag.controller;
 
 import gan.missulgan.tag.dto.TagResponseDTO;
 import gan.missulgan.tag.service.TagService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("tag")
+@Api(tags = "🦕 태그 API")
 public class TagController {
 
     private final TagService tagService;
