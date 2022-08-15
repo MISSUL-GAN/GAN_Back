@@ -6,7 +6,7 @@ import gan.missulgan.drawing.dto.NftAddRequestDTO;
 import gan.missulgan.drawing.dto.TagDrawingSearchRequestDTO;
 import gan.missulgan.drawing.service.DrawingService;
 import gan.missulgan.image.domain.Image;
-import gan.missulgan.image.domain.ImageService;
+import gan.missulgan.image.service.ImageService;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
 import gan.missulgan.nft.domain.Nft;

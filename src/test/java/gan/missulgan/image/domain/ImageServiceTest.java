@@ -18,6 +18,8 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.image.dto.ImageResponseDTO;
+import gan.missulgan.image.repository.ImageRepository;
+import gan.missulgan.image.service.ImageService;
 import gan.missulgan.member.domain.Member;
 
 @ExtendWith(MockitoExtension.class)

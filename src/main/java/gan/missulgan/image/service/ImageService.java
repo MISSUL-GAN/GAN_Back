@@ -1,5 +1,8 @@
-package gan.missulgan.image.domain;
+package gan.missulgan.image.service;
 
+import gan.missulgan.image.domain.Image;
+import gan.missulgan.image.repository.ImageRepository;
+import gan.missulgan.image.domain.ImageType;
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.image.dto.ImageResponseDTO;
 import gan.missulgan.image.exception.ImageNotFoundException;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import gan.missulgan.image.domain.ImageService;
+import gan.missulgan.image.service.ImageService;
 import gan.missulgan.image.dto.ImageResponseDTO;
 import gan.missulgan.image.exception.UnsupportedMediaException;
 import gan.missulgan.member.domain.Member;
