@@ -38,7 +38,7 @@ public class HeartService {
 
     @Transactional
     public List<MemberResponseDTO> findHearts(Drawing drawing, Pageable pageable) {
-        return heartRepository.findHeartMembers(drawing, pageable).stream()
+        return heartRepository.findHeartedMembers(drawing, pageable).stream()
                 .map(MemberResponseDTO::from)
                 .collect(Collectors.toList());
     }

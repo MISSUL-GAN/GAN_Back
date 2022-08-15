@@ -20,6 +20,6 @@ public interface ScrapRepository extends JpaRepository<Scrap, Long> {
     Long countByMember(Member member);
 
     @Query(value = "select s.drawing from Scrap s where s.member = :member")
-    List<Drawing> findScrapDrawing(@Param("member") Member member, Pageable pageable);
+    List<Drawing> findScrapedDrawing(@Param("member") Member member, Pageable pageable);
 
 }
