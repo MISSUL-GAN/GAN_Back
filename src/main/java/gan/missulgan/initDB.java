@@ -35,7 +35,7 @@ public class initDB {
     static class InitService {
 
         private static final List<String> tagNames = List.of("어두운", "화사한", "다채로운", "차분한", "강렬한", "차가운", "따뜻한", "반 고흐",
-                "클로드 모네", "폴 세잔", "우키요에", "동물", "인물", "기타");
+                "클로드 모네", "폴 세잔", "우키요에", "풍경", "동물", "인물", "기타");
 
         private final MemberRepository memberRepository;
         private final DrawingRepository drawingRepository;
