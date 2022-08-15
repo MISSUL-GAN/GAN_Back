@@ -3,6 +3,8 @@ package gan.missulgan.image.domain;
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.image.dto.ImageResponseDTO;
 import gan.missulgan.image.exception.ImageNotFoundException;
+import gan.missulgan.image.exception.ImageProcessException;
+import gan.missulgan.image.exception.UnsupportedMediaException;
 import gan.missulgan.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -53,7 +55,7 @@ public class ImageService {
                 return imageRepository.save(imageToSave);
             return imageOptional.get();
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage()); // TODO: 500 대체
+            throw new ImageProcessException();
         }
     }
 
@@ -61,6 +63,6 @@ public class ImageService {
         ImageType imageType = ImageType.of(contentType);
         if (imageType != null)
             return imageType;
-        throw new RuntimeException("NOT_A_IMAGE"); // TODO: 400으로 대체
+        throw new UnsupportedMediaException();
     }
 }

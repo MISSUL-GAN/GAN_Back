@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import gan.missulgan.image.domain.ImageService;
 import gan.missulgan.image.dto.ImageResponseDTO;
+import gan.missulgan.image.exception.UnsupportedMediaException;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
 import gan.missulgan.security.auth.AuthDTO;
@@ -54,7 +55,7 @@ public class ImageController {
 			String contentType = multipartFile.getContentType();
 			return imageService.save(member, bytes, contentType);
 		} catch (IOException e) {
-			throw new RuntimeException(e); // TODO: 400 -> 잘못된 파일
+			throw new UnsupportedMediaException();
 		}
 	}
 
