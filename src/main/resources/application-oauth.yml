@@ -30,4 +30,5 @@ frontend:
   redirectUri: http://localhost:3000/login/oauth2/code/kakao
   authorizedRedirectUris: >
     http://localhost:3000.*,
-    https://missulgan.art.*
+    https://missulgan.art.*,
+    https://.*missulgan.vercel.app.*
