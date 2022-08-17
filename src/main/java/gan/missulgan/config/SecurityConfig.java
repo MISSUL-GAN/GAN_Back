@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsUtils;
 
 import gan.missulgan.security.auth.JwtAuthenticationEntryPoint;
 import gan.missulgan.security.auth.JwtAuthenticationFilter;
@@ -50,6 +51,7 @@ public class SecurityConfig {
 			.mvcMatchers(GET, "/drawing/{memberId}").permitAll()
 			.mvcMatchers("/drawing/heart/**").permitAll()
 			.mvcMatchers("/drawing/random/**").permitAll()
+			.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
 			.anyRequest().authenticated()
 			.and()
 
