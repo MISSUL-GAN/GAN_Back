@@ -1,5 +1,6 @@
 package gan.missulgan.image.domain;
 
+import gan.missulgan.common.DateTimeEntity;
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.member.domain.Member;
 import lombok.AccessLevel;
@@ -12,9 +13,9 @@ import javax.persistence.*;
 import java.io.IOException;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Image {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Image extends DateTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

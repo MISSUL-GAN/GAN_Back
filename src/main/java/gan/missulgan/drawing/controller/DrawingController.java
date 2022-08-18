@@ -78,6 +78,21 @@ public class DrawingController {
         return drawingService.getDrawings(member, pageable);
     }
 
+    @PostMapping("recent/tags")
+    @ApiOperation(value = "최신 순으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 최신 순으로 나옴. **페이징** 가능")
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(
+            @Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
+        Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
+        Set<Tag> tags = tagService.getTagsByIds(tagIds);
+        return drawingService.getDrawingsByRecentOrder(tags, pageable);
+    }
+
+    @GetMapping("recent")
+    @ApiOperation(value = "최신 순으로 그림 가져오기 🔒❌", notes = "최신 순으로 그림 가져오기, **페이징** 가능")
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(@PageableDefault Pageable pageable) {
+        return drawingService.getDrawingsByRecentOrder(pageable);
+    }
+
     @GetMapping("")
     @ApiOperation(value = "현재 멤버의 그림 가져오기", notes = "현재 멤버의 그림 가져옴")
     public List<DrawingResponseDTO> getDrawings(@AuthDTO AuthMemberDTO memberDTO, @PageableDefault Pageable pageable) {
