@@ -28,7 +28,6 @@ public class MemberRepositoryTest {
             "시연");
     }
 
-    @Test
     @Transactional
     public void find_member_by_email() throws RuntimeException {
         memberRepository.save(member);
