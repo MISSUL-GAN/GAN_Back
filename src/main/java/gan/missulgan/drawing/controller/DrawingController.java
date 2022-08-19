@@ -81,7 +81,7 @@ public class DrawingController {
     @GetMapping("{drawingId}")
     @ApiOperation(value = "그림 가져오기 🔒❌", notes = "특정 그림 가져옴")
     public DrawingResponseDTO getDrawing(@PathVariable Long drawingId) {
-        return DrawingResponseDTO.from(drawingService.getDrawingById(drawingId));
+        return drawingService.getDrawing(drawingId);
     }
 
     @GetMapping("")
