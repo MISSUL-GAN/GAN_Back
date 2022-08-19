@@ -78,6 +78,12 @@ public class DrawingController {
         return drawingService.getDrawings(member, pageable);
     }
 
+    @GetMapping("{drawingId}")
+    @ApiOperation(value = "그림 가져오기 🔒❌", notes = "특정 그림 가져옴")
+    public DrawingResponseDTO getDrawing(@PathVariable Long drawingId) {
+        return DrawingResponseDTO.from(drawingService.getDrawingById(drawingId));
+    }
+
     @GetMapping("")
     @ApiOperation(value = "현재 멤버의 그림 가져오기", notes = "현재 멤버의 그림 가져옴")
     public List<DrawingResponseDTO> getDrawings(@AuthDTO AuthMemberDTO memberDTO, @PageableDefault Pageable pageable) {
