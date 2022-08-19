@@ -70,7 +70,7 @@ public class DrawingController {
         return drawingService.getDrawingsByHeartCountOrder(pageable);
     }
 
-    @GetMapping("{memberId}")
+    @GetMapping("member/{memberId}")
     @ApiOperation(value = "특정 멤버의 그림 가져오기 🔒❌", notes = "특정 멤버의 그림 가져오기, **페이징** 가능")
     public List<DrawingResponseDTO> getDrawings(@PathVariable("memberId") Long memberId,
                                                 @PageableDefault Pageable pageable) {
