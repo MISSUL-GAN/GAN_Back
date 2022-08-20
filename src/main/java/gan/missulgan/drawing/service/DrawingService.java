@@ -35,6 +35,11 @@ public class DrawingService {
     }
 
     @Transactional
+    public DrawingResponseDTO getDrawing(Long drawingId) {
+        return DrawingResponseDTO.from(getDrawingById(drawingId));
+    }
+
+    @Transactional
     public List<DrawingResponseDTO> getDrawingsByRandom(Set<Tag> tags, Pageable pageable) {
         return drawingTagRepository.findAllByOrTagsRandom(tags, pageable)
                 .stream()

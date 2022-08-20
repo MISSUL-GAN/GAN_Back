@@ -49,4 +49,5 @@ frontend:
   redirectUri: https://missulgan.art/login/oauth
   authorizedRedirectUris: >
     http://localhost:3000.*,
-    https://missulgan.art.*
+    https://missulgan.art.*,
+    https://.*missulgan.vercel.app.*
