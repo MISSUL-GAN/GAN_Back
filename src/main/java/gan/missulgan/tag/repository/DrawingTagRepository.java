@@ -29,5 +29,6 @@ public interface DrawingTagRepository extends JpaRepository<DrawingTag, Long> {
     @Query(value = "select distinct d.drawing from DrawingTag d where d.tag in :tags order by rand()", nativeQuery = true)
     List<Drawing> findAllByOrTagsRandom(@Param("tags") Set<Tag> tags, Pageable pageable);
 
+    @Query("select distinct d.drawing from DrawingTag d where d.tag in :tags order by d.drawing.createdAt DESC")
     List<Drawing> findAllByOrTagsOrderByIdDesc(@Param("tags") Set<Tag> tags, Pageable pageable);
 }
