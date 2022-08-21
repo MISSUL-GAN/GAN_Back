@@ -70,18 +70,27 @@ public class DrawingController {
         return drawingService.getDrawingsByHeartCountOrder(pageable);
     }
 
-    @GetMapping("member/{memberId}")
+    @PostMapping("recent/tags")
+    @ApiOperation(value = "최신 순으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 최신 순으로 나옴. **페이징** 가능")
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(
+            @Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
+        Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
+        Set<Tag> tags = tagService.getTagsByIds(tagIds);
+        return drawingService.getDrawingsByRecentOrder(tags, pageable);
+    }
+
+    @GetMapping("recent")
+    @ApiOperation(value = "최신 순으로 그림 가져오기 🔒❌", notes = "최신 순으로 그림 가져오기, **페이징** 가능")
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(@PageableDefault Pageable pageable) {
+        return drawingService.getDrawingsByRecentOrder(pageable);
+    }
+
+    @GetMapping("{memberId}")
     @ApiOperation(value = "특정 멤버의 그림 가져오기 🔒❌", notes = "특정 멤버의 그림 가져오기, **페이징** 가능")
     public List<DrawingResponseDTO> getDrawings(@PathVariable("memberId") Long memberId,
                                                 @PageableDefault Pageable pageable) {
         Member member = memberService.getMember(memberId);
         return drawingService.getDrawings(member, pageable);
-    }
-
-    @GetMapping("{drawingId}")
-    @ApiOperation(value = "그림 가져오기 🔒❌", notes = "특정 그림 가져옴")
-    public DrawingResponseDTO getDrawing(@PathVariable Long drawingId) {
-        return drawingService.getDrawing(drawingId);
     }
 
     @GetMapping("")
