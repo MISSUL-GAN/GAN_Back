@@ -19,4 +19,6 @@ public interface DrawingRepository extends JpaRepository<Drawing, Long> {
 
     @Query(value = "select d from Drawing d order by d.hearts.size")
     List<Drawing> findAllOrderByHeartCount(Pageable pageable);
+
+    List<Drawing> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

@@ -72,6 +72,20 @@ public class DrawingService {
     }
 
     @Transactional
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(Set<Tag> tags, Pageable pageable) {
+        return drawingTagRepository.findAllByOrTagsOrderByIdDesc(tags, pageable).stream()
+                .map(DrawingResponseDTO::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(Pageable pageable) {
+        return drawingRepository.findAllByOrderByCreatedAtDesc(pageable).stream()
+                .map(DrawingResponseDTO::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
     public List<DrawingResponseDTO> getDrawings(Member member, Pageable pageable) {
         List<Drawing> drawings = drawingRepository.findAllByMember(member, pageable);
         return drawings.stream()
