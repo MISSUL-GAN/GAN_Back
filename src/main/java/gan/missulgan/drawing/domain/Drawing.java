@@ -107,4 +107,10 @@ public class Drawing extends DateTimeEntity {
     public boolean ownerEquals(Member member) {
         return this.member.equals(member);
     }
+
+    public void update(String title, String description, Set<Tag> tags) {
+        this.title = title;
+        this.description = description;
+        setTags(tags);
+    }
 }

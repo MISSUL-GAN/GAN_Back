@@ -1,9 +1,7 @@
 package gan.missulgan.drawing.controller;
 
-import gan.missulgan.drawing.dto.DrawingAddRequestDTO;
-import gan.missulgan.drawing.dto.DrawingResponseDTO;
-import gan.missulgan.drawing.dto.NftAddRequestDTO;
-import gan.missulgan.drawing.dto.TagDrawingSearchRequestDTO;
+import gan.missulgan.drawing.domain.Drawing;
+import gan.missulgan.drawing.dto.*;
 import gan.missulgan.drawing.service.DrawingService;
 import gan.missulgan.image.domain.Image;
 import gan.missulgan.image.service.ImageService;
@@ -115,6 +113,20 @@ public class DrawingController {
         Member member = memberService.getMember(memberDTO.getId());
         Nft nft = requestDTO.toEntity();
         return drawingService.putNft(member, drawingId, nft);
+    }
+
+    @PutMapping("{drawingId}")
+    @ApiOperation(value = "그림 수정", notes = "그림 수정. 그림 업로더만 삭제 가능")
+    @ResponseStatus(NO_CONTENT)
+    public void updateDrawing(@AuthDTO AuthMemberDTO memberDTO, @PathVariable Long drawingId,
+                              @Valid @RequestBody DrawingUpdateRequestDTO requestDTO) {
+        Member member = memberService.getMember(memberDTO.getId());
+        Drawing drawing = drawingService.getDrawingById(drawingId);
+        String title = requestDTO.getTitle();
+        String description = requestDTO.getDescription();
+        Set<Long> tagIds = requestDTO.getTagIds();
+        Set<Tag> tags = tagService.getTagsByIds(tagIds);
+        drawingService.updateDrawing(member, drawing, title, description, tags);
     }
 
     @DeleteMapping("{drawingId}")
