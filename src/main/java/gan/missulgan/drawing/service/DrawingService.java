@@ -41,8 +41,11 @@ public class DrawingService {
 
     @Transactional
     public List<DrawingResponseDTO> getDrawingsByRandom(Set<Tag> tags, Pageable pageable) {
-        return drawingTagRepository.findAllByOrTagsRandom(tags, pageable)
+        List<Drawing> drawings = drawingTagRepository.findAllByOrTagsRandom(tags, pageable)
                 .stream()
+                .map(this::getDrawingById)
+                .collect(Collectors.toList());
+        return drawings.stream()
                 .map(DrawingResponseDTO::from)
                 .collect(Collectors.toList());
     }
