@@ -35,8 +35,7 @@ public class MemberController {
 
     @PutMapping("name")
     @ApiOperation(value = "별명 변경하기")
-    public NameDTO putName(@AuthDTO AuthMemberDTO memberDTO,
-                           @RequestBody NameDTO nameDTO) {
+    public NameDTO putName(@AuthDTO AuthMemberDTO memberDTO, @RequestBody NameDTO nameDTO) {
         String name = memberService.saveName(memberDTO.getId(), nameDTO.getName());
         return new NameDTO(name);
     }

@@ -119,6 +119,13 @@ public class DrawingService {
     }
 
     @Transactional
+    public void updateDrawing(Member member, Drawing drawing, String title, String description, Set<Tag> tags) {
+        validateDrawingOwner(member, drawing);
+        drawing.update(title, description, tags);
+        drawingRepository.save(drawing);
+    }
+
+    @Transactional
     public void removeDrawing(Member member, Long drawingId) {
         Drawing drawing = getDrawingById(drawingId);
         validateDrawingOwner(member, drawing);

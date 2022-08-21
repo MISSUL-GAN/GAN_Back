@@ -20,6 +20,6 @@ public abstract class DateTimeEntity {
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime deletedAt;
+    private LocalDateTime modifiedAt;
 
 }
