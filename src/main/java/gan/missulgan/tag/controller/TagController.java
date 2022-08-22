@@ -20,7 +20,7 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping("all")
-    @ApiOperation(value = "모든 태그 가져오기", notes = "존재하는 모든 태그를 가져옵니다. `AccessToken` 불필요")
+    @ApiOperation(value = "모든 태그 가져오기 \uD83D\uDD12❌", notes = "존재하는 모든 태그를 가져옵니다. `AccessToken` 불필요")
     public List<TagResponseDTO> getTags() {
         return tagService.getAllTags();
     }
