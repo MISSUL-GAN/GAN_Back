@@ -45,7 +45,8 @@ jobs:
         app.auth.refreshTokenSecret: ${{ secrets.REFRESH_TOKEN_SECRET }}
         app.localStorePath: ${{ secrets.LOCAL_STORE_PATH }}
         app.nftStorageToken: ${{ secrets.NFT_STORAGE_TOKEN }}
-        
+        app.nftAuthorizationKey: ${{ secrets.NFT_AUTHORIZATION_KEY }}
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
