@@ -1,6 +1,6 @@
 package gan.missulgan.drawing.dto;
 
-import gan.missulgan.nft.domain.Nft;
+import gan.missulgan.nft.domain.NFT;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,9 +27,9 @@ public class DrawingAddRequestDTO {
     @NotNull
     @Size(min = 1, max = 3)
     private Set<Long> tagIds;
-    private NftAddRequestDTO nft;
+    private NFTAddRequestDTO nft;
 
-    public Optional<Nft> getNft() {
+    public Optional<NFT> getNft() {
         if (nft != null)
             return Optional.of(nft.toEntity());
         return Optional.empty();

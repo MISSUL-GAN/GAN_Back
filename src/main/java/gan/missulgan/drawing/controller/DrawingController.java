@@ -7,7 +7,7 @@ import gan.missulgan.image.domain.Image;
 import gan.missulgan.image.service.ImageService;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
-import gan.missulgan.nft.domain.Nft;
+import gan.missulgan.nft.domain.NFT;
 import gan.missulgan.security.auth.AuthDTO;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
 import gan.missulgan.tag.domain.Tag;
@@ -113,7 +113,7 @@ public class DrawingController {
         Set<Long> tagIds = requestDTO.getTagIds();
         Set<Tag> tags = tagService.getTagsByIds(tagIds);
         Image image = imageService.getImage(requestDTO.getFileName());
-        Optional<Nft> nftOptional = requestDTO.getNft();
+        Optional<NFT> nftOptional = requestDTO.getNft();
 
         String title = requestDTO.getTitle();
         String description = requestDTO.getDescription();
@@ -124,9 +124,9 @@ public class DrawingController {
     @ApiOperation(value = "NFT 정보 넣기", notes = "본인 그림에만 가능")
     @ResponseStatus(NO_CONTENT)
     public DrawingResponseDTO addNft(@AuthDTO AuthMemberDTO memberDTO, @PathVariable Long drawingId,
-                                     @Valid @RequestBody NftAddRequestDTO requestDTO) {
+                                     @Valid @RequestBody NFTAddRequestDTO requestDTO) {
         Member member = memberService.getMember(memberDTO.getId());
-        Nft nft = requestDTO.toEntity();
+        NFT nft = requestDTO.toEntity();
         return drawingService.putNft(member, drawingId, nft);
     }
 

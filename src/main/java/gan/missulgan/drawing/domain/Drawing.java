@@ -8,7 +8,7 @@ import gan.missulgan.common.DateTimeEntity;
 import gan.missulgan.heart.domain.Heart;
 import gan.missulgan.image.domain.Image;
 import gan.missulgan.member.domain.Member;
-import gan.missulgan.nft.domain.Nft;
+import gan.missulgan.nft.domain.NFT;
 import gan.missulgan.scrap.domain.Scrap;
 import gan.missulgan.tag.domain.DrawingTag;
 import gan.missulgan.tag.domain.Tag;
@@ -68,10 +68,10 @@ public class Drawing extends DateTimeEntity {
 
     @OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
     @JoinColumn(name = "nft_id")
-    private Nft nft;
+    private NFT nft;
 
     @Builder
-    public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags, Nft nft) {
+    public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags, NFT nft) {
         this.title = title;
         this.description = description;
         this.image = image;
@@ -80,7 +80,7 @@ public class Drawing extends DateTimeEntity {
         this.nft = nft;
     }
 
-    public void putNftInfo(Nft nft) {
+    public void putNftInfo(NFT nft) {
         this.nft = nft;
     }
 
