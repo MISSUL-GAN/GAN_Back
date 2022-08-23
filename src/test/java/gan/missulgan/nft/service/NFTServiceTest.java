@@ -19,7 +19,7 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("IPFS 저장 전략 테스트")
+@DisplayName("NFT Service 테스트")
 @SpringBootTest
 class NFTServiceTest {
 
