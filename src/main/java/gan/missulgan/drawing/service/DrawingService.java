@@ -76,7 +76,7 @@ public class DrawingService {
 
     @Transactional
     public List<DrawingResponseDTO> getDrawingsByRecentOrder(Set<Tag> tags, Pageable pageable) {
-        return drawingTagRepository.findAllByOrTagsOrderByIdDesc(tags, pageable).stream()
+        return drawingTagRepository.findAllByOrTagsOrderByIdAsc(tags, pageable).stream()
                 .map(DrawingResponseDTO::from)
                 .collect(Collectors.toList());
     }

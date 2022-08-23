@@ -21,4 +21,6 @@ public interface DrawingRepository extends JpaRepository<Drawing, Long> {
     List<Drawing> findAllOrderByHeartCount(Pageable pageable);
 
     List<Drawing> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
+    List<Drawing> findAllByOrderByCreatedAtAsc(Pageable pageable);
 }
