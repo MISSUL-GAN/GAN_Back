@@ -135,7 +135,7 @@ public class DrawingService {
         drawingRepository.delete(drawing);
     }
 
-    private void validateDrawingOwner(Member member, Drawing drawing) {
+    public void validateDrawingOwner(Member member, Drawing drawing) {
         if (!drawing.ownerEquals(member))
             throw new DrawingOwnerException();
     }

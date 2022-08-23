@@ -8,6 +8,7 @@ import gan.missulgan.image.service.ImageService;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
 import gan.missulgan.nft.domain.NFT;
+import gan.missulgan.nft.service.NFTService;
 import gan.missulgan.security.auth.AuthDTO;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
 import gan.missulgan.tag.domain.Tag;
@@ -17,9 +18,12 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -37,6 +41,7 @@ public class DrawingController {
     private final TagService tagService;
     private final MemberService memberService;
     private final ImageService imageService;
+    private final NFTService nftService;
 
     @PostMapping("random/tags")
     @ApiOperation(value = "랜덤으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 랜덤 순으로 나옴. **페이징** 가능")
@@ -108,7 +113,7 @@ public class DrawingController {
     @ResponseStatus(CREATED)
     @ApiOperation(value = "그림 추가", notes = "그림 추가. 태그 필요하며, `fileName`을 넣어야 함<br>**NFT 정보는 선택사항!**<br><h2>`fileName`은 이미지 서버가 줌!</h2>")
     public DrawingResponseDTO addDrawing(@AuthDTO AuthMemberDTO memberDTO,
-                                         @Valid @RequestBody DrawingAddRequestDTO requestDTO) {
+                                                        @Valid @RequestBody DrawingAddRequestDTO requestDTO) throws IOException {
         Member member = memberService.getMember(memberDTO.getId());
         Set<Long> tagIds = requestDTO.getTagIds();
         Set<Tag> tags = tagService.getTagsByIds(tagIds);
@@ -117,7 +122,15 @@ public class DrawingController {
 
         String title = requestDTO.getTitle();
         String description = requestDTO.getDescription();
-        return drawingService.addDrawing(member, title, description, image, tags, nftOptional);
+        String ipfs = image.getIPFS();
+        Optional<String> wallet = requestDTO.getWallet_address();
+
+        DrawingResponseDTO responseDTO = drawingService.addDrawing(member, title, description, image, tags, nftOptional);
+        if (wallet.isPresent()) {
+            String wallet_address = wallet.get();
+            nftService.mintNFT(title, description, ipfs, wallet_address);
+        }
+        return responseDTO;
     }
 
     @PutMapping("{drawingId}/nft")

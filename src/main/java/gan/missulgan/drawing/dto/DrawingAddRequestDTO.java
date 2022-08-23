@@ -20,14 +20,20 @@ public class DrawingAddRequestDTO {
 
     @NotBlank
     private String title;
+
     @NotNull
     private String description;
+
     @NotBlank
     private String fileName;
+
     @NotNull
     @Size(min = 1, max = 3)
     private Set<Long> tagIds;
+
     private NFTAddRequestDTO nft;
+
+    private Optional<String> wallet_address;
 
     public Optional<NFT> getNft() {
         if (nft != null)
