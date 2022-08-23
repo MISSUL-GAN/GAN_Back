@@ -39,18 +39,18 @@ public class DrawingController {
     private final ImageService imageService;
 
     @PostMapping("random/tags")
-    @ApiOperation(value = "랜덤으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 랜덤 순으로 나옴. **페이징** 가능")
+    @ApiOperation(value = "랜덤으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 랜덤 순으로 나옴. **20개**")
     public List<DrawingResponseDTO> getDrawingsByRandom(
-            @Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
+            @Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO) {
         Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
         Set<Tag> tags = tagService.getTagsByIds(tagIds);
-        return drawingService.getDrawingsByRandom(tags, pageable);
+        return drawingService.getDrawingsByRandom(tags);
     }
 
     @GetMapping("random")
-    @ApiOperation(value = "랜덤으로 그림 가져오기 🔒❌", notes = "랜덤으로 그림 가져옴, **페이징 가능**")
-    public List<DrawingResponseDTO> getDrawingsByRandom(@PageableDefault Pageable pageable) {
-        return drawingService.getDrawingsByRandom(pageable);
+    @ApiOperation(value = "랜덤으로 그림 가져오기 🔒❌", notes = "랜덤으로 그림 가져옴, **20개**")
+    public List<DrawingResponseDTO> getDrawingsByRandom() {
+        return drawingService.getDrawingsByRandom();
     }
 
     @PostMapping("heart/tags")
