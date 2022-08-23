@@ -40,8 +40,8 @@ public class DrawingService {
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByRandom(Set<Tag> tags, Pageable pageable) {
-        List<Drawing> drawings = drawingTagRepository.findAllByOrTagsRandom(tags, pageable)
+    public List<DrawingResponseDTO> getDrawingsByRandom(Set<Tag> tags) {
+        List<Drawing> drawings = drawingTagRepository.findAllByOrTagsRandom(tags)
                 .stream()
                 .map(this::getDrawingById)
                 .collect(Collectors.toList());
@@ -51,8 +51,8 @@ public class DrawingService {
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByRandom(Pageable pageable) {
-        List<Drawing> drawings = drawingRepository.findAllByRandom(pageable);
+    public List<DrawingResponseDTO> getDrawingsByRandom() {
+        List<Drawing> drawings = drawingRepository.findAllByRandom();
         return drawings.stream()
                 .map(DrawingResponseDTO::from)
                 .collect(Collectors.toList());
