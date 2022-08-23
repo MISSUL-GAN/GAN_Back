@@ -83,7 +83,7 @@ public class DrawingService {
 
     @Transactional
     public List<DrawingResponseDTO> getDrawingsByRecentOrder(Pageable pageable) {
-        return drawingRepository.findAllByOrderByCreatedAtDesc(pageable).stream()
+        return drawingRepository.findAllByOrderByCreatedAtAsc(pageable).stream()
                 .map(DrawingResponseDTO::from)
                 .collect(Collectors.toList());
     }
