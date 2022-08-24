@@ -44,13 +44,13 @@ public class NFTService {
 
         ResponseEntity<String> response =
                 restTemplate.postForEntity(METADATA_IPFS_URL, request, String.class);
+        log.info("NFT metadata response : {}", response);
 
         if (response.getStatusCode().equals(HttpStatus.OK)) {
             String body = response.getBody();
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = (JsonObject) jsonParser.parse(body);
             JsonPrimitive metadata_uri = jsonObject.getAsJsonPrimitive("metadata_uri");
-            System.out.println("body = " + body);
             return metadata_uri.getAsString();
         }
         return null;
@@ -74,5 +74,7 @@ public class NFTService {
 
         ResponseEntity<String> response =
                 restTemplate.postForEntity(MINTING_URL, request, String.class);
+
+        log.info("NFT mint response : {}", response);
     }
 }
