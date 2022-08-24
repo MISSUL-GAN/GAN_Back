@@ -1,8 +1,5 @@
 package gan.missulgan.member.domain;
 
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.GenerationType.*;
-
 import gan.missulgan.common.DateTimeEntity;
 import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.scrap.domain.Scrap;
@@ -16,6 +13,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter
