@@ -18,7 +18,7 @@ public class Scrap extends DateTimeEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "like_id")
+    @Column(name = "scrap_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)

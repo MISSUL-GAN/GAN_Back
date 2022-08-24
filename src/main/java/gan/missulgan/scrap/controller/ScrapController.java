@@ -4,6 +4,7 @@ import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.drawing.dto.DrawingResponseDTO;
 import gan.missulgan.drawing.service.DrawingService;
 import gan.missulgan.member.domain.Member;
+import gan.missulgan.member.dto.MemberResponseDTO;
 import gan.missulgan.member.service.MemberService;
 import gan.missulgan.scrap.service.ScrapService;
 import gan.missulgan.security.auth.AuthDTO;
@@ -46,10 +47,17 @@ public class ScrapController {
         scrapService.unScrap(member, drawing);
     }
 
+    @GetMapping("{drawingID}")
+    @ApiOperation(value = "스크랩 누른 사용자 정보 가져오기", notes = "특정 그림의 스크랩을 누른 사용자의 정보를 가져옴. 최신순 정렬 방식")
+    public List<MemberResponseDTO> getScrappedMembers(@PathVariable("drawingID") Long drawingID, @PageableDefault Pageable pageable) {
+        Drawing drawing = drawingService.getDrawingById(drawingID);
+        return scrapService.findScrappedMembers(drawing, pageable);
+    }
+
     @GetMapping("")
-    @ApiOperation(value = "스크랩한 그림 모두 가져오기", notes = "해당 사용자가 누른 스크랩한 그림 정보를 가져옴")
-    public List<DrawingResponseDTO> getScraps(@AuthDTO AuthMemberDTO memberDTO, @PageableDefault Pageable pageable) {
+    @ApiOperation(value = "스크랩한 그림 모두 가져오기", notes = "해당 사용자가 누른 스크랩한 그림 정보를 가져옴. 최신순 정렬 방식")
+    public List<DrawingResponseDTO> getScrappedDrawings(@AuthDTO AuthMemberDTO memberDTO, @PageableDefault Pageable pageable) {
         Member member = memberService.getMember(memberDTO.getId());
-        return scrapService.findScraps(member, pageable);
+        return scrapService.findScrappedDrawings(member, pageable);
     }
 }
