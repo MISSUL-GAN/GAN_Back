@@ -33,7 +33,7 @@ public class DrawingAddRequestDTO {
 
     private NFTAddRequestDTO nft;
 
-    private Optional<String> wallet_address;
+    private String walletAddress;
 
     public Optional<NFT> getNft() {
         if (nft != null)

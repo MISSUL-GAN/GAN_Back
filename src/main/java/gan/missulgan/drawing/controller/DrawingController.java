@@ -122,13 +122,15 @@ public class DrawingController {
 
         String title = requestDTO.getTitle();
         String description = requestDTO.getDescription();
-        String ipfs = image.getIPFS();
-        Optional<String> wallet = requestDTO.getWallet_address();
+        String fileName = image.getFileName();
 
         DrawingResponseDTO responseDTO = drawingService.addDrawing(member, title, description, image, tags, nftOptional);
-        if (wallet.isPresent()) {
-            String wallet_address = wallet.get();
-            nftService.mintNFT(title, description, ipfs, wallet_address);
+
+        Optional<String> walletOptional = Optional.ofNullable(requestDTO.getWalletAddress());
+        if (walletOptional.isPresent()) {
+            String walletAddress = walletOptional.get();
+            MintResponseDTO mint = nftService.mintNFT(title, description, fileName, walletAddress);
+            responseDTO.putMintResponse(mint);
         }
         return responseDTO;
     }

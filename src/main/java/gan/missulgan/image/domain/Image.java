@@ -51,8 +51,4 @@ public class Image extends DateTimeEntity {
     public Resource load(final FileStoreStrategy fileStoreStrategy) throws IOException {
         return fileStoreStrategy.load(fileName);
     }
-
-    public String getIPFS() {
-        return "https://ipfs.io/ipfs/" + fileName;
-    }
 }
