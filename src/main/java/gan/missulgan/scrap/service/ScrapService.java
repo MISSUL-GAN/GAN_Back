@@ -37,14 +37,14 @@ public class ScrapService {
         scrapRepository.delete(scrap);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<DrawingResponseDTO> findScrappedDrawings(Member member, Pageable pageable) {
         return scrapRepository.findScrappedDrawings(member, pageable).stream()
                 .map(DrawingResponseDTO::from)
                 .collect(Collectors.toList());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<MemberResponseDTO> findScrappedMembers(Drawing drawing, Pageable pageable) {
         return scrapRepository.findScrappedMembers(drawing, pageable).stream()
                 .map(MemberResponseDTO::from)

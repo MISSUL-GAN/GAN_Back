@@ -36,7 +36,7 @@ public class HeartService {
         heartRepository.delete(heart);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<MemberResponseDTO> findHeartedMembers(Drawing drawing, Pageable pageable) {
         return heartRepository.findHeartedMembers(drawing, pageable).stream()
                 .map(MemberResponseDTO::from)
