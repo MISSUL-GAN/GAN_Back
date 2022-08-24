@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Nft extends DateTimeEntity {
+public class NFT extends DateTimeEntity {
 
     @Id
     @GeneratedValue
@@ -22,7 +22,7 @@ public class Nft extends DateTimeEntity {
     private String assetContractAddress;
     private String tokenId;
 
-    public Nft(String assetContractAddress, String tokenId) {
+    public NFT(String assetContractAddress, String tokenId) {
         this.assetContractAddress = assetContractAddress;
         this.tokenId = tokenId;
     }

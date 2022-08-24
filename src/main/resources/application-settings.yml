@@ -1,6 +1,7 @@
 app:
   localStorePath: ${LOCAL_STORE_PATH}
   nftStorageToken: ${NFT_STORAGE_TOKEN}
+  nftAuthorizationKey: ${NFT_AUTHORIZATION_KEY}
 
   auth:
     accessTokenSecret: ${ACCESS_TOKEN_SECRET}
