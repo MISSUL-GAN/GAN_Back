@@ -40,7 +40,7 @@ class NFTServiceTest {
         ReflectionTestUtils.setField(nftService, "CONTRACT_ADDRESS", "0x4e614dfb5b65705b3b7e48a1dac453362902596f");
     }
 
-    @Test
+//    @Test
     @Transactional
     @DisplayName("민팅")
     void mintNFT() throws IOException {
