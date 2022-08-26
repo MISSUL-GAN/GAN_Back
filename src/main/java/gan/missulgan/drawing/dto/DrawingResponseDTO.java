@@ -33,6 +33,7 @@ public class DrawingResponseDTO {
     private final Integer heartCount;
     private final Integer scrapCount;
     private final NftResponseDTO nft;
+    private MintResponseDTO mint;
 
     public static DrawingResponseDTO from(Drawing drawing) {
         Set<TagResponseDTO> tags = drawing.getTags()
@@ -54,5 +55,9 @@ public class DrawingResponseDTO {
                 .scrapCount(drawing.getScrapCount())
                 .nft(nft)
                 .build();
+    }
+
+    public void putMintResponse(MintResponseDTO mint) {
+        this.mint = mint;
     }
 }

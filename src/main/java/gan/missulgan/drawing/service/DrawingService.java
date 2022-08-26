@@ -7,8 +7,8 @@ import gan.missulgan.drawing.exception.DrawingOwnerException;
 import gan.missulgan.drawing.repository.DrawingRepository;
 import gan.missulgan.image.domain.Image;
 import gan.missulgan.member.domain.Member;
-import gan.missulgan.nft.domain.Nft;
-import gan.missulgan.nft.repository.NftRepository;
+import gan.missulgan.nft.domain.NFT;
+import gan.missulgan.nft.repository.NFTRepository;
 import gan.missulgan.tag.domain.Tag;
 import gan.missulgan.tag.repository.DrawingTagRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class DrawingService {
 
     private final DrawingTagRepository drawingTagRepository;
     private final DrawingRepository drawingRepository;
-    private final NftRepository nftRepository;
+    private final NFTRepository nftRepository;
 
     public Drawing getDrawingById(Long drawingId) {
         return drawingRepository.findById(drawingId)
@@ -40,8 +40,8 @@ public class DrawingService {
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByRandom(Set<Tag> tags, Pageable pageable) {
-        List<Drawing> drawings = drawingTagRepository.findAllByOrTagsRandom(tags, pageable)
+    public List<DrawingResponseDTO> getDrawingsByRandom(Set<Tag> tags) {
+        List<Drawing> drawings = drawingTagRepository.findAllByOrTagsRandom(tags)
                 .stream()
                 .map(this::getDrawingById)
                 .collect(Collectors.toList());
@@ -51,8 +51,8 @@ public class DrawingService {
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByRandom(Pageable pageable) {
-        List<Drawing> drawings = drawingRepository.findAllByRandom(pageable);
+    public List<DrawingResponseDTO> getDrawingsByRandom() {
+        List<Drawing> drawings = drawingRepository.findAllByRandom();
         return drawings.stream()
                 .map(DrawingResponseDTO::from)
                 .collect(Collectors.toList());
@@ -98,7 +98,7 @@ public class DrawingService {
 
     @Transactional
     public DrawingResponseDTO addDrawing(Member member, String title, String description, Image image, Set<Tag> tags,
-                                         Optional<Nft> nftOptional) {
+                                         Optional<NFT> nftOptional) {
         Drawing.DrawingBuilder drawingBuilder = Drawing.builder();
         nftOptional.ifPresent(drawingBuilder::nft);
         Drawing drawing = drawingBuilder
@@ -113,11 +113,11 @@ public class DrawingService {
     }
 
     @Transactional
-    public DrawingResponseDTO putNft(Member member, Long drawingId, Nft nft) {
+    public DrawingResponseDTO putNft(Member member, Long drawingId, NFT nft) {
         Drawing drawing = getDrawingById(drawingId);
         validateDrawingOwner(member, drawing);
-        Nft savedNft = nftRepository.save(nft);
-        drawing.putNftInfo(savedNft);
+        NFT savedNFT = nftRepository.save(nft);
+        drawing.putNftInfo(savedNFT);
         return DrawingResponseDTO.from(drawing);
     }
 
@@ -135,7 +135,7 @@ public class DrawingService {
         drawingRepository.delete(drawing);
     }
 
-    private void validateDrawingOwner(Member member, Drawing drawing) {
+    public void validateDrawingOwner(Member member, Drawing drawing) {
         if (!drawing.ownerEquals(member))
             throw new DrawingOwnerException();
     }

@@ -1,5 +1,7 @@
 package gan.missulgan.member.controller;
 
+import javax.websocket.server.PathParam;
+
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.dto.MemberResponseDTO;
 import gan.missulgan.member.dto.NameDTO;
@@ -23,6 +25,13 @@ public class MemberController {
     @ApiOperation(value = "유저 정보 가져오기", notes = "현재 인증된 유저 정보 가져옴")
     public MemberResponseDTO getMember(@AuthDTO AuthMemberDTO memberDTO) {
         Member member = memberService.getMember(memberDTO.getId());
+        return MemberResponseDTO.from(member);
+    }
+
+    @GetMapping("{memberId}")
+    @ApiOperation(value = "특정 유저 정보 가져오기 \uD83D\uDD12❌", notes = "현재 인증된 유저 정보 가져옴")
+    public MemberResponseDTO getMember(@PathVariable Long memberId) {
+        Member member = memberService.getMember(memberId);
         return MemberResponseDTO.from(member);
     }
 

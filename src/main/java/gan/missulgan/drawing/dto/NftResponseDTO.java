@@ -1,6 +1,6 @@
 package gan.missulgan.drawing.dto;
 
-import gan.missulgan.nft.domain.Nft;
+import gan.missulgan.nft.domain.NFT;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,7 +11,7 @@ public class NftResponseDTO {
     private final String assetContractAddress;
     private final String tokenId;
 
-    public static NftResponseDTO from(Nft nft) {
+    public static NftResponseDTO from(NFT nft) {
         if (nft != null)
             return new NftResponseDTO(nft.getAssetContractAddress(), nft.getTokenId());
         return null;
