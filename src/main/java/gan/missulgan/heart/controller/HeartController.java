@@ -46,9 +46,9 @@ public class HeartController {
     }
 
     @GetMapping("{drawingID}")
-    @ApiOperation(value = "좋아요 누른 사용자 정보 가져오기", notes = "특정 그림의 좋아요를 누른 사용자의 정보를 가져옴")
-    public List<MemberResponseDTO> getHeartMembers(@PathVariable("drawingID") Long drawingID, @PageableDefault Pageable pageable) {
+    @ApiOperation(value = "좋아요 누른 사용자 정보 가져오기", notes = "특정 그림의 좋아요를 누른 사용자의 정보를 가져옴. 최신순 정렬 방식")
+    public List<MemberResponseDTO> getHeartedMembers(@PathVariable("drawingID") Long drawingID, @PageableDefault Pageable pageable) {
         Drawing drawing = drawingService.getDrawingById(drawingID);
-        return heartService.findHearts(drawing, pageable);
+        return heartService.findHeartedMembers(drawing, pageable);
     }
 }

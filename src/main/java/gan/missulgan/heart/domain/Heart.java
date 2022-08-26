@@ -18,7 +18,7 @@ public class Heart extends DateTimeEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "like_id")
+    @Column(name = "heart_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)

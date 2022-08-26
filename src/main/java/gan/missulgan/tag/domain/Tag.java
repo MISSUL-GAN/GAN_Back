@@ -1,14 +1,14 @@
 package gan.missulgan.tag.domain;
 
-import static javax.persistence.FetchType.*;
-import static javax.persistence.GenerationType.*;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter

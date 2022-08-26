@@ -1,9 +1,5 @@
 package gan.missulgan.drawing.domain;
 
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.FetchType.*;
-import static javax.persistence.GenerationType.*;
-
 import gan.missulgan.common.DateTimeEntity;
 import gan.missulgan.heart.domain.Heart;
 import gan.missulgan.image.domain.Image;
@@ -26,6 +22,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter
