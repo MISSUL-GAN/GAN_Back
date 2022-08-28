@@ -41,7 +41,6 @@ public class DrawingResponseDTO {
                 .stream()
                 .map(TagResponseDTO::from)
                 .collect(Collectors.toSet());
-        NftResponseDTO nft = NftResponseDTO.from(drawing.getNft());
         MemberResponseDTO member = MemberResponseDTO.from(drawing.getMember());
 
         return DrawingResponseDTO.builder()
