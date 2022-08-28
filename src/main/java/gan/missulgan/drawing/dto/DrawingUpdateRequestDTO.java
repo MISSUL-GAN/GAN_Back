@@ -20,7 +20,7 @@ public class DrawingUpdateRequestDTO {
     private String description;
 
     @NotNull
-    @Size(min = 1, max = 3)
+    @Size(min = 1, max = 4)
     private Set<Long> tagIds;
 
 }

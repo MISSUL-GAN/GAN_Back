@@ -115,34 +115,21 @@ public class DrawingController {
     public DrawingResponseDTO addDrawing(@AuthDTO AuthMemberDTO memberDTO,
                                                         @Valid @RequestBody DrawingAddRequestDTO requestDTO) throws IOException {
         Member member = memberService.getMember(memberDTO.getId());
-        Set<Long> tagIds = requestDTO.getTagIds();
-        Set<Tag> tags = tagService.getTagsByIds(tagIds);
-        Image image = imageService.getImage(requestDTO.getFileName());
-        Optional<NFT> nftOptional = requestDTO.getNft();
-
         String title = requestDTO.getTitle();
         String description = requestDTO.getDescription();
-        String fileName = image.getFileName();
+        Image image = imageService.getImage(requestDTO.getFileName());
+        Set<Long> tagIds = requestDTO.getTagIds();
+        Set<Tag> tags = tagService.getTagsByIds(tagIds);
 
-        DrawingResponseDTO responseDTO = drawingService.addDrawing(member, title, description, image, tags, nftOptional);
+        Drawing drawing = drawingService.addDrawing(member, title, description, image, tags);
 
         Optional<String> walletOptional = Optional.ofNullable(requestDTO.getWalletAddress());
         if (walletOptional.isPresent()) {
             String walletAddress = walletOptional.get();
-            MintResponseDTO mint = nftService.mintNFT(title, description, fileName, walletAddress);
-            responseDTO.putMintResponse(mint);
+            nftService.mint(drawing, walletAddress);
         }
-        return responseDTO;
-    }
 
-    @PutMapping("{drawingId}/nft")
-    @ApiOperation(value = "NFT 정보 넣기", notes = "본인 그림에만 가능")
-    @ResponseStatus(NO_CONTENT)
-    public DrawingResponseDTO addNft(@AuthDTO AuthMemberDTO memberDTO, @PathVariable Long drawingId,
-                                     @Valid @RequestBody NFTAddRequestDTO requestDTO) {
-        Member member = memberService.getMember(memberDTO.getId());
-        NFT nft = requestDTO.toEntity();
-        return drawingService.putNft(member, drawingId, nft);
+        return DrawingResponseDTO.from(drawing);
     }
 
     @PutMapping("{drawingId}")
