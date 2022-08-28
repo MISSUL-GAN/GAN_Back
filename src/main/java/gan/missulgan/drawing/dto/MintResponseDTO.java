@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MintResponseDTO {
-    private String transactionExternalUrl;
+    private String transactionHash;
 }

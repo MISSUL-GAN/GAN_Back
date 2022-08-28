@@ -87,8 +87,8 @@ public class NFTService {
             String body = response.getBody();
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = (JsonObject) jsonParser.parse(body);
-            JsonPrimitive transactionExternalUrl = jsonObject.getAsJsonPrimitive("transaction_external_url");
-            return new MintResponseDTO(transactionExternalUrl.getAsString());
+            JsonPrimitive transactionHash = jsonObject.getAsJsonPrimitive("transaction_hash");
+            return new MintResponseDTO(transactionHash.getAsString());
         }
         return null;
     }
