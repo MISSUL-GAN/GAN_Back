@@ -71,15 +71,16 @@ public class Drawing extends DateTimeEntity {
     private NFT nft;
 
     @Builder
-    public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags) {
+    public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags, NFT nft) {
         this.title = title;
         this.description = description;
         this.image = image;
         this.member = member;
         this.tags = tags;
+        this.nft = nft;
     }
 
-    public void setNFT(NFT nft) {
+    public void putNftInfo(NFT nft) {
         this.nft = nft;
     }
 

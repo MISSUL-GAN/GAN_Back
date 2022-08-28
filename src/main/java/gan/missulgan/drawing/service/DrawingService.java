@@ -7,6 +7,8 @@ import gan.missulgan.drawing.exception.DrawingOwnerException;
 import gan.missulgan.drawing.repository.DrawingRepository;
 import gan.missulgan.image.domain.Image;
 import gan.missulgan.member.domain.Member;
+import gan.missulgan.nft.domain.NFT;
+import gan.missulgan.nft.repository.NFTRepository;
 import gan.missulgan.tag.domain.Tag;
 import gan.missulgan.tag.repository.DrawingTagRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,6 +27,7 @@ public class DrawingService {
 
     private final DrawingTagRepository drawingTagRepository;
     private final DrawingRepository drawingRepository;
+    private final NFTRepository nftRepository;
 
     public Drawing getDrawingById(Long drawingId) {
         return drawingRepository.findById(drawingId)
@@ -93,16 +97,28 @@ public class DrawingService {
     }
 
     @Transactional
-    public Drawing addDrawing(Member member, String title, String description, Image image, Set<Tag> tags) {
-        Drawing drawing = Drawing.builder()
+    public DrawingResponseDTO addDrawing(Member member, String title, String description, Image image, Set<Tag> tags,
+                                         Optional<NFT> nftOptional) {
+        Drawing.DrawingBuilder drawingBuilder = Drawing.builder();
+        nftOptional.ifPresent(drawingBuilder::nft);
+        Drawing drawing = drawingBuilder
                 .title(title)
                 .description(description)
                 .image(image)
                 .member(member)
                 .build();
         drawing.setTags(tags);
-        drawingRepository.save(drawing);
-        return drawing;
+        Drawing saved = drawingRepository.save(drawing);
+        return DrawingResponseDTO.from(saved);
+    }
+
+    @Transactional
+    public DrawingResponseDTO putNft(Member member, Long drawingId, NFT nft) {
+        Drawing drawing = getDrawingById(drawingId);
+        validateDrawingOwner(member, drawing);
+        NFT savedNFT = nftRepository.save(nft);
+        drawing.putNftInfo(savedNFT);
+        return DrawingResponseDTO.from(drawing);
     }
 
     @Transactional
