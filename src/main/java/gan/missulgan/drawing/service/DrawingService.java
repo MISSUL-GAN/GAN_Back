@@ -34,65 +34,71 @@ public class DrawingService {
                 .orElseThrow(BadDrawingException::new);
     }
 
-    @Transactional
-    public DrawingResponseDTO getDrawing(Long drawingId) {
-        return DrawingResponseDTO.from(getDrawingById(drawingId));
+    private DrawingResponseDTO buildDrawingResponseDTO(Drawing drawing, Optional<Long> optionalAuthMemberId) {
+        DrawingResponseDTO drawingResponseDTO = DrawingResponseDTO.from(drawing);
+        optionalAuthMemberId.ifPresent(authMemberId ->
+            drawingResponseDTO.putDidHeart(drawing.didHeart(authMemberId)));
+        return drawingResponseDTO;
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByRandom(Set<Tag> tags) {
-        List<Drawing> drawings = drawingTagRepository.findAllByOrTagsRandom(tags)
+    public DrawingResponseDTO getDrawing(Long drawingId, Optional<Long> optionalAuthMemberId) {
+        Drawing drawing = getDrawingById(drawingId);
+        return buildDrawingResponseDTO(drawing, optionalAuthMemberId);
+    }
+
+    @Transactional
+    public List<DrawingResponseDTO> getDrawingsByRandom(Set<Tag> tags, Optional<Long> optionalAuthMemberId) {
+        return drawingTagRepository.findAllByOrTagsRandom(tags)
                 .stream()
                 .map(this::getDrawingById)
-                .collect(Collectors.toList());
-        return drawings.stream()
-                .map(DrawingResponseDTO::from)
+                .map(drawing -> buildDrawingResponseDTO(drawing, optionalAuthMemberId))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByRandom() {
+    public List<DrawingResponseDTO> getDrawingsByRandom(Optional<Long> optionalAuthMemberId) {
         List<Drawing> drawings = drawingRepository.findAllByRandom();
         return drawings.stream()
-                .map(DrawingResponseDTO::from)
+                .map(drawing -> buildDrawingResponseDTO(drawing, optionalAuthMemberId))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByHeartCountOrder(Set<Tag> tags, Pageable pageable) {
+    public List<DrawingResponseDTO> getDrawingsByHeartCountOrder(Set<Tag> tags, Pageable pageable, Optional<Long> optionalAuthMemberId) {
         return drawingTagRepository.findAllByOrTagsOrderByHeartCount(tags, pageable)
                 .stream()
-                .map(DrawingResponseDTO::from)
+                .map(drawing -> buildDrawingResponseDTO(drawing, optionalAuthMemberId))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByHeartCountOrder(Pageable pageable) {
+    public List<DrawingResponseDTO> getDrawingsByHeartCountOrder(Pageable pageable, Optional<Long> optionalAuthMemberId) {
         return drawingRepository.findAllOrderByHeartCount(pageable)
                 .stream()
-                .map(DrawingResponseDTO::from)
+                .map(drawing -> buildDrawingResponseDTO(drawing, optionalAuthMemberId))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByRecentOrder(Set<Tag> tags, Pageable pageable) {
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(Set<Tag> tags, Pageable pageable, Optional<Long> optionalAuthMemberId) {
         return drawingTagRepository.findAllByOrTagsOrderByIdDesc(tags, pageable).stream()
-                .map(DrawingResponseDTO::from)
+                .map(drawing -> buildDrawingResponseDTO(drawing, optionalAuthMemberId))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawingsByRecentOrder(Pageable pageable) {
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(Pageable pageable, Optional<Long> optionalAuthMemberId) {
         return drawingRepository.findAllByOrderByCreatedAtDesc(pageable).stream()
-                .map(DrawingResponseDTO::from)
+                .map(drawing -> buildDrawingResponseDTO(drawing, optionalAuthMemberId))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<DrawingResponseDTO> getDrawings(Member member, Pageable pageable) {
+    public List<DrawingResponseDTO> getDrawings(Member member, Pageable pageable, Optional<Long> optionalAuthMemberId) {
         List<Drawing> drawings = drawingRepository.findAllByMember(member, pageable);
         return drawings.stream()
-                .map(DrawingResponseDTO::from)
+                .map(drawing -> buildDrawingResponseDTO(drawing, optionalAuthMemberId))
                 .collect(Collectors.toList());
     }
 

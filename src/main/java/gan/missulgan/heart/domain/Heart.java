@@ -34,4 +34,9 @@ public class Heart extends DateTimeEntity {
         this.member = member;
         this.drawing = drawing;
     }
+
+    public boolean didHeart(Long memberId) {
+        return member.getId()
+            .equals(memberId);
+    }
 }
