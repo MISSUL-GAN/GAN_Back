@@ -115,4 +115,14 @@ public class Drawing extends DateTimeEntity {
         this.description = description;
         setTags(tags);
     }
+
+    public boolean didHeart(Long memberId){
+        return hearts.stream()
+            .anyMatch(heart -> heart.didHeart(memberId));
+    }
+
+    public boolean didScrap(Long memberId){
+        return scraps.stream()
+            .anyMatch(scrap -> scrap.didScrap(memberId));
+    }
 }
