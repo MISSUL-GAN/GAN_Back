@@ -1,5 +1,7 @@
 package gan.missulgan.nft.domain;
 
+import static javax.persistence.GenerationType.*;
+
 import gan.missulgan.common.DateTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -15,7 +18,7 @@ import javax.persistence.Id;
 public class NFT extends DateTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "nft_id")
     private Long id;
 

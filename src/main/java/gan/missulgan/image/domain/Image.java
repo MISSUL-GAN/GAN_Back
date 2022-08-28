@@ -1,5 +1,7 @@
 package gan.missulgan.image.domain;
 
+import static javax.persistence.GenerationType.*;
+
 import gan.missulgan.common.DateTimeEntity;
 import gan.missulgan.image.domain.strategy.store.FileStoreStrategy;
 import gan.missulgan.member.domain.Member;
@@ -18,7 +20,7 @@ import java.io.IOException;
 public class Image extends DateTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "image_id", nullable = false)
     private Long id;
 
