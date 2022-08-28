@@ -148,16 +148,6 @@ public class DrawingController {
         return responseDTO;
     }
 
-    @PutMapping("{drawingId}/nft")
-    @ApiOperation(value = "NFT 정보 넣기", notes = "본인 그림에만 가능")
-    @ResponseStatus(NO_CONTENT)
-    public DrawingResponseDTO addNft(@AuthDTO AuthMemberDTO memberDTO, @PathVariable Long drawingId,
-                                     @Valid @RequestBody NFTAddRequestDTO requestDTO) {
-        Member member = memberService.getMember(memberDTO.getId());
-        NFT nft = requestDTO.toEntity();
-        return drawingService.putNft(member, drawingId, nft);
-    }
-
     @PutMapping("{drawingId}")
     @ApiOperation(value = "그림 수정", notes = "그림 수정. 그림 업로더만 삭제 가능")
     @ResponseStatus(NO_CONTENT)

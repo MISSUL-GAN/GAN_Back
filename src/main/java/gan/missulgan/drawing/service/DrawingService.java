@@ -121,15 +121,6 @@ public class DrawingService {
     }
 
     @Transactional
-    public DrawingResponseDTO putNft(Member member, Long drawingId, NFT nft) {
-        Drawing drawing = getDrawingById(drawingId);
-        validateDrawingOwner(member, drawing);
-        NFT savedNFT = nftRepository.save(nft);
-        drawing.putNftInfo(savedNFT);
-        return DrawingResponseDTO.from(drawing);
-    }
-
-    @Transactional
     public void updateDrawing(Member member, Drawing drawing, String title, String description, Set<Tag> tags) {
         validateDrawingOwner(member, drawing);
         drawing.update(title, description, tags);
