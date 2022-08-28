@@ -35,6 +35,7 @@ public class DrawingResponseDTO {
     private final NftResponseDTO nft;
     private MintResponseDTO mint;
     private Boolean didHeart;
+    private Boolean didScrap;
 
     public static DrawingResponseDTO from(Drawing drawing) {
         Set<TagResponseDTO> tags = drawing.getTags()
@@ -64,5 +65,9 @@ public class DrawingResponseDTO {
 
     public void putDidHeart(Boolean didHeart) {
         this.didHeart = didHeart;
+    }
+
+    public void putDidScrap(Boolean didScrap) {
+        this.didScrap = didScrap;
     }
 }

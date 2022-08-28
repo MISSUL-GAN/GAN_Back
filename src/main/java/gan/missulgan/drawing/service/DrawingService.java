@@ -36,8 +36,10 @@ public class DrawingService {
 
     private DrawingResponseDTO buildDrawingResponseDTO(Drawing drawing, Optional<Long> optionalAuthMemberId) {
         DrawingResponseDTO drawingResponseDTO = DrawingResponseDTO.from(drawing);
-        optionalAuthMemberId.ifPresent(authMemberId ->
-            drawingResponseDTO.putDidHeart(drawing.didHeart(authMemberId)));
+        optionalAuthMemberId.ifPresent(authMemberId -> {
+            drawingResponseDTO.putDidHeart(drawing.didHeart(authMemberId));
+            drawingResponseDTO.putDidScrap(drawing.didScrap(authMemberId));
+        });
         return drawingResponseDTO;
     }
 

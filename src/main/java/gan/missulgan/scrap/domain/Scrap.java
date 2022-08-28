@@ -34,4 +34,9 @@ public class Scrap extends DateTimeEntity {
         this.member = member;
         this.drawing = drawing;
     }
+
+	public boolean didScrap(Long memberId) {
+        return member.getId()
+            .equals(memberId);
+	}
 }

@@ -120,4 +120,9 @@ public class Drawing extends DateTimeEntity {
         return hearts.stream()
             .anyMatch(heart -> heart.didHeart(memberId));
     }
+
+    public boolean didScrap(Long memberId){
+        return scraps.stream()
+            .anyMatch(scrap -> scrap.didScrap(memberId));
+    }
 }
