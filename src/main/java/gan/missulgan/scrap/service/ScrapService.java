@@ -3,6 +3,7 @@ package gan.missulgan.scrap.service;
 import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.drawing.dto.DrawingResponseDTO;
 import gan.missulgan.member.domain.Member;
+import gan.missulgan.member.dto.MemberResponseDTO;
 import gan.missulgan.scrap.domain.Scrap;
 import gan.missulgan.scrap.exception.BadScrapException;
 import gan.missulgan.scrap.exception.ScrapDuplicateException;
@@ -36,10 +37,17 @@ public class ScrapService {
         scrapRepository.delete(scrap);
     }
 
-    @Transactional
-    public List<DrawingResponseDTO> findScraps(Member member, Pageable pageable) {
-        return scrapRepository.findScrapedDrawing(member, pageable).stream()
+    @Transactional(readOnly = true)
+    public List<DrawingResponseDTO> findScrappedDrawings(Member member, Pageable pageable) {
+        return scrapRepository.findScrappedDrawings(member, pageable).stream()
                 .map(DrawingResponseDTO::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberResponseDTO> findScrappedMembers(Drawing drawing, Pageable pageable) {
+        return scrapRepository.findScrappedMembers(drawing, pageable).stream()
+                .map(MemberResponseDTO::from)
                 .collect(Collectors.toList());
     }
 

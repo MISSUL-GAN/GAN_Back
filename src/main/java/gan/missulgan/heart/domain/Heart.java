@@ -18,7 +18,7 @@ public class Heart extends DateTimeEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "like_id")
+    @Column(name = "heart_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
@@ -33,5 +33,10 @@ public class Heart extends DateTimeEntity {
     public Heart(Member member, Drawing drawing) {
         this.member = member;
         this.drawing = drawing;
+    }
+
+    public boolean didHeart(Long memberId) {
+        return member.getId()
+            .equals(memberId);
     }
 }

@@ -18,8 +18,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -43,70 +41,85 @@ public class DrawingController {
     private final ImageService imageService;
     private final NFTService nftService;
 
+    private Optional<Long> getOptionalAuthMemberId(AuthMemberDTO memberDTO) {
+        if(memberDTO != null)
+            return Optional.of(memberDTO.getId());
+        return Optional.empty();
+    }
+
     @PostMapping("random/tags")
     @ApiOperation(value = "랜덤으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 랜덤 순으로 나옴. **20개**")
-    public List<DrawingResponseDTO> getDrawingsByRandom(
+    public List<DrawingResponseDTO> getDrawingsByRandom(@AuthDTO AuthMemberDTO memberDTO,
             @Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO) {
+        Optional<Long> optionalAuthMemberId = getOptionalAuthMemberId(memberDTO);
         Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
         Set<Tag> tags = tagService.getTagsByIds(tagIds);
-        return drawingService.getDrawingsByRandom(tags);
+        return drawingService.getDrawingsByRandom(tags, optionalAuthMemberId);
     }
 
     @GetMapping("random")
     @ApiOperation(value = "랜덤으로 그림 가져오기 🔒❌", notes = "랜덤으로 그림 가져옴, **20개**")
-    public List<DrawingResponseDTO> getDrawingsByRandom() {
-        return drawingService.getDrawingsByRandom();
+    public List<DrawingResponseDTO> getDrawingsByRandom(@AuthDTO AuthMemberDTO memberDTO) {
+        Optional<Long> optionalAuthMemberId = getOptionalAuthMemberId(memberDTO);
+        return drawingService.getDrawingsByRandom(optionalAuthMemberId);
     }
 
     @PostMapping("heart/tags")
     @ApiOperation(value = "좋아요 순으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 좋아요 순으로 나옴. **페이징** 가능")
-    public List<DrawingResponseDTO> getDrawingsByHeartOrder(
+    public List<DrawingResponseDTO> getDrawingsByHeartOrder(@AuthDTO AuthMemberDTO memberDTO,
             @Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
+        Optional<Long> optionalAuthMemberId = getOptionalAuthMemberId(memberDTO);
         Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
         Set<Tag> tags = tagService.getTagsByIds(tagIds);
-        return drawingService.getDrawingsByHeartCountOrder(tags, pageable);
+        return drawingService.getDrawingsByHeartCountOrder(tags, pageable, optionalAuthMemberId);
     }
 
     @GetMapping("heart")
     @ApiOperation(value = "좋아요 순으로 그림 가져오기 🔒❌", notes = "좋아요 순으로 가져오기. **페이징** 가능")
-    public List<DrawingResponseDTO> getDrawingsByHeartOrder(@PageableDefault Pageable pageable) {
-        return drawingService.getDrawingsByHeartCountOrder(pageable);
+    public List<DrawingResponseDTO> getDrawingsByHeartOrder(@AuthDTO AuthMemberDTO memberDTO, @PageableDefault Pageable pageable) {
+        Optional<Long> optionalAuthMemberId = getOptionalAuthMemberId(memberDTO);
+        return drawingService.getDrawingsByHeartCountOrder(pageable, optionalAuthMemberId);
     }
 
     @PostMapping("recent/tags")
     @ApiOperation(value = "최신 순으로 그림 가져오기 + 태그 🔒❌", notes = "태그로 그림 필터링. `tagId` 필요, 최신 순으로 나옴. **페이징** 가능")
-    public List<DrawingResponseDTO> getDrawingsByRecentOrder(
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(@AuthDTO AuthMemberDTO memberDTO,
             @Valid @RequestBody TagDrawingSearchRequestDTO tagDrawingSearchRequestDTO, @PageableDefault Pageable pageable) {
+        Optional<Long> optionalAuthMemberId = getOptionalAuthMemberId(memberDTO);
         Set<Long> tagIds = tagDrawingSearchRequestDTO.getTagIds();
         Set<Tag> tags = tagService.getTagsByIds(tagIds);
-        return drawingService.getDrawingsByRecentOrder(tags, pageable);
+        return drawingService.getDrawingsByRecentOrder(tags, pageable, optionalAuthMemberId);
     }
 
     @GetMapping("recent")
     @ApiOperation(value = "최신 순으로 그림 가져오기 🔒❌", notes = "최신 순으로 그림 가져오기, **페이징** 가능")
-    public List<DrawingResponseDTO> getDrawingsByRecentOrder(@PageableDefault Pageable pageable) {
-        return drawingService.getDrawingsByRecentOrder(pageable);
+    public List<DrawingResponseDTO> getDrawingsByRecentOrder(@AuthDTO AuthMemberDTO memberDTO, @PageableDefault Pageable pageable) {
+        Optional<Long> optionalAuthMemberId = getOptionalAuthMemberId(memberDTO);
+        return drawingService.getDrawingsByRecentOrder(pageable, optionalAuthMemberId);
     }
 
     @GetMapping("{drawingId}")
     @ApiOperation(value = "그림 가져오기 🔒❌", notes = "특정 그림 가져옴")
-    public DrawingResponseDTO getDrawing(@PathVariable Long drawingId) {
-        return drawingService.getDrawing(drawingId);
+    public DrawingResponseDTO getDrawing(@AuthDTO AuthMemberDTO memberDTO, @PathVariable Long drawingId) {
+        Optional<Long> optionalAuthMemberId = getOptionalAuthMemberId(memberDTO);
+        return drawingService.getDrawing(drawingId, optionalAuthMemberId);
     }
 
     @GetMapping("/member/{memberId}")
     @ApiOperation(value = "특정 멤버의 그림 가져오기 🔒❌", notes = "특정 멤버의 그림 가져오기, **페이징** 가능")
-    public List<DrawingResponseDTO> getDrawings(@PathVariable("memberId") Long memberId,
+    public List<DrawingResponseDTO> getDrawings(@AuthDTO AuthMemberDTO memberDTO, @PathVariable("memberId") Long memberId,
                                                 @PageableDefault Pageable pageable) {
+        Optional<Long> optionalAuthMemberId = getOptionalAuthMemberId(memberDTO);
         Member member = memberService.getMember(memberId);
-        return drawingService.getDrawings(member, pageable);
+        return drawingService.getDrawings(member, pageable, optionalAuthMemberId);
     }
 
     @GetMapping("")
     @ApiOperation(value = "현재 멤버의 그림 가져오기", notes = "현재 멤버의 그림 가져옴")
     public List<DrawingResponseDTO> getDrawings(@AuthDTO AuthMemberDTO memberDTO, @PageableDefault Pageable pageable) {
+        Optional<Long> optionalAuthMemberId = getOptionalAuthMemberId(memberDTO);
         Member member = memberService.getMember(memberDTO.getId());
-        return drawingService.getDrawings(member, pageable);
+        return drawingService.getDrawings(member, pageable, optionalAuthMemberId);
     }
 
     @PostMapping("")

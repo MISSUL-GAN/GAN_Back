@@ -18,7 +18,7 @@ public class Scrap extends DateTimeEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "like_id")
+    @Column(name = "scrap_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
@@ -34,4 +34,9 @@ public class Scrap extends DateTimeEntity {
         this.member = member;
         this.drawing = drawing;
     }
+
+	public boolean didScrap(Long memberId) {
+        return member.getId()
+            .equals(memberId);
+	}
 }
