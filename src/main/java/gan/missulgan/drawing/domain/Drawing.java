@@ -4,6 +4,7 @@ import gan.missulgan.common.DateTimeEntity;
 import gan.missulgan.heart.domain.Heart;
 import gan.missulgan.image.domain.Image;
 import gan.missulgan.member.domain.Member;
+import gan.missulgan.nft.domain.NFT;
 import gan.missulgan.scrap.domain.Scrap;
 import gan.missulgan.tag.domain.DrawingTag;
 import gan.missulgan.tag.domain.Tag;
@@ -56,6 +57,10 @@ public class Drawing extends DateTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
+    @JoinColumn(name = "nft_id")
+    private NFT nft;
+
     @OneToMany(mappedBy = "drawing", fetch = LAZY, cascade = ALL, orphanRemoval = true)
     private Set<DrawingTag> tags = new HashSet<>();
 
@@ -68,12 +73,13 @@ public class Drawing extends DateTimeEntity {
     private List<Scrap> scraps = new ArrayList<>();
 
     @Builder
-    public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags) {
+    public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags, NFT nft) {
         this.title = title;
         this.description = description;
         this.image = image;
         this.member = member;
         this.tags = tags;
+        this.nft = nft;
     }
 
     public void setTags(Set<Tag> tags) {

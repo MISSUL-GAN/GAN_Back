@@ -7,6 +7,7 @@ import gan.missulgan.drawing.exception.DrawingOwnerException;
 import gan.missulgan.drawing.repository.DrawingRepository;
 import gan.missulgan.image.domain.Image;
 import gan.missulgan.member.domain.Member;
+import gan.missulgan.nft.domain.NFT;
 import gan.missulgan.tag.domain.Tag;
 import gan.missulgan.tag.repository.DrawingTagRepository;
 import lombok.RequiredArgsConstructor;
@@ -102,8 +103,10 @@ public class DrawingService {
     }
 
     @Transactional
-    public DrawingResponseDTO addDrawing(Member member, String title, String description, Image image, Set<Tag> tags) {
+    public DrawingResponseDTO addDrawing(Member member, String title, String description, Image image,
+                                            Set<Tag> tags, Optional<NFT> nftOptional) {
         Drawing.DrawingBuilder drawingBuilder = Drawing.builder();
+        nftOptional.ifPresent(drawingBuilder::nft);
         Drawing drawing = drawingBuilder
                 .title(title)
                 .description(description)

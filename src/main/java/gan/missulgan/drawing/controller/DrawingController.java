@@ -7,6 +7,7 @@ import gan.missulgan.image.domain.Image;
 import gan.missulgan.image.service.ImageService;
 import gan.missulgan.member.domain.Member;
 import gan.missulgan.member.service.MemberService;
+import gan.missulgan.nft.domain.NFT;
 import gan.missulgan.nft.service.NFTService;
 import gan.missulgan.security.auth.AuthDTO;
 import gan.missulgan.security.auth.dto.AuthMemberDTO;
@@ -129,21 +130,19 @@ public class DrawingController {
         Member member = memberService.getMember(memberDTO.getId());
         Set<Long> tagIds = requestDTO.getTagIds();
         Set<Tag> tags = tagService.getTagsByIds(tagIds);
-        Image image = imageService.getImage(requestDTO.getFileName());
 
         String title = requestDTO.getTitle();
         String description = requestDTO.getDescription();
+        Image image = imageService.getImage(requestDTO.getFileName());
         String fileName = image.getFileName();
 
-        DrawingResponseDTO responseDTO = drawingService.addDrawing(member, title, description, image, tags);
-
+        Optional<NFT> nftOptional = Optional.empty();
         Optional<String> walletOptional = Optional.ofNullable(requestDTO.getWalletAddress());
         if (walletOptional.isPresent()) {
             String walletAddress = walletOptional.get();
-            MintResponseDTO mint = nftService.mintNFT(title, description, fileName, walletAddress);
-            responseDTO.putMintResponse(mint);
+            nftOptional = Optional.ofNullable(nftService.mintNFT(title, description, fileName, walletAddress));
         }
-        return responseDTO;
+        return drawingService.addDrawing(member, title, description, image, tags, nftOptional);
     }
 
     @PutMapping("{drawingId}")

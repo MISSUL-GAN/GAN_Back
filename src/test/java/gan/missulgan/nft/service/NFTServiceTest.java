@@ -1,7 +1,8 @@
 package gan.missulgan.nft.service;
 
-import gan.missulgan.drawing.dto.MintResponseDTO;
 import gan.missulgan.nft.domain.ChainType;
+import gan.missulgan.nft.domain.NFT;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +43,7 @@ class NFTServiceTest {
         ReflectionTestUtils.setField(nftService, "CONTRACT_ADDRESS", "0x534a77f27cddf844dd23664a387a98b13f4d7ca6");
     }
 
-    // @Test
+    @Test
     @Transactional
     @DisplayName("민팅")
     void mintNFT() throws IOException {
@@ -50,8 +51,8 @@ class NFTServiceTest {
         String description = "MissulGAN LOGO";
         String fileUrl = "https://ipfs.io/ipfs/bafkreiatvoc5ruqisgnodrzimmbnt2jgcc5vrgvkh6ktinoh75y4n3gq4e";
         String walletAddress = "0xbae911aBE112EbeE9f81936a3Ed4B9934b7C70Cb";
-        MintResponseDTO mintDTO = nftService.mintNFT(name, description, fileUrl, walletAddress);
-        String transactionHash = mintDTO.getTransactionHash();
+        NFT nft = nftService.mintNFT(name, description, fileUrl, walletAddress);
+        String transactionHash = nft.getTransactionHash();
         Assertions.assertThat(transactionHash).startsWith("0x");
     }
 }
