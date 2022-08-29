@@ -4,8 +4,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.nimbusds.jose.shaded.json.JSONObject;
-import gan.missulgan.drawing.dto.MintResponseDTO;
+
 import gan.missulgan.nft.domain.ChainType;
+import gan.missulgan.nft.domain.NFT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,17 +31,14 @@ public class NFTService {
     private static String CHAIN = ChainType.POLYGON.getValue();
     private static String CONTRACT_ADDRESS = "0x7d08a465f7ffd7371e0d90614b19b35df9553dfb";  // NFT Contract address
 
-
     private final RestTemplate restTemplate;
 
-    public String metadataToIPFS(String name, String description, String fileName) throws IOException {
+    private String metadataToIPFS(String name, String description, String fileName) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", NFT_AUTHORIZATION_KEY);
 
         String ipfs = IPFS_PREFIX + fileName;
-
-        // TODO : IPFS 가 접근 가능한지(GET 가능한지? == 유효한 IPFS 인지?) 검증 로직
 
         JSONObject requestJson = new JSONObject();
         requestJson.put("name", name);
@@ -63,9 +61,9 @@ public class NFTService {
         return null;
     }
 
-    public MintResponseDTO mintNFT(String name, String description, String fileName, String walletAddress) throws IOException {
+    public NFT mintNFT(String name, String description, String fileName, String walletAddress) throws IOException {
 
-        String metadataUri = metadataToIPFS(name, description, fileName);  // TODO : Optional 처리하고 없으면 예외 발생
+        String metadataUri = metadataToIPFS(name, description, fileName);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -87,8 +85,8 @@ public class NFTService {
             String body = response.getBody();
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = (JsonObject) jsonParser.parse(body);
-            JsonPrimitive transactionExternalUrl = jsonObject.getAsJsonPrimitive("transaction_external_url");
-            return new MintResponseDTO(transactionExternalUrl.getAsString());
+            String transactionHash = jsonObject.getAsJsonPrimitive("transaction_hash").getAsString();
+            return new NFT(transactionHash);
         }
         return null;
     }
