@@ -33,7 +33,7 @@ public class DrawingResponseDTO {
     private final Set<TagResponseDTO> tags;
     private final Integer heartCount;
     private final Integer scrapCount;
-    private final NFT nft;
+    private final String nftTransactionHash;
     private Boolean didHeart;
     private Boolean didScrap;
 
@@ -52,7 +52,7 @@ public class DrawingResponseDTO {
                 .createdAt(drawing.getCreatedAt())
                 .member(member)
                 .tags(tags)
-                .nft(drawing.getNft())
+                .nftTransactionHash(drawing.getNft().getTransactionHash())
                 .heartCount(drawing.getHeartCount())
                 .scrapCount(drawing.getScrapCount())
                 .build();
