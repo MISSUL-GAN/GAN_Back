@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.*;
 
 @Entity
 @Getter
@@ -17,7 +18,7 @@ import static javax.persistence.FetchType.LAZY;
 public class Heart extends DateTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "heart_id")
     private Long id;
 
