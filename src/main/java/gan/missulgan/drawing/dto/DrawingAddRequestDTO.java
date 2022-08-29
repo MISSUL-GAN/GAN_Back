@@ -27,7 +27,7 @@ public class DrawingAddRequestDTO {
     private String fileName;
 
     @NotNull
-    @Size(min = 1, max = 3)
+    @Size(min = 1, max = 4)
     private Set<Long> tagIds;
 
     private String walletAddress;
