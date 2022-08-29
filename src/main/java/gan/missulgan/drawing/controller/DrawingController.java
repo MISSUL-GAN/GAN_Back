@@ -130,32 +130,19 @@ public class DrawingController {
         Member member = memberService.getMember(memberDTO.getId());
         Set<Long> tagIds = requestDTO.getTagIds();
         Set<Tag> tags = tagService.getTagsByIds(tagIds);
-        Image image = imageService.getImage(requestDTO.getFileName());
-        Optional<NFT> nftOptional = requestDTO.getNft();
 
         String title = requestDTO.getTitle();
         String description = requestDTO.getDescription();
+        Image image = imageService.getImage(requestDTO.getFileName());
         String fileName = image.getFileName();
 
-        DrawingResponseDTO responseDTO = drawingService.addDrawing(member, title, description, image, tags, nftOptional);
-
+        Optional<NFT> nftOptional = Optional.empty();
         Optional<String> walletOptional = Optional.ofNullable(requestDTO.getWalletAddress());
         if (walletOptional.isPresent()) {
             String walletAddress = walletOptional.get();
-            MintResponseDTO mint = nftService.mintNFT(title, description, fileName, walletAddress);
-            responseDTO.putMintResponse(mint);
+            nftOptional = Optional.ofNullable(nftService.mintNFT(title, description, fileName, walletAddress));
         }
-        return responseDTO;
-    }
-
-    @PutMapping("{drawingId}/nft")
-    @ApiOperation(value = "NFT 정보 넣기", notes = "본인 그림에만 가능")
-    @ResponseStatus(NO_CONTENT)
-    public DrawingResponseDTO addNft(@AuthDTO AuthMemberDTO memberDTO, @PathVariable Long drawingId,
-                                     @Valid @RequestBody NFTAddRequestDTO requestDTO) {
-        Member member = memberService.getMember(memberDTO.getId());
-        NFT nft = requestDTO.toEntity();
-        return drawingService.putNft(member, drawingId, nft);
+        return drawingService.addDrawing(member, title, description, image, tags, nftOptional);
     }
 
     @PutMapping("{drawingId}")

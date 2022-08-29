@@ -3,6 +3,7 @@ package gan.missulgan.drawing.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import gan.missulgan.drawing.domain.Drawing;
 import gan.missulgan.member.dto.MemberResponseDTO;
+import gan.missulgan.nft.domain.NFT;
 import gan.missulgan.tag.dto.TagResponseDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,8 +33,7 @@ public class DrawingResponseDTO {
     private final Set<TagResponseDTO> tags;
     private final Integer heartCount;
     private final Integer scrapCount;
-    private final NftResponseDTO nft;
-    private MintResponseDTO mint;
+    private final NFT nft;
     private Boolean didHeart;
     private Boolean didScrap;
 
@@ -42,7 +42,6 @@ public class DrawingResponseDTO {
                 .stream()
                 .map(TagResponseDTO::from)
                 .collect(Collectors.toSet());
-        NftResponseDTO nft = NftResponseDTO.from(drawing.getNft());
         MemberResponseDTO member = MemberResponseDTO.from(drawing.getMember());
 
         return DrawingResponseDTO.builder()
@@ -53,14 +52,10 @@ public class DrawingResponseDTO {
                 .createdAt(drawing.getCreatedAt())
                 .member(member)
                 .tags(tags)
+                .nft(drawing.getNft())
                 .heartCount(drawing.getHeartCount())
                 .scrapCount(drawing.getScrapCount())
-                .nft(nft)
                 .build();
-    }
-
-    public void putMintResponse(MintResponseDTO mint) {
-        this.mint = mint;
     }
 
     public void putDidHeart(Boolean didHeart) {

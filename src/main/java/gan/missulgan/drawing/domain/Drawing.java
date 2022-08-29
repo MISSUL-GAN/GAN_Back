@@ -57,6 +57,10 @@ public class Drawing extends DateTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
+    @JoinColumn(name = "nft_id")
+    private NFT nft;
+
     @OneToMany(mappedBy = "drawing", fetch = LAZY, cascade = ALL, orphanRemoval = true)
     private Set<DrawingTag> tags = new HashSet<>();
 
@@ -68,10 +72,6 @@ public class Drawing extends DateTimeEntity {
     @OneToMany(mappedBy = "drawing", cascade = REMOVE, orphanRemoval = true, fetch = LAZY)
     private List<Scrap> scraps = new ArrayList<>();
 
-    @OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
-    @JoinColumn(name = "nft_id")
-    private NFT nft;
-
     @Builder
     public Drawing(String title, String description, Image image, Member member, Set<DrawingTag> tags, NFT nft) {
         this.title = title;
@@ -79,10 +79,6 @@ public class Drawing extends DateTimeEntity {
         this.image = image;
         this.member = member;
         this.tags = tags;
-        this.nft = nft;
-    }
-
-    public void putNftInfo(NFT nft) {
         this.nft = nft;
     }
 
