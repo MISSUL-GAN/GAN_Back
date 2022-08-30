@@ -14,12 +14,14 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -120,5 +122,12 @@ public class Drawing extends DateTimeEntity {
     public boolean didScrap(Long memberId){
         return scraps.stream()
             .anyMatch(scrap -> scrap.didScrap(memberId));
+    }
+
+    @Nullable
+    public String getNFTTransactionalHash() {
+        if (nft != null)
+            return nft.getTransactionHash();
+        return null;
     }
 }
