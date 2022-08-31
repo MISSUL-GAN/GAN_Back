@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .mvcMatchers("/drawing/heart/**").permitAll()
                 .mvcMatchers("/drawing/random/**").permitAll()
                 .mvcMatchers(GET,"/heart/{drawingId}", "/scrap/{drawingId}").permitAll()
+                .mvcMatchers(GET,"/member/{memberId}").permitAll()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated()
                 .and()
