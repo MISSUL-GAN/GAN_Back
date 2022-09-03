@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,10 +38,18 @@ public class ScrapService {
         scrapRepository.delete(scrap);
     }
 
+    private DrawingResponseDTO buildDrawingResponseDTO(Drawing drawing, Member member) { // TODO: 제거하고 별도의 endpoint로..!
+        Long memberId = member.getId();
+        DrawingResponseDTO drawingResponseDTO = DrawingResponseDTO.from(drawing);
+        drawingResponseDTO.putDidHeart(drawing.didHeart(memberId));
+        drawingResponseDTO.putDidScrap(drawing.didScrap(memberId));
+        return drawingResponseDTO;
+    }
+
     @Transactional(readOnly = true)
     public List<DrawingResponseDTO> findScrappedDrawings(Member member, Pageable pageable) {
         return scrapRepository.findScrappedDrawings(member, pageable).stream()
-                .map(DrawingResponseDTO::from)
+                .map(drawing -> buildDrawingResponseDTO(drawing, member))
                 .collect(Collectors.toList());
     }
 

@@ -32,7 +32,7 @@ public class DrawingService {
                 .orElseThrow(BadDrawingException::new);
     }
 
-    private DrawingResponseDTO buildDrawingResponseDTO(Drawing drawing, Optional<Long> optionalAuthMemberId) {
+    private DrawingResponseDTO buildDrawingResponseDTO(Drawing drawing, Optional<Long> optionalAuthMemberId) { // TODO: 제거하고 별도의 endpoint로..!
         DrawingResponseDTO drawingResponseDTO = DrawingResponseDTO.from(drawing);
         optionalAuthMemberId.ifPresent(authMemberId -> {
             drawingResponseDTO.putDidHeart(drawing.didHeart(authMemberId));
