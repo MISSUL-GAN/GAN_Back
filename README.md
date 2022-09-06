@@ -1,3 +1,4 @@
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FMISSUL-GAN&count_bg=%2380A68F&title_bg=%233C6B50&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 # Missul;GAN
 ### GAN을 활용한 작품 공유 커뮤니티 및 NFT 연동 서비스
 
