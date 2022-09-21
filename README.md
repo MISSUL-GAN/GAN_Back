@@ -1,4 +1,8 @@
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FMISSUL-GAN&count_bg=%2380A68F&title_bg=%233C6B50&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FMISSUL-GAN&count_bg=%2380A68F&title_bg=%233C6B50&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) <br/>
+[![Java CI with Gradle](https://github.com/MISSUL-GAN/GAN_Back/actions/workflows/gradle.yml/badge.svg)](https://github.com/MISSUL-GAN/GAN_Back/actions/workflows/gradle.yml)
+[![Spring Boot & Gradle CI/CD](https://github.com/MISSUL-GAN/GAN_Back/actions/workflows/deploy.yml/badge.svg)](https://github.com/MISSUL-GAN/GAN_Back/actions/workflows/deploy.yml)
+![Website](https://img.shields.io/website?label=test%20server&url=https%3A%2F%2Fapi.missulgan.art)
+
 # Missul;GAN
 **숭실대학교 소프트웨어학부 소프트웨어공모전 총장상🥇**
 ### GAN을 활용한 작품 공유 커뮤니티 및 NFT 연동 서비스
