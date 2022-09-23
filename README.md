@@ -7,49 +7,38 @@
 </p>
 
 
-# Missul;GAN
+# [Missul;GAN](https://github.com/MISSUL-GAN)
 **숭실대학교 소프트웨어학부 소프트웨어공모전 총장상🥇**
 ### GAN을 활용한 작품 공유 커뮤니티 및 NFT 연동 서비스
 
 ![화면](https://user-images.githubusercontent.com/87802191/188563274-c526792f-512d-4f8a-9098-d850d041a8d8.png)
 
 ---
-## Repository
-
+## 👜Repository
 | [GAN_Front](https://github.com/MISSUL-GAN/GAN_Front) | [GAN_Back](https://github.com/MISSUL-GAN/GAN_Back) | [GAN_DeepLearning](https://github.com/MISSUL-GAN/GAN_DeepLearning) |
 |:--------:|:--------:|:--------:|
 
 <br>
 
-## Team member
+## 👨‍💻Server Engineers👩‍💻
 | ![박성철](https://user-images.githubusercontent.com/87802191/188561844-607cfb6d-cd49-422e-acc7-f8722eb404a1.png) | ![손시연](https://user-images.githubusercontent.com/87802191/188562993-51dea9fb-cc7a-4322-b2b9-729b71252bb5.png) |
 |:--------:|:-------:| 
 | [박성철](https://github.com/0chil) | [손시연](https://github.com/siyeonSon)  |
 
-## 2. Project Info
-### 📚 0) Version Info
-|   IDE    | Version |
-|:--------:|:-------:| 
-| IntelliJ | 2022.2  |
+<br>
 
-| Language | Version |
-|:--------:|:-------:| 
-|   Java   |   11    |
+## 🛠Tech Stacks
+<table>
+	<tr><td>Language</td><td>Java 11</td></tr>
+	<tr><td>Framework</td><td>Spring Boot, Gradle</td></tr>
+	<tr><td>ORM</td><td>Spring Data JPA</td></tr>
+	<tr><td>Authorization</td><td>Spring Security, OAuth 2.0, JWT</td></tr>
+	<tr><td>API Documentation</td><td>Swagger</td></tr>
+	<tr><td>Database</td><td>MySQL</td></tr>
+	<tr><td>Test</td><td>JUnit5, Mockito</td></tr>
+	<tr><td>Login Open API</td><td>Kakao, Google, Naver</td></tr>
+  <tr><td>NFT Open API</td><td>IPFS, MetaMask, NFTPort</td></tr>
+	<tr><th>AWS Cloud Service</th><td colspan="2">EC2, S3, CodeDeploy, RDS</td></tr>
+</table>
 
-|  Framework  | Version |
-|:-----------:|:-------:| 
-| Spring boot |  2.7.1  |
-|   gradle    |  7.4.1  |
-
-| Database  |       Version        | Description                    |
-|:---------:|:--------------------:|--------------------------------|
-|   MySQL   |        8.0.28        | RDBMS: 사용자, 작품 등 연관관계 저장 |
-
-
-### 📚 2) Requirements Spec
-
-
-## 3. Architecture
-
-## 4. Database Modeling
 
