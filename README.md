@@ -2,8 +2,7 @@
 
 <p>
   <a href="https://github.com/MISSUL-GAN/GAN_Back/actions/workflows/gradle.yml"><img src="https://github.com/MISSUL-GAN/GAN_Back/actions/workflows/gradle.yml/badge.svg"/></a> &nbsp
-  <a href="https://github.com/MISSUL-GAN/GAN_Back/actions/workflows/deploy.yml"><img src="https://github.com/MISSUL-GAN/GAN_Back/actions/workflows/deploy.yml/badge.svg"/></a> &nbsp
-  <img src="https://img.shields.io/website?label=test%20server&url=https://missulgan.art/"/>
+  <img src="https://img.shields.io/website?label=test%20server&url=https://api.missulgan.art/"/>
 </p>
 
 
