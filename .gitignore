@@ -46,3 +46,7 @@ gen
 .gradle
 build
 application.properties
+
+resources-live
+*.sh
+*.out
