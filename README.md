@@ -8,6 +8,12 @@
 
 # [Missul;GAN](https://github.com/MISSUL-GAN)
 **숭실대학교 소프트웨어학부 소프트웨어공모전 총장상🥇**
+<p>
+  <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
+  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+  <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=Java&logoColor=white">
+	<img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
+</p>
 ### GAN을 활용한 작품 공유 커뮤니티 및 NFT 연동 서비스
 
 ![화면](https://user-images.githubusercontent.com/87802191/188563274-c526792f-512d-4f8a-9098-d850d041a8d8.png)
